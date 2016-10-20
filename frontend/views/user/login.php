@@ -1,5 +1,5 @@
 <?php $this->load->view('top'); ?>
-        <div class="row col-md-6 col-md-offset-3 padd-60-0">
+        <div class="row col-md-6 col-md-offset-3 padd-40-0">
             <form id="login-form" action="<?php echo base_url('auth/login'); ?>" method="post">
                 <div class="transbox col-md-8 col-md-offset-2">
                     <div class="form-group">

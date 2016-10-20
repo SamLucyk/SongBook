@@ -1,4 +1,4 @@
-<div class='col-md-8 col-md-offset-2'>
+<div class='col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12 padd-20'>
 <table id="songs-table" class="table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
             <tr>
@@ -20,6 +20,11 @@
 
 <script>
 $(document).ready(function() {
-    $('#songs-table').DataTable();
+    $('#songs-table').DataTable( {
+        "info": false,
+        "scrollY": "300px",
+        "scrollCollapse": true,
+        "paging": false
+} );
 } );
 </script>

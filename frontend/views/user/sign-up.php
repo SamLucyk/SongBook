@@ -1,7 +1,7 @@
 <?php $this->load->view('top'); ?>
-        <div class='padd-20'>
-        <div class="transbox row col-md-6 col-md-offset-3 padd-40-30">
+        <div class="row col-md-6 col-md-offset-3 padd-20">
             <form id="signupform" action="<?php echo base_url('user/create_user'); ?>" method="post">
+                <div class="col-md-12 transbox">
                 <div class="col-md-6">
                     First name
                     <div class="form-group">
@@ -37,6 +37,7 @@
                 <div id="alert" class="col-md-8 col-md-offset-2 center transbox hide alert">
                     Please enter your name and a valid email address!
                 </div>
+                </div>                          
                 <div class="col-md-4 col-md-offset-3 center padd-10-0">
                     <input onclick="validate()" id="form-btn" class="button button-info" value="Sign-up">
                 </div>

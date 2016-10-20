@@ -1,5 +1,5 @@
 
-<div id="myCarousel" class="transbox-b carousel slide col-md-6 col-md-offset-3 padd-40-0" data-ride="carousel">
+<div id="myCarousel" class="carousel slide col-md-6 col-md-offset-3 padd-40-0" data-ride="carousel">
     <!-- Indicators -->
     <ol class="carousel-indicators">
         <?php 
@@ -20,7 +20,7 @@
             foreach($albums as $album){?>
             <div class="item <?php if($first){ echo "active"; }?>">
                 <div class="center">
-                    <div class="col-md-12"><img src="<?php if(isset($album->picture)){ echo $album->picture; } else { echo base_url('img/default-album-art.png');} ?>" alt="<?php echo $album->name; ?>"><div class="col-md-12"><?php echo $album->name; ?></div></div>
+                    <div class="col-md-12"><img src="<?php if(isset($album->picture)){ echo $album->picture; } else { echo base_url('img/default-album-art.png');} ?>" alt="<?php echo $album->name; ?>"><div class="caption col-md-12"><?php echo $album->name; ?></div></div>
                     
                 </div>
             </div>

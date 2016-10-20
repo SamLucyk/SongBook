@@ -1,7 +1,7 @@
 <?php $userdata = $this->session->userdata('user_data'); ?>
 <form class="navbar-form" role="search">
     <a class="navbar-brand navbar-left" href="<?php echo base_url()?>">
-        <img alt="Home" src="<?php echo base_url('img/logo.min.png')?>">
+        <img alt="Home" src="<?php echo base_url('img/logo-alt.min.png')?>">
     </a>
     <ul class="nav navbar-right nav-pills">
         <?php if( isset($userdata['is_logged_in']) && $userdata['is_logged_in'] == true ){ ?>
