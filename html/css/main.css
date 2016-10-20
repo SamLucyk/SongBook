@@ -1,0 +1,436 @@
+#bg {
+  background-image:url(../img/banner.jpg);
+   background-repeat:no-repeat;
+   background-size:cover;
+    min-height: 100%
+
+}
+
+.center { text-align: center}
+
+.alert {
+    color: red;
+    padding: 5px;
+    text-shadow: none;
+    font-size: 12px;
+}
+
+.error {
+    border:1px solid red;
+}
+
+.hide {
+    display: none;
+}
+
+.transbox-b h4 {
+    color: #e8a520;
+}
+
+.white {
+    color: white;
+}
+
+.transbox h1 {
+    color: #e8a520;
+    text-decoration: underline;
+}
+
+.form-group {
+    font-weight: bold;
+}
+
+.left { text-align: left}
+
+.transbox {
+  background-color: rgba(255, 255, 255, 0.90);
+}
+
+.transbox p {
+    margin: 5%;
+    font-weight: bold;
+    color: #000000;
+    opacity: 1.0;
+}
+
+.transbox-g {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.transbox-g p {
+    margin: 5%;
+    font-weight: bold;
+    color: #000000;
+    opacity: 1.0;
+}
+
+.transbox h4 {
+    opacity: 1.0;
+}
+
+.transbox-b {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.transbox-b p {
+    margin: 5%;
+    font-weight: bold;
+}
+
+body {
+    font-family: Nobile !important;
+	line-height: 30px;
+}
+
+h4 {
+    font-size: 20px;
+}
+
+p {
+    font-size: 15px;
+    line-height: 25px;
+}
+
+.rating {
+    vertical-align: middle;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.banner {
+    min-height: 100%;
+    min-width: 100%;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    z-index: -1;
+}
+
+
+.banner .title {
+    color: aliceblue;
+    padding-top: 140px;
+    font-size: 50px;
+    font-weight: 500;
+}
+
+
+.banner .logo {
+    width: 350px;
+    background-size:cover;
+}
+
+.banner .title-sm {
+    color: aliceblue;
+    padding-top: 70px;
+    font-size: 50px;
+    font-weight: 500;
+}
+
+.banner .logo-sm {
+    width: 250px;
+    background-size:cover;
+}
+
+
+.box {
+    min-height: 30px;
+}
+
+.content {
+    background-size: cover;
+}
+
+
+.white-text {
+    color:white;
+    text-shadow: 1px 0px black;
+}
+
+.submit-btn {
+    font-size: 25px;
+}
+
+.button-info {
+    color: #fff;
+    background-color: #e8a520;
+}
+
+.button-selected {
+    color: #e8a520;
+    background-color: white;
+    border-color: black
+}
+
+.button {
+    display: inline-block;
+    padding: 5px;
+    margin-bottom: 0;
+    font-size: 24px;
+    font-family: "Hickory Jack" !important;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.button:hover {
+    color: #e8a520;
+    background-color: #fff;
+}
+
+.form ul {
+  list-style:none;
+  padding: 0;
+}
+
+.form ul li {
+  overflow:hidden;
+}
+
+.form ul li.checkbox input {
+  float:left;
+}
+
+.form ul li.checkbox label {
+  float:right; 
+  width:270px;
+}
+///* SONGBOOK *?//
+/* The side navigation menu */
+body,html{
+    height: 100%;
+  }
+
+  nav.sidebar, .main{
+    -webkit-transition: margin 200ms ease-out;
+      -moz-transition: margin 200ms ease-out;
+      -o-transition: margin 200ms ease-out;
+      transition: margin 200ms ease-out;
+  }
+
+  .main{
+    padding: 10px 10px 0 10px;
+  }
+
+ @media (min-width: 765px) {
+
+    .main{
+      position: absolute;
+      width: calc(100% - 40px); 
+      margin-left: 40px;
+      float: right;
+    }
+
+    nav.sidebar:hover + .main{
+      margin-left: 200px;
+    }
+
+    nav.sidebar.navbar.sidebar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
+      margin-left: 0px;
+    }
+
+    nav.sidebar .navbar-brand, nav.sidebar .navbar-header{
+      text-align: center;
+      width: 100%;
+      margin-left: 0px;
+    }
+    
+    nav.sidebar a{
+      padding-right: 13px;
+    }
+
+    nav.sidebar .navbar-nav > li:first-child{
+      border-top: 1px #e5e5e5 solid;
+    }
+
+    nav.sidebar .navbar-nav > li{
+      border-bottom: 1px #e5e5e5 solid;
+    }
+
+    nav.sidebar .navbar-nav .open .dropdown-menu {
+      position: static;
+      float: none;
+      width: auto;
+      margin-top: 0;
+      background-color: transparent;
+      border: 0;
+      -webkit-box-shadow: none;
+      box-shadow: none;
+    }
+
+    nav.sidebar .navbar-collapse, nav.sidebar .container-fluid{
+      padding: 0 0px 0 0px;
+    }
+
+    .navbar-inverse .navbar-nav .open .dropdown-menu>li>a {
+      color: #777;
+    }
+
+    nav.sidebar{
+      width: 200px;
+      height: 100%;
+      margin-left: -160px;
+      float: left;
+      margin-bottom: 0px;
+    }
+
+    nav.sidebar li {
+      width: 100%;
+    }
+
+    nav.sidebar:hover{
+      margin-left: 0px;
+    }
+
+    .forAnimate{
+      opacity: 0;
+    }
+  }
+   
+  @media (min-width: 1330px) {
+
+    .main{
+      width: calc(100% - 200px);
+      margin-left: 200px;
+    }
+
+    nav.sidebar{
+      margin-left: 0px;
+      float: left;
+    }
+
+    nav.sidebar .forAnimate{
+      opacity: 1;
+    }
+  }
+
+  nav.sidebar .navbar-nav .open .dropdown-menu>li>a:hover, nav.sidebar .navbar-nav .open .dropdown-menu>li>a:focus {
+    color: #CCC;
+    background-color: transparent;
+  }
+
+  nav:hover .forAnimate{
+    opacity: 1;
+  }
+  section{
+    padding-left: 15px;
+  }
+  
+.songbook-wrap {
+    position:fixed;
+    z-index: -1;
+    padding-top:20px;
+}
+
+///* PADDING *///
+.padd-15 {
+    padding: 15px;
+} 
+
+.padd-20 {
+    padding: 20px;
+}
+
+.padd-30 {
+    padding: 30px;
+}
+
+.padd-0-20 {
+    padding-bottom: 20px;
+}
+
+.padd-0-40 {
+    padding-bottom: 40px;
+}
+
+.padd-0-100 {
+    padding-top: 0px;
+    padding-bottom: 100px;
+}
+
+.padd-0-220 {
+    padding-bottom: 220px;
+}
+
+.padd-10-0 {
+    padding-top: 10px;
+}
+
+.padd-10-40 {
+    padding-top: 10px;
+    padding-bottom: 40px;
+}
+
+.padd-15-0 {
+    padding-top: 15px;
+}
+
+.padd-20-0 {
+    padding-top: 20px;
+}
+
+.padd-20-20 {
+    padding-top: 20px;
+    padding-bottom: 42px;
+}
+
+.padd-20-40 {
+    padding-top: 20px;
+    padding-bottom: 40px;
+}
+
+.padd-40-0 {
+    padding-top: 40px;
+}
+
+.padd-40-20 {
+    padding-top: 40px;
+    padding-bottom: 20px;
+}
+
+.padd-40-40 {
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.padd-40-30 {
+    padding-top: 40px;
+    padding-bottom: 30px;
+}
+
+.padd-50-20 {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+.padd-60-0 {
+    padding-top: 60px;
+}
+
+.padd-60-40 {
+    padding-top: 60px;
+    padding-bottom: 40px;
+}
+
+.padd-80 {
+    padding: 80px;
+}
+
+.padd-100-40 {
+    padding-top: 100px;
+    padding-bottom: 40px;
+}
