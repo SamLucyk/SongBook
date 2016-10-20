@@ -1,5 +1,5 @@
 
-<div id="myCarousel" class="carousel slide col-md-6 col-md-offset-3 padd-40-0" data-ride="carousel">
+<div id="myCarousel" class="transbox-b carousel slide col-md-6 col-md-offset-3 padd-40-0" data-ride="carousel">
     <!-- Indicators -->
     <ol class="carousel-indicators">
         <?php 
@@ -20,8 +20,8 @@
             foreach($albums as $album){?>
             <div class="item <?php if($first){ echo "active"; }?>">
                 <div class="center">
-                    <div class="col-md-12"><img src="<?php if(isset($album->picture)){ echo $album->picture; } else { echo base_url('img/default-album-art.png');} ?>" alt="<?php echo $album->name; ?>"></div>
-                    <div class="col-md-12"><?php echo $album->name; ?></div>
+                    <div class="col-md-12"><img src="<?php if(isset($album->picture)){ echo $album->picture; } else { echo base_url('img/default-album-art.png');} ?>" alt="<?php echo $album->name; ?>"><div class="col-md-12"><?php echo $album->name; ?></div></div>
+                    
                 </div>
             </div>
         <?php $first = false;
@@ -29,12 +29,15 @@
     </div>
 
     <!-- Left and right controls -->
-    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+    <a class="left carousel-control" href="#myCarousel" role="button" style="background-image:none" data-slide="prev">
         <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
         <span class="sr-only">Previous</span>
     </a>
-    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+    <a class="right carousel-control" href="#myCarousel" role="button" style="background-image:none" data-slide="next">
         <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
     </a>
 </div>
+
+<script>
+</script>

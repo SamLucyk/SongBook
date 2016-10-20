@@ -1,3 +1,7 @@
+:root {
+  --main: #e8a520;
+}
+
 #bg {
   background-image:url(../img/banner.jpg);
    background-repeat:no-repeat;
@@ -24,7 +28,7 @@
 }
 
 .transbox-b h4 {
-    color: #e8a520;
+    color: var(--main);
 }
 
 .white {
@@ -32,7 +36,7 @@
 }
 
 .transbox h1 {
-    color: #e8a520;
+    color: var(--main);
     text-decoration: underline;
 }
 
@@ -155,11 +159,11 @@ p {
 
 .button-info {
     color: #fff;
-    background-color: #e8a520;
+    background-color: var(--main);
 }
 
 .button-selected {
-    color: #e8a520;
+    color: var(--main);
     background-color: white;
     border-color: black
 }
@@ -188,7 +192,7 @@ p {
 }
 
 .button:hover {
-    color: #e8a520;
+    color: var(--main);
     background-color: #fff;
 }
 
@@ -334,6 +338,18 @@ body,html{
     position:absolute;
     z-index: -1;
     padding-top:20px;
+    background-color: gainsboro;
+    color: white;
+        
+}
+
+.songbook-wrap h1 {
+    color: var(--main);       
+}
+
+.songbook-wrap h2 {
+    color: var(--main);
+        
 }
 
 .clickable-row {
@@ -341,9 +357,26 @@ body,html{
     background-color: #d9edf7;
 }
 
+.song-table{
+    border-style: solid;
+    color:black;
+}
+
 .clickable-row:hover {
     cursor: pointer;
     background-color: #ffedbc;
+}
+
+.odd {
+    color: black;
+}
+
+.even {
+    background-color: darkgrey;
+}
+
+#songs-table th{
+    background-color: darkgrey;
 }
 
 ///* PADDING *///
