@@ -331,9 +331,19 @@ body,html{
   }
   
 .songbook-wrap {
-    position:fixed;
+    position:absolute;
     z-index: -1;
     padding-top:20px;
+}
+
+.clickable-row {
+    cursor: pointer;
+    background-color: #d9edf7;
+}
+
+.clickable-row:hover {
+    cursor: pointer;
+    background-color: #ffedbc;
 }
 
 ///* PADDING *///
