@@ -33,7 +33,7 @@ class Auth extends CI_Controller{
                 'id_user' => $user->ID,
                 );
             $this->session->set_userdata('user_data', $data);
-            redirect( base_url('') );
+            redirect( base_url('songbook') );
         } else {
             redirect(base_url('user/login'));
         }

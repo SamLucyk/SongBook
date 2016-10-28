@@ -11,7 +11,7 @@
     <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
         <ul class="nav navbar-nav">
             <li class="active">
-                <a href="#">
+                <a href="<?php echo site_url('songbook') ?>">
                     Home<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span>
                 </a>
             </li>
@@ -22,8 +22,8 @@
                     <span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-plus"></span>
                 </a>
                 <ul class="dropdown-menu forAnimate" role="menu">
-                    <li><a href="#">New Song</a></li>
-                    <li><a href="#">New Album</a></li>
+                    <li><a href="<?php echo site_url('songbook/newsong') ?>">New Song</a></li>
+                    <li><a href="<?php echo site_url('songbook/newalbum') ?>">New Album</a></li>
                 </ul>
             </li>    
             <li class="dropdown">
@@ -34,7 +34,7 @@
                 </a>
                 <ul class="dropdown-menu forAnimate" role="menu">
                     <?php foreach($songs as $song){?>
-                    <li><a href="#"><?php echo $song->name; ?></a></li>
+                    <li><a href="<?php echo site_url('songbook/song/v/'.$song->ID) ?>"><?php echo $song->name; ?></a></li>
                     <?php } ?>
                 </ul>
             </li>    
@@ -46,7 +46,7 @@
                 </a>
                 <ul class="dropdown-menu forAnimate" role="menu">
                     <?php foreach($albums as $album){?>
-                    <li><a href="#"><?php echo $album->name; ?></a></li>
+                    <li><a href="<?php echo site_url('songbook/album/v/'.$album->ID) ?>"><?php echo $album->name; ?></a></li>
                     <?php } ?>
                 </ul>
             </li>

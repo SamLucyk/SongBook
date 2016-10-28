@@ -16,16 +16,24 @@
     <!-- Wrapper for slides -->
     <div class="carousel-inner" role="listbox">
         <?php 
+            if(isset($albums) && !empty($albums)){
             $first = true;
             foreach($albums as $album){?>
             <div class="item <?php if($first){ echo "active"; }?>">
                 <div class="center">
+                    <a href='<?php echo site_url('songbook/album/v/'.$album->ID) ?>'>
                     <div class="col-md-12"><img src="<?php if(isset($album->picture)){ echo $album->picture; } else { echo base_url('img/default-album-art.png');} ?>" alt="<?php echo $album->name; ?>"><div class="caption col-md-12"><?php echo $album->name; ?></div></div>
-                    
+                    </a>
                 </div>
             </div>
         <?php $first = false;
-            } ?>
+            }} else { ?>
+                <div class="item active">
+                <a href='<?php echo site_url('songbook/newalbum') ?>'><div class="center">
+                    <div class="col-md-12"><img src="<?php echo base_url('img/default-album-art.png'); ?>" alt="Create Album"><div class="caption col-md-12">Create Album</div></div>
+                </div></a>
+            </div>
+        <?php } ?>
     </div>
 
     <!-- Left and right controls -->

@@ -1,6 +1,6 @@
 <?php $userdata = $this->session->userdata('user_data'); ?>
 <form class="navbar-form" role="search">
-    <a class="navbar-brand navbar-left" href="<?php echo base_url()?>">
+    <a class="navbar-brand navbar-left" href="<?php echo base_url('songbook')?>">
         <img alt="Home" src="<?php echo base_url('img/logo-alt.min.png')?>">
     </a>
     <ul class="nav navbar-right nav-pills">

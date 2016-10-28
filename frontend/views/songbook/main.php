@@ -1,10 +1,6 @@
-<?php $this->load->view('head'); ?>
-<?php $this->load->view('songbook/sidenav'); ?>
-<?php $this->load->view('header'); ?>
-
+<?php $this->load->view('songbook/top'); ?>
 <?php $userdata = $this->session->userdata('user_data'); ?>
-<div class="col-xs-12 center songbook-wrap padd-40-40">
-    <div class="transbox-b col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+    <div class="transbox-b col-sm-8 col-sm-offset-2 col-xs-12">
         <h1><?php echo $userdata['name']; ?>'s Song Book</h1>
     </div>
     <div class="padd-20 col-xs-12">
@@ -19,8 +15,7 @@
             <?php $this->load->view('songbook/albums'); ?>
         </div>
     </div>
-    
+    </div>
 </div>
-
-
+</div>
 <?php $this->load->view('songbook/footer'); ?>

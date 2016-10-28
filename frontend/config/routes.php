@@ -64,6 +64,7 @@ $route['thankyou'] = 'pages/thankyou';
 //Song Book
 $route['songbook']  = 'songbook/index';
 
+$route['upload'] = 'Upload';
 
 
 
