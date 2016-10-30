@@ -7,9 +7,10 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css">
     <link href="<?php echo base_url(); ?>css/main.css?v=1.1" rel="stylesheet" type="text/css"/>
-    <script src="//cdn.ckeditor.com/4.5.11/standard/ckeditor.js"></script>
     <link href="<?php echo base_url(); ?>js/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css"/>
-    <link href="<?php echo base_url(); ?>css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="<?php echo base_url(); ?>css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="<?php echo base_url(); ?>css/main.css?v=1.1" rel="stylesheet" type="text/css"/>
+    <script src="//cdn.ckeditor.com/4.5.11/standard/ckeditor.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <!-- canvas-to-blob.min.js is only needed if you wish to resize images before upload.
          This must be loaded before fileinput.min.js -->

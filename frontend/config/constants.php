@@ -86,5 +86,9 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 
 
 
+
 /* DS DEFINED */
-//define('PRODUCTION_URL', 'http://107.170.201.12/'); // highest automatically-assigned error code
+define('Bucket','mysongbook');
+define('BucketUrl', 'https://s3.amazonaws.com/mysongbook/');
+define('BucketAudio', 'Audio/');
+define('BucketVideo', 'Video/');

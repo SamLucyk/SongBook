@@ -94,7 +94,7 @@
     position: relative;
     display: table;
     margin: 8px;
-    height: 160px;
+    height: 80px;
     border: 1px solid #ddd;
     box-shadow: 1px 1px 5px 0 #a2958a;
     padding: 6px;
@@ -381,7 +381,7 @@
 }
 
 .file-zoom-content {
-    height: 480px;
+    height: 200px;
     text-align: center;
 }
 

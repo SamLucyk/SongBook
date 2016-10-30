@@ -35,6 +35,10 @@
     color: white;
 }
 
+.black {
+    color: black;
+}
+
 .transbox h1 {
     color: var(--main);
     text-decoration: underline;
@@ -405,6 +409,43 @@ table.dataTable {
     margin-top: 0px;
 }
 
+.glyph {
+    cursor: pointer;
+    color: white;
+}
+
+.glyph-edit {
+    margin-left: 3px;
+}
+
+.glyph:hover {
+    color: var(--light-alt);
+}
+
+.audio-container {
+    border: 2px solid;
+    padding: 20px;
+    height: 100px;
+    width: 100%;
+    resize: vertical;
+    overflow: scroll;
+}
+
+.video-container {
+    border: 2px solid;
+    padding: 20px;
+    height: 250px;
+    width: 100%;
+    resize: vertical;
+    overflow: scroll;
+}
+
+.lyric-container {
+    height: 400px;
+    resize: vertical;
+    overflow: scroll;
+}
+
 ///* PADDING *///
 .padd-15 {
     padding: 15px;
@@ -420,6 +461,10 @@ table.dataTable {
 
 .padd-0-20 {
     padding-bottom: 20px;
+}
+
+.padd-20-0 {
+    padding-top: 20px;
 }
 
 .padd-0-40 {

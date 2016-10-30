@@ -5,22 +5,52 @@
         <h1><?php echo $song->name;?></h1>
         <h4>By <?php echo $user->first.' '.$user->last ?></h4>
     </div>
-    <div class="padd-20 col-xs-12">
-        <audio controls>
-            <source src="<?php echo base_url('uploads/15-_-Silver-Song.mp3'); ?>" type="audio/mp3">
-</audio>
-        <div class="col-md-12 padd-0-20">
-        <div id='status' class="col-md-4">
-            <h3>Status: <?php echo $song->status->name; ?></h3>
+    <div class="padd-20 col-xs-12 col-sm-10 col-sm-offset-1">
+        <div>
+            <h4 class="col-xs-4 control-label">Info <a onclick="toggle('info')" class="glyph glyph-edit"><span id="info-toggle" style="font-size:16px" class="glyphicon glyphicon-chevron-up"></span></a></h4>
+            <h4 class="col-xs-4 control-label">Audios <a onclick="toggle('audio')" class="glyph glyph-edit"><span id="audio-toggle" style="font-size:16px" class="glyphicon glyphicon-chevron-up"></span></a></h4>
+            <h4 class="col-xs-4 control-label">Videos <a onclick="toggle('video')" class="glyph glyph-edit"><span id="video-toggle" style="font-size:16px" class="glyphicon glyphicon-chevron-up"></span></a></h4>
         </div>
-        <div id='album' class="col-md-4">
-            <h3>Album: <?php echo $song->album->name; ?></h3>
+        <div class="padd-20 transbox-b">
+            <div id="info-container" class="" style="display:none">
+                <div id='status' class="col-md-4">
+                    <h4>Status: <?php echo $song->status->name; ?></h4>
+                </div>
+                <div id='album' class="col-md-4">
+                    <h4>Album: <?php echo $song->album->name; ?></h4>
+                </div>
+                <div id='created' class="col-md-4">
+                    <h4>Created: <?php echo $song->created_at; ?></h4>
+                </div>
+            </div>
         </div>
-        <div id='created' class="col-md-4">
-            <h3>Created: <?php echo $song->created_at; ?></h3>
+        <?php if(isset($audios) && !empty($audios)){ ?>
+        <div class="padd-20">
+            <div id="audio-container" class="audio-container" style="display:none">
+                <?php foreach($audios as $audio){ ?>
+                <div class="transbox-b col-md-6" id="<?php echo 'audio_'.$audio->ID; ?>">
+                <div><span ><?php echo $audio->name ?> </span></div>
+                <audio controls>
+                    <source src="https://s3.amazonaws.com/mysongbook/15+-+Silver+Song.mp3" type="audio/mp3">
+                </audio>
+                </div>
+                <?php } ?>
+            </div>
         </div>
-    </div>
-        <div class="transbox-b-dark col-md-10 col-md-offset-1 padd-20">
+        <?php } ?>
+        <?php if(isset($videos) && !empty($videos)){ ?>
+        <div class="padd-20">
+            <div id="video-container" class="video-container" style="display:none">
+                <?php foreach($videos as $video){ ?>
+                <div class="col-md-6" id="<?php echo 'video_'.$video->ID; ?>">
+                <div><span><?php echo $video->name ?> </span></div>
+                <video style="width:300px" class="" controls=""><source src="<?php echo $video->src ?>" type="video/mp4"></video>
+                </div>
+                <?php } ?>
+            </div>
+            <?php } ?>
+        </div>
+        <div class="transbox-b-dark lyric-container col-md-10 col-md-offset-1 padd-20">
             <h3>Lyrics:</h3>
             <?php if($song->lyrics->content != ''){ echo $song->lyrics->content;}
             else { ?> 
@@ -44,5 +74,17 @@ $(function() {
         return window.confirm("Are you sure you want to delete \"<?php echo $song->name ?>\"? (This can not be undone)");
     });
 });
+    
+    function toggle(ele){
+        var item = document.getElementById(ele + '-container');
+        var toggle = document.getElementById(ele + '-toggle');
+        if(item.style.display == 'none'){
+            item.style.display = '';
+            toggle.classList = 'glyphicon glyphicon-chevron-down';
+        } else{
+            item.style.display = 'none';
+            toggle.classList = 'glyphicon glyphicon-chevron-up';
+        }
+    }
 </script>
 <?php $this->load->view('footer'); ?>

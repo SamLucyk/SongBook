@@ -1,4 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+require '../vendor/autoload.php';
+use Aws\S3\S3Client;
 
 use Mailgun\Mailgun;
 class Songbook extends CI_Controller{
@@ -8,6 +10,11 @@ class Songbook extends CI_Controller{
         $this->load->model("User_model");
         $this->load->model("Songbook_model");
         $this->userdata = $this->session->userdata('user_data');
+        $this->client = S3Client::factory(array(
+            'profile' => 'default',
+            'region' => 'us-east-1',
+            'version' => 'latest'
+        ));
         if( !$this->verify()){
             redirect(site_url());
         }
@@ -63,8 +70,9 @@ class Songbook extends CI_Controller{
     
     function song( $type, $song_id){
         $song = $this->Songbook_model->getSong( $song_id );
-        $song = $this->formatSong($song);
-        $this->data['song'] = $song;
+        $this->data['song'] = $this->formatSong($song);
+        $this->data['audios'] = $this->get_audios($song_id);
+        $this->data['videos'] = $this->get_videos($song_id);
         $this->load->view('songbook/songs/song_'.$type, $this->data);
     }
     
@@ -90,20 +98,6 @@ class Songbook extends CI_Controller{
 
       $this->Songbook_model->updateSong($song_id, $data);
       redirect(site_url('songbook/song/v/'.$song_id));
-    }
-    
-    public function upload_song($song_id){
-        header('Content-Type: application/json');
-        /* AJAX check  */
-        if( !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'){
-            $sourcePath = $_FILES['file-upload']['tmp_name']; // Storing source path of the file in a variable
-            $targetPath = "uploads/".$_FILES['file-upload']['name']; // Target path where file is to be stored
-            $targetPath = str_replace(' ', '-', $targetPath);
-            $srcPath = base_url($targetPath);
-            move_uploaded_file($sourcePath,$targetPath);
-            $a = "<audio class='kv-preview-data' controls=''><source src='".$srcPath."' type='audio/mp3'></audio>";
-            echo json_encode(array('initialPreview' => $a));
-        }
     }
     
     function formatSong( $song ){
@@ -210,10 +204,273 @@ class Songbook extends CI_Controller{
         return $albums;
     }
     
+    /////////////
+    /// Audio //
+    ///////////
+    function get_audios($song_id){
+        return $this->Songbook_model->getAudios($song_id);
+    }
+    
+    function get_audio($audio_id){
+        return $this->Songbook_model->getAudio($audio_id);
+    }
+    
+    public function upload_audio($song_id){
+        header('Content-Type: application/json');
+        if( $this->is_ajax() ){
+            $sourcePath = $_FILES['audio-upload']['tmp_name'];
+            $valid = $this->validate_audio($sourcePath);
+            if (!$valid['result']){
+                echo json_encode(array('error' =>'You are not allowed to upload such a file. Type: '.$valid['type']));
+            } else {
+                $name = $_FILES['audio-upload']['name'];
+                $ext = pathinfo($name, PATHINFO_EXTENSION);
+                $audio_id = $this->insert_audio($song_id, $name, $ext);
+                $key = $this->get_key(BucketAudio, $audio_id, $ext);
+                $src = BucketUrl.$key;
+
+                $result = $this->client->putObject(array(
+                    'Content-Type' => 'audio/'.$ext,
+                    'Bucket'       => Bucket,
+                    'Key'          => $key,
+                    'SourceFile'   => $sourcePath,
+                    'ACL'          => 'public-read'
+                ));
+
+                $this->client->waitUntil('ObjectExists', array(
+                    'Bucket' => Bucket,
+                    'Key'    => $key
+                ));
+                
+                if ($result){
+                    $a = "<audio class='kv-preview-data' controls=''><source src='".$src."' type='audio/".$ext."'></audio>";
+                    $b = array(
+                        'type' => 'audio',
+                        'filetype' => 'audio/'.$ext,
+                        'url' => base_url('songbook/delete_audio/'.$audio_id),
+                        'caption' => $name,
+                        'frameAttr' => array('style' => 'height:80px')
+                    );
+
+                    echo json_encode(array('initialPreview' => $a, 'initialPreviewConfig' => $b));
+                } else {
+                    $this->delete_audio($audio_id);
+                    echo json_encode(array('error' =>'The file was not uploaded. Please try again.'));
+                }
+            }
+        }
+    }
+    
+    function insert_audio($song_id, $name, $ext){
+        $data = array(
+            'song_id' => $song_id,
+            'name' => $name
+        );
+        $audio_id = $this->Songbook_model->insertAudio($data);
+        $key = $this->get_key(BucketAudio, $audio_id, $ext);
+        $src = BucketUrl.$key;
+        $srcdata = array(
+            'src' => $src,
+            's3key' => $key
+        );
+        $this->Songbook_model->updateAudio($audio_id, $srcdata);
+        return $audio_id;
+    }
+    
+    function delete_audio($audio_id){
+        header('Content-Type: application/json');
+        if( $this->is_ajax() ){
+            $audio = $this->Songbook_model->getAudio($audio_id);
+            $result = $this->client->deleteObject(array(
+                'Bucket'       => Bucket,
+                'Key'          => $audio->s3key
+            ));
+            if($result){
+                $this->Songbook_model->deleteAudio($audio_id);
+            }
+            echo json_encode(array('result' => true));
+        } else {
+            echo json_encode(array('result' => false));
+        }
+    }
+    
+    function update_audio_name($audio_id, $name){
+        header('Content-Type: application/json');
+        if( $this->is_ajax() ){
+            $data = array(
+                'name' => str_replace('%20', ' ', $name),
+            );
+            $this->Songbook_model->updateAudio($audio_id, $data);
+            echo json_encode(array('result' => true));
+        } else {
+            echo json_encode(array('result' => false));
+        }
+    }
+    
+    function validate_audio($file){
+
+        $info = new finfo(FILEINFO_MIME);
+        $type = $info->buffer(file_get_contents($file));
+        $arr = explode(";", $type);
+        $type = $arr[0];
+
+        switch ($type) {
+            case 'audio/mpeg':
+            case 'audio/ogg':
+            case 'audio/wav':
+            case 'audio/x-matroska':
+            case 'audio/mp4':
+            case 'audio/mp3':
+                return array(
+                    'result'=> true
+                );
+            break;
+            default:
+                return array(
+                    'result'=> false,
+                    'type' => $type
+                );
+            break;
+        }
+    }
+    
+    /////////////
+    /// Video //
+    ///////////
+    function get_videos($song_id){
+        return $this->Songbook_model->getVideos($song_id);
+    }
+    
+    function get_video($audio_id){
+        return $this->Songbook_model->getVideo($audio_id);
+    }
+    
+    public function upload_video($song_id){
+        header('Content-Type: application/json');
+        if( $this->is_ajax() ){
+            $sourcePath = $_FILES['video-upload']['tmp_name'];
+            $valid = $this->validate_video($sourcePath);
+            if (!$valid['result']){
+                echo json_encode(array('error' =>'You are not allowed to upload such a file. Type: '.$valid['type']));
+            } else {
+                $name = $_FILES['video-upload']['name'];
+                $ext = pathinfo($name, PATHINFO_EXTENSION);
+                $video_id = $this->insert_video($song_id, $name, $ext);
+                $key = $this->get_key(BucketVideo, $video_id, $ext);
+                $src = BucketUrl.$key;
+
+                $result = $this->client->putObject(array(
+                    'Content-Type' => 'video/'.$ext,
+                    'Bucket'       => Bucket,
+                    'Key'          => $key,
+                    'SourceFile'   => $sourcePath,
+                    'ACL'          => 'public-read'
+                ));
+
+                $this->client->waitUntil('ObjectExists', array(
+                    'Bucket' => Bucket,
+                    'Key'    => $key
+                ));
+                
+                if ($result){
+                    $a = "<video style='height:100px' class='kv-preview-data' controls=''><source src='".$src."' type='video/mp4'></video>";
+                    $b = array(
+                        'type' => 'video',
+                        'url' => base_url('songbook/delete_video/'.$video_id),
+                        'caption' => $name
+                    );
+                    echo json_encode(array('initialPreview' => $a, 'initialPreviewConfig' => $b));
+                } else {
+                    $this->delete_video($video_id);
+                    echo json_encode(array('error' =>'The file was not uploaded. Please try again.'));
+                }
+            }
+        }
+    }
+    
+    function insert_video($song_id, $name, $ext){
+        $data = array(
+            'song_id' => $song_id,
+            'name' => $name
+        );
+        $video_id = $this->Songbook_model->insertVideo($data);
+        $key = $this->get_key(BucketVideo, $video_id, $ext);
+        $src = BucketUrl.$key;
+        $srcdata = array(
+            'src' => $src,
+            's3key' => $key
+        );
+        $this->Songbook_model->updateVideo($video_id, $srcdata);
+        return $video_id;
+    }
+    
+    function delete_video($video_id){
+        header('Content-Type: application/json');
+        if( $this->is_ajax() ){
+            $video = $this->Songbook_model->getVideo($video_id);
+            $result = $this->client->deleteObject(array(
+                'Bucket'       => Bucket,
+                'Key'          => $video->s3key
+            ));
+            if($result){
+                $this->Songbook_model->deleteVideo($video_id);
+            }
+            echo json_encode(array('result' => true));
+        } else {
+            echo json_encode(array('result' => false));
+        }
+    }
+    
+    function update_video_name($video_id, $name){
+        header('Content-Type: application/json');
+        if( !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'){
+            $data = array(
+                'name' => str_replace('%20', ' ', $name),
+            );
+            $this->Songbook_model->updateVideo($video_id, $data);
+            echo json_encode(array('result' => true));
+        } else {
+            echo json_encode(array('result' => false));
+        }
+    }
+    
+    function validate_video($file){
+
+        $info = new finfo(FILEINFO_MIME);
+        $type = $info->buffer(file_get_contents($file));
+        $arr = explode(";", $type);
+        $type = $arr[0];
+        switch ($type) {
+            case 'video/mp4':
+            case 'video/avi':
+            case 'video/mpeg':
+            case 'video/mpg':
+                return array(
+                    'result'=> true
+                );
+            break;
+            default:
+                return array(
+                    'result'=> false,
+                    'type' => $type
+                );
+            break;
+        }
+    }
+
+    ///Helpers///
     function verify(){
         $result = ( isset($this->userdata['is_logged_in']) && $this->userdata['is_logged_in'] == true );
         return $result;
     }
-
+    
+    function get_key($type, $id, $ext){
+        return $type.$this->user->ID.'/'.$id.'.'.$ext;
+    }
+    
+    function is_ajax(){
+        return (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
+    }
+            
 }
 ?>
