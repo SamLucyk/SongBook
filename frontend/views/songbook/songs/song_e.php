@@ -57,11 +57,11 @@
                 <div class="audio-container">
                     <?php foreach($audios as $audio){ ?>
                     <div class="transbox-b col-md-6" id="<?php echo 'audio_'.$audio->ID; ?>">
-                    <div><span id="<?php echo 'a_name'.$audio->ID; ?>"><?php echo $audio->name ?> </span><a id="<?php echo 'a_edit'.$audio->ID; ?>" class="glyph glyph-edit" onclick='editAudioName(<?php echo $audio->ID; ?>, <?php echo 'a_name'.$audio->ID; ?>)'><span id="<?php echo 'a_icon'.$audio->ID; ?>" class="glyphicon glyphicon-pencil"></span></a></div>
+                    <div><span id="<?php echo 'a_name'.$audio->ID; ?>"><?php echo $audio->name ?> </span><a id="<?php echo 'a_edit'.$audio->ID; ?>" class="glyph glyph-edit" onclick="editMediaName(<?php echo $audio->ID; ?>, <?php echo 'a_name'.$audio->ID; ?>, '<?php echo Audio; ?>')"><span id="<?php echo 'a_icon'.$audio->ID; ?>" class="glyphicon glyphicon-pencil"></span></a></div>
                     <audio controls>
                         <source src="<?php echo $audio->src ?>" type="audio/mp3">
                     </audio>
-                    <a class="glyph" onclick="deleteAudio(<?php echo $audio->ID; ?>, <?php echo 'audio_'.$audio->ID; ?>)"><span class="glyphicon glyphicon-remove"></span></a>
+                    <a class="glyph" onclick="deleteMedia(<?php echo $audio->ID; ?>, <?php echo 'audio_'.$audio->ID; ?>, 'audio')"><span class="glyphicon glyphicon-remove"></span></a>
                     </div>
                     <?php } ?>
                 </div>
@@ -72,9 +72,9 @@
                 <div class="video-container">
                     <?php foreach($videos as $video){ ?>
                     <div class="col-md-6" id="<?php echo 'video_'.$video->ID; ?>">
-                    <div><span id="<?php echo 'v_name'.$video->ID; ?>"><?php echo $video->name ?> </span><a id="<?php echo 'v_edit'.$video->ID; ?>" class="glyph glyph-edit" onclick='editVideoName(<?php echo $video->ID; ?>, <?php echo 'v_name'.$video->ID; ?>)'><span id="<?php echo 'v_icon'.$video->ID; ?>" class="glyphicon glyphicon-pencil"></span></a></div>
+                    <div><span id="<?php echo 'v_name'.$video->ID; ?>"><?php echo $video->name ?> </span><a id="<?php echo 'v_edit'.$video->ID; ?>" class="glyph glyph-edit" onclick="editMediaName(<?php echo $video->ID; ?>, <?php echo 'v_name'.$video->ID; ?>, '<?php echo Video ?>')"><span id="<?php echo 'v_icon'.$video->ID; ?>" class="glyphicon glyphicon-pencil"></span></a></div>
                     <video style="width:300px" class="" controls=""><source src="<?php echo $video->src ?>" type="video/mp4"></video>
-                    <a class="glyph" onclick="deleteVideo(<?php echo $video->ID; ?>, <?php echo 'video_'.$video->ID; ?>)"><span class="glyphicon glyphicon-remove"></span></a>
+                    <a class="glyph" onclick="deleteMedia(<?php echo $video->ID; ?>, <?php echo 'video_'.$video->ID; ?>, 'video')"><span class="glyphicon glyphicon-remove"></span></a>
                     </div>
                     <?php } ?>
                 </div>
@@ -82,12 +82,12 @@
                 
                 <div class="col-xs-6 padd-20-0 center">
                     <label class="control-label">Upload Audio</label>
-                    <input name="audio-upload" id="audio-upload" type='file'>
+                    <input name="file-upload" id="audio-upload" type='file'>
                 </div>
                 
                 <div class="col-xs-6 padd-20-0 center">
                     <label class="control-label">Upload Video</label>
-                    <input name="video-upload" id="video-upload" type='file'>
+                    <input name="file-upload" id="video-upload" type='file'>
                 </div>
                 
             </div>
@@ -122,113 +122,57 @@
     
     ///Audio///
     
-    function deleteAudio( audioId, elementId ) {
-        var r = confirm("Are you sure you want to delete this mp3?");
+    function deleteMedia( audioId, elementId, type ) {
+        var r = confirm("Are you sure you want to delete this?");
         if (r == true) {
-            var ajax_url = '<?php echo site_url('songbook/delete_audio'); ?>/' + audioId;
+            var ajax_url = '<?php echo site_url('media/delete'); ?>/' + audioId + '/' + type;
+            console.log(ajax_url);
             jQuery.ajax({
             url: ajax_url,
             method: 'GET',
             success: function(res){
                 if( res.result ){
-                    elementId.innerHTML = 'Audio Deleted';
+                    elementId.innerHTML = 'Item Deleted';
                 }
             }
             });
         }
     }
     
-    function editAudioName( audioId, elementId ) {
-        var edit = document.getElementById('a_edit' + audioId);
-        var name_div = document.getElementById('a_name' + audioId);
+    function editMediaName( mediaId, elementId, type ) {
+        var prefix = type.charAt(0);
+        var edit = document.getElementById(prefix + '_edit' + mediaId);
+        var name_div = document.getElementById(prefix + '_name' + mediaId);
         var name = name_div.innerHTML;
-        var icon = document.getElementById('a_icon' + audioId);
+        var icon = document.getElementById(prefix + '_icon' + mediaId);
         icon.classList = 'glyphicon glyphicon-ok';
-        edit.onclick = function(){ changeAudioName(audioId, 'a_name' + audioId); } ;
-        input = createAudioInput(name, audioId);
+        edit.onclick = function(){ changeMediaName(mediaId, prefix + '_name' + mediaId, type); } ;
+        input = createMediaInput(name, mediaId, type);
         name_div.innerHTML = '';
         name_div.appendChild(input);
     }
     
-    function createAudioInput(name, audioId){
+    function createMediaInput(name, mediaId, type){
+        var prefix = type.charAt(0);
         var x = document.createElement("INPUT");
         x.setAttribute("type", "text");
         x.setAttribute("style", "width:300px; margin-right:3px; margin-bottom:5px");
         x.classList = 'black';
-        x.setAttribute("id", "a_input"+audioId);
+        x.setAttribute("id", prefix+"_input"+mediaId);
         x.value = name;
         return x;
     }
     
-    function changeAudioName( audioId, elementId ){
-        var edit = document.getElementById('a_edit' + audioId);
-        var icon = document.getElementById('a_icon' + audioId);
-        var input = document.getElementById('a_input' + audioId);
-        var name_div = document.getElementById('a_name' + audioId);
+    function changeMediaName( mediaId, elementId, type ){
+        var prefix = type.charAt(0);
+        var edit = document.getElementById(prefix + '_edit' + mediaId);
+        var icon = document.getElementById(prefix + '_icon' + mediaId);
+        var input = document.getElementById(prefix + '_input' + mediaId);
+        var name_div = document.getElementById(prefix + '_name' + mediaId);
         var new_name = input.value;
         icon.classList = 'glyphicon glyphicon-pencil';
-        edit.onclick = function(){ editAudioName(audioId, 'a_name' + audioId); } ;
-        var ajax_url = '<?php echo site_url('songbook/update_audio_name'); ?>/' + audioId + '/' + new_name;
-            jQuery.ajax({
-            url: ajax_url,
-            method: 'GET',
-            success: function(res){
-                if( res.result ){
-                    name_div.innerHTML = new_name;
-                }
-            }
-            });
-    }
-    
-    ///Video///
-    
-    function deleteVideo( videoId, elementId ) {
-        var r = confirm("Are you sure you want to delete this video?");
-        if (r == true) {
-            var ajax_url = '<?php echo site_url('songbook/delete_video'); ?>/' + videoId;
-            jQuery.ajax({
-            url: ajax_url,
-            method: 'GET',
-            success: function(res){
-                if( res.result ){
-                    elementId.innerHTML = 'Video Deleted';
-                }
-            }
-            });
-        }
-    }
-    
-    function editVideoName( videoId, elementId ) {
-        var edit = document.getElementById('v_edit' + videoId);
-        var name_div = document.getElementById('v_name' + videoId);
-        var name = name_div.innerHTML;
-        var icon = document.getElementById('v_icon' + videoId);
-        icon.classList = 'glyphicon glyphicon-ok';
-        edit.onclick = function(){ changeVideoName(videoId, 'v_name' + videoId); } ;
-        input = createVideoInput(name, videoId);
-        name_div.innerHTML = '';
-        name_div.appendChild(input);
-    }
-    
-    function createVideoInput(name, videoId){
-        var x = document.createElement("INPUT");
-        x.setAttribute("type", "text");
-        x.setAttribute("style", "width:300px; margin-right:3px; margin-bottom:5px");
-        x.classList = 'black';
-        x.setAttribute("id", "v_input"+videoId);
-        x.value = name;
-        return x;
-    }
-    
-    function changeVideoName( videoId, elementId ){
-        var edit = document.getElementById('v_edit' + videoId);
-        var icon = document.getElementById('v_icon' + videoId);
-        var input = document.getElementById('v_input' + videoId);
-        var name_div = document.getElementById('v_name' + videoId);
-        var new_name = input.value;
-        icon.classList = 'glyphicon glyphicon-pencil';
-        edit.onclick = function(){ editVideoName(videoId, 'v_name' + videoId); } ;
-        var ajax_url = '<?php echo site_url('songbook/update_video_name'); ?>/' + videoId + '/' + new_name;
+        edit.onclick = function(){ editMediaName(mediaId, prefix + '_name' + mediaId, type); } ;
+        var ajax_url = '<?php echo site_url('media/update_name'); ?>/' + mediaId + '/' + new_name + '/' + type;
             jQuery.ajax({
             url: ajax_url,
             method: 'GET',
@@ -249,7 +193,7 @@
 
     });
     
-    $("#audio-upload").fileinput({'showUpload':false, 'type':'audio', 'uploadUrl':'<?php echo site_url('songbook/upload_audio')  ; ?>/<?php echo $song->ID; ?>'});
-    $("#video-upload").fileinput({'showUpload':false, 'type':'video', 'maxFileSize': 0, 'maxPreviewFileSize': 0, 'uploadUrl':'<?php echo site_url('songbook/upload_video')  ; ?>/<?php echo $song->ID; ?>'});
+    $("#audio-upload").fileinput({'showUpload':false, 'type':'audio', 'uploadUrl':'<?php echo site_url('media/upload/'.Audio.'/'.$song->ID); ?>'});
+    $("#video-upload").fileinput({'showUpload':false, 'type':'video', 'maxFileSize': 0, 'maxPreviewFileSize': 0, 'uploadUrl':'<?php echo site_url('media/upload/'.Video.'/'.$song->ID); ?>'});
 </script>
 <?php $this->load->view('footer'); ?>

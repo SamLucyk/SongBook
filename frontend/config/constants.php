@@ -92,3 +92,5 @@ define('Bucket','mysongbook');
 define('BucketUrl', 'https://s3.amazonaws.com/mysongbook/');
 define('BucketAudio', 'Audio/');
 define('BucketVideo', 'Video/');
+define('Audio', 'audio');
+define('Video', 'video');

@@ -11,8 +11,8 @@
             <h4 class="col-xs-4 control-label">Audios <a onclick="toggle('audio')" class="glyph glyph-edit"><span id="audio-toggle" style="font-size:16px" class="glyphicon glyphicon-chevron-up"></span></a></h4>
             <h4 class="col-xs-4 control-label">Videos <a onclick="toggle('video')" class="glyph glyph-edit"><span id="video-toggle" style="font-size:16px" class="glyphicon glyphicon-chevron-up"></span></a></h4>
         </div>
-        <div class="padd-20 transbox-b">
-            <div id="info-container" class="" style="display:none">
+        <div id="info-container" style="display:none" class="padd-20 transbox-b">
+            <div >
                 <div id='status' class="col-md-4">
                     <h4>Status: <?php echo $song->status->name; ?></h4>
                 </div>
@@ -25,13 +25,13 @@
             </div>
         </div>
         <?php if(isset($audios) && !empty($audios)){ ?>
-        <div class="padd-20">
-            <div id="audio-container" class="audio-container" style="display:none">
+        <div id="audio-container" class="padd-20" style="display:none">
+            <div  class="audio-container" >
                 <?php foreach($audios as $audio){ ?>
                 <div class="transbox-b col-md-6" id="<?php echo 'audio_'.$audio->ID; ?>">
                 <div><span ><?php echo $audio->name ?> </span></div>
                 <audio controls>
-                    <source src="https://s3.amazonaws.com/mysongbook/15+-+Silver+Song.mp3" type="audio/mp3">
+                    <source src="<?php echo $audio->src; ?>" type="audio/mp3">
                 </audio>
                 </div>
                 <?php } ?>
@@ -39,8 +39,8 @@
         </div>
         <?php } ?>
         <?php if(isset($videos) && !empty($videos)){ ?>
-        <div class="padd-20">
-            <div id="video-container" class="video-container" style="display:none">
+        <div id="video-container" class="padd-20" style="display:none">
+            <div class="video-container" >
                 <?php foreach($videos as $video){ ?>
                 <div class="col-md-6" id="<?php echo 'video_'.$video->ID; ?>">
                 <div><span><?php echo $video->name ?> </span></div>
