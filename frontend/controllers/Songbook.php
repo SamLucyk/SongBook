@@ -70,12 +70,24 @@ class Songbook extends CI_Controller{
         $this->load->view('songbook/songs/song_'.$type, $this->data);
     }
     
+    public function update_song_name($song_id, $new_name){
+        header('Content-Type: application/json');
+        if( $this->is_ajax() ){
+            $data->song_data = array(
+                'name' => $new_name
+            );
+            $this->Songbook_model->updateSong($song_id, $data);
+            echo json_encode(array('result' => true));
+        } else {
+            echo json_encode(array('result' => false));
+        }
+    }
+    
     public function update_song($song_id){
         $dateTime = strtotime($this->input->post('created_at')); 
         $timestamp = date('Y-m-d H:i:s', $dateTime); 
         $data = new stdClass;
         $data->song_data = array(
-            'name' => $this->input->post('name'),
             'status_id' => $this->input->post('status'),
             'created_at' => $timestamp
         );

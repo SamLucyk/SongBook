@@ -3,10 +3,8 @@
     Song
     <form id="songUpdateForm" action="<?php echo base_url('songbook/update_song/'.$song->ID); ?>" method="post">
         <div class="transbox-b-dark col-sm-8 col-sm-offset-2 col-xs-12">
-            <h1>
-                <div class="form-group">
-                    <input type="text" class="form-control" id='name' name="name" style="font-variant: none;" value="<?php echo $song->name ?>" onblur="inputBlur(this)">
-                </div>
+            <h1 id="name">
+                <?php echo $song->name ?><a id="name_edit" class="glyph glyph-edit" onclick="editName()"><span id="name-icon" class="glyphicon glyphicon-pencil"></span></a>
             </h1>
         </div>
         <div class="padd-20 col-xs-12">
@@ -53,7 +51,7 @@
                 
             <div class="padd-20 col-md-12 center">
                 <?php if(isset($audios) && !empty($audios)){ ?>
-                <label class="control-label">Audios</label>
+                <label class="control-label">Audio</label>
                 <div class="audio-container">
                     <?php foreach($audios as $audio){ ?>
                     <div class="transbox-b col-md-6" id="<?php echo 'audio_'.$audio->ID; ?>">
@@ -137,6 +135,49 @@
             }
             });
         }
+    }
+    
+    function editName() {
+        var edit = document.getElementById('name_edit');
+        var name_div = document.getElementById('name');
+        var name = name_div.innerHTML;
+        var icon = document.getElementById('name_icon');
+        icon.classList = 'glyphicon glyphicon-ok';
+        edit.onclick = function(){ changeName(); } ;
+        input = createNameInput(name);
+        name_div.innerHTML = '';
+        name_div.appendChild(input);
+    }
+    
+    function createInput(name){
+        var x = document.createElement("INPUT");
+        x.setAttribute("type", "text");
+        x.setAttribute("style", "width:300px; margin-right:3px; margin-bottom:5px");
+        x.classList = 'black';
+        x.setAttribute("id", 'name_input');
+        x.value = name;
+        return x;
+    }
+    
+    function changeName(){
+        var prefix = type.charAt(0);
+        var edit = document.getElementById('name_edit');
+        var icon = document.getElementById('name_icon');
+        var input = document.getElementById('name_input');
+        var name_div = document.getElementById('name');
+        var new_name = input.value;
+        icon.classList = 'glyphicon glyphicon-pencil';
+        edit.onclick = function(){ editMediaName(); } ;
+        var ajax_url = '<?php echo site_url('songbook/update_song_name'); ?>/' + <?php echo $song->ID; ?> + '/' + new_name;
+            jQuery.ajax({
+            url: ajax_url,
+            method: 'GET',
+            success: function(res){
+                if( res.result ){
+                    name_div.innerHTML = new_name;
+                }
+            }
+            });
     }
     
     function editMediaName( mediaId, elementId, type ) {

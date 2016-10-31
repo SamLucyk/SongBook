@@ -8,7 +8,7 @@
     <div class="padd-20 col-xs-12 col-sm-10 col-sm-offset-1">
         <div>
             <h4 class="col-xs-4 control-label">Info <a onclick="toggle('info')" class="glyph glyph-edit"><span id="info-toggle" style="font-size:16px" class="glyphicon glyphicon-chevron-up"></span></a></h4>
-            <h4 class="col-xs-4 control-label">Audios <a onclick="toggle('audio')" class="glyph glyph-edit"><span id="audio-toggle" style="font-size:16px" class="glyphicon glyphicon-chevron-up"></span></a></h4>
+            <h4 class="col-xs-4 control-label">Audio <a onclick="toggle('audio')" class="glyph glyph-edit"><span id="audio-toggle" style="font-size:16px" class="glyphicon glyphicon-chevron-up"></span></a></h4>
             <h4 class="col-xs-4 control-label">Videos <a onclick="toggle('video')" class="glyph glyph-edit"><span id="video-toggle" style="font-size:16px" class="glyphicon glyphicon-chevron-up"></span></a></h4>
         </div>
         <div id="info-container" style="display:none" class="padd-20 transbox-b">
@@ -57,7 +57,7 @@
             <a href="<?php echo site_url('songbook/song/e/'.$song->ID) ?>"><p>Click here to add lyrics!</p></a>
             <?php }?>
         </div>
-        <div class="col-xs-12 padd-20-0">
+        <div class="col-xs-12 padd-20-20">
             <div class="col-md-6 center">
                 <a href="<?php echo site_url('songbook/song/e/'.$song->ID) ?>"><input id="about-btn" class="button button-info" value="Edit"></a>
             </div>

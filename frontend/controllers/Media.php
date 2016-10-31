@@ -105,7 +105,7 @@ class Media extends CI_Controller{
     
     function delete($id, $type){
         header('Content-Type: application/json');
-        if( true ){
+        if( $this->is_ajax() ){
             $media = $this->Media_model->get($id, $type);
             $result = $this->client->deleteObject(array(
                 'Bucket'       => Bucket,
