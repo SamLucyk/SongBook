@@ -412,6 +412,7 @@ table.dataTable {
 .glyph {
     cursor: pointer;
     color: white;
+    font-size: 16px;
 }
 
 .glyph-edit {

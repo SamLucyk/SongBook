@@ -3,8 +3,8 @@
     Song
     <form id="songUpdateForm" action="<?php echo base_url('songbook/update_song/'.$song->ID); ?>" method="post">
         <div class="transbox-b-dark col-sm-8 col-sm-offset-2 col-xs-12">
-            <h1 id="name">
-                <?php echo $song->name ?><a id="name_edit" class="glyph glyph-edit" onclick="editName()"><span id="name-icon" class="glyphicon glyphicon-pencil"></span></a>
+            <h1>
+                <span id="name"><?php echo $song->name ?></span><a id="name_edit" class="glyph glyph-edit" onclick="editName()"><span id="name_icon" class="glyphicon glyphicon-pencil"></span></a>
             </h1>
         </div>
         <div class="padd-20 col-xs-12">
@@ -149,10 +149,10 @@
         name_div.appendChild(input);
     }
     
-    function createInput(name){
+    function createNameInput(name){
         var x = document.createElement("INPUT");
         x.setAttribute("type", "text");
-        x.setAttribute("style", "width:300px; margin-right:3px; margin-bottom:5px");
+        x.setAttribute("style", "width:300px; font-size:16px; margin-right:3px; margin-bottom:5px");
         x.classList = 'black';
         x.setAttribute("id", 'name_input');
         x.value = name;
@@ -160,24 +160,24 @@
     }
     
     function changeName(){
-        var prefix = type.charAt(0);
         var edit = document.getElementById('name_edit');
         var icon = document.getElementById('name_icon');
         var input = document.getElementById('name_input');
         var name_div = document.getElementById('name');
         var new_name = input.value;
         icon.classList = 'glyphicon glyphicon-pencil';
-        edit.onclick = function(){ editMediaName(); } ;
+        edit.onclick = function(){ editName(); } ;
         var ajax_url = '<?php echo site_url('songbook/update_song_name'); ?>/' + <?php echo $song->ID; ?> + '/' + new_name;
-            jQuery.ajax({
-            url: ajax_url,
-            method: 'GET',
-            success: function(res){
-                if( res.result ){
-                    name_div.innerHTML = new_name;
-                }
+        jQuery.ajax({
+        url: ajax_url,
+        method: 'GET',
+        success: function(res){
+            if( res.result ){
+                console.log('success');
+                name_div.innerHTML = new_name;
             }
-            });
+        }
+        });
     }
     
     function editMediaName( mediaId, elementId, type ) {

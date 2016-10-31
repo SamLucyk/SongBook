@@ -72,9 +72,10 @@ class Songbook extends CI_Controller{
     
     public function update_song_name($song_id, $new_name){
         header('Content-Type: application/json');
-        if( $this->is_ajax() ){
+        if( true ){
+            $data = new stdClass;
             $data->song_data = array(
-                'name' => $new_name
+                'name' => str_replace('%20', ' ', $new_name),
             );
             $this->Songbook_model->updateSong($song_id, $data);
             echo json_encode(array('result' => true));
