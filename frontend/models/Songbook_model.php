@@ -49,9 +49,10 @@ class Songbook_model extends CI_Model{
     }
     
     public function updateSong($song_id, $data){
-        $this->db->where('ID', $song_id);
-        $this->db->update('song', $data->song_data);
-        
+        if (isset($data->song_data)){
+            $this->db->where('ID', $song_id);
+            $this->db->update('song', $data->song_data);
+        }
         if (isset($data->song_album_data)){
             if($data->song_album_data['album_id'] == 'none'){
                 $this->db->where('song_id', $song_id);

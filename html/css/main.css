@@ -418,6 +418,18 @@ table.dataTable {
     font-size: 16px;
 }
 
+.glyphicon-edit {
+    color:#5bc0de;
+}
+
+.glyphicon-remove {
+    color:#d9534f;
+}
+
+.glyphicon-ok {
+    color:limegreen;
+}
+
 .glyph-edit {
     margin-left: 3px;
 }

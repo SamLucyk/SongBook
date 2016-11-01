@@ -1,34 +1,41 @@
 <?php $this->load->view('songbook/top'); ?>
 <?php $userdata = $this->session->userdata('user_data'); ?>
-    Song
+    
     <form id="songUpdateForm" action="<?php echo base_url('songbook/update_song/'.$song->ID); ?>" method="post">
+        Song
         <div class="transbox-b-dark col-sm-8 col-sm-offset-2 col-xs-12">
             <h1>
-                <span id="name"><?php echo $song->name ?></span><a id="name_edit" class="glyph glyph-edit" onclick="edit('name')"><span id="name_icon" class="glyphicon glyphicon-pencil"></span></a>
+                <span id="name"><?php echo $song->name ?></span><a id="name_edit" class="glyph glyph-edit" onclick="edit('name')"><span id="name_icon" class="glyphicon glyphicon-edit"></span></a>
             </h1>
             <h4>By 
-                <span id="artist"><?php echo $song->artist ?></span><a id="artist_edit" class="glyph glyph-edit" onclick="edit('artist')"><span id="artist_icon" class="glyphicon glyphicon-pencil"></span></a></h4>
+                <span id="artist"><?php echo $song->artist ?></span><a id="artist_edit" class="glyph glyph-edit" onclick="edit('artist')"><span id="artist_icon" class="glyphicon glyphicon-edit"></span></a></h4>
         </div>
         <div class="padd-20 col-xs-12">
             <div class="col-md-12">
             <div class="col-md-4">
-                <h3>Status: 
-                    <div class="form-group">
-                        <select class="form-control" id="status" name="status">
+                <h3><span id="status_id_display">Status:</span> 
+                    <span id="status_id_view">
+                        <span id="status_id_selected"><?php echo $song->status->name; ?></span><a id="status_id_icon_div" class="glyph glyph-edit" onclick="editHidden('status_id')"><span id="status_id_icon" class="glyphicon glyphicon-edit"></span></a>
+                    </span>
+                    <div id='status_id_edit' style="display:none">
+                        <select class="form-control" id="status_id_input" name="status">
                             <?php foreach($statuses as $status){ ?>
-                                <option value="<?php echo $status->ID; ?>" <?php if($status->ID == $song->status_id){echo 'selected';} ?>><?php echo $status->name; ?></option>
+                                <option id='status_id_option_<?php echo $status->ID; ?>' value="<?php echo $status->ID; ?>" <?php if($status->ID == $song->status_id){echo 'selected';} ?>><?php echo $status->name; ?></option>
                             <?php } ?>
                         </select>
                     </div>
                 </h3>
             </div>
             <div class="col-md-4">
-                <h3>Album: 
-                    <div class="form-group">
-                        <select class="form-control" id="album" name="album">
-                                <option value="none" selected>No Album</option>
+                <h3><span id="album_id_display">Album:</span> 
+                    <span id="album_id_view">
+                        <span id="album_id_selected"><?php echo $song->album->name; ?></span><a id="album_id_icon_div" class="glyph glyph-edit" onclick="editHidden('album_id')"><span id="album_id_icon" class="glyphicon glyphicon-edit"></span></a>
+                    </span>
+                    <div id='album_id_edit' style="display:none">
+                        <select class="form-control" id="album_id_input" name="album">
+                                <option id='album_id_option_none' value="none" selected>No Album</option>
                             <?php foreach($albums as $album){ ?>
-                                <option value="<?php echo $album->ID; ?>" 
+                                <option id='album_id_option_<?php echo $album->ID; ?>' value="<?php echo $album->ID; ?>" 
                                         <?php if(isset($song->album_id)){
                                                 if($album->ID == $song->album_id){
                                                     echo 'selected';}
@@ -39,10 +46,13 @@
                 </h3>
             </div>
             <div class="col-md-4">
-                <h3>Created: 
-                    <div class="form-group">
-                        <div class='input-group date' id='datetimepicker1' style="color:black">
-                            <input type='text' name='created_at' class="form-control" value="<?php echo $song->created_at?>"/>
+                <h3><span id="created_at_display">Created at:</span> 
+                    <span id="created_at_view">
+                        <span style="font-size:18px" id="created_at_selected"><?php echo $song->created_at; ?></span><a id="created_at_icon_div" class="glyph glyph-edit" onclick="editHidden('created_at')"><span id="created_at_icon" class="glyphicon glyphicon-edit"></span></a>
+                    </span>
+                    <div id='created_at_edit' style="display:none">
+                        <div class='input-group date' id='created_at_div' style="color:black">
+                            <input type='text' id='created_at_input' class="form-control" value="<?php echo $song->created_at?>"/>
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -57,7 +67,7 @@
                 <div class="audio-container">
                     <?php foreach($audios as $audio){ ?>
                     <div class="transbox-b col-md-6" id="<?php echo 'audio_'.$audio->ID; ?>">
-                    <div><span id="<?php echo 'a_name'.$audio->ID; ?>"><?php echo $audio->name ?> </span><a id="<?php echo 'a_edit'.$audio->ID; ?>" class="glyph glyph-edit" onclick="editMediaName(<?php echo $audio->ID; ?>, <?php echo 'a_name'.$audio->ID; ?>, '<?php echo Audio; ?>')"><span id="<?php echo 'a_icon'.$audio->ID; ?>" class="glyphicon glyphicon-pencil"></span></a></div>
+                    <div><span id="<?php echo 'a_name'.$audio->ID; ?>"><?php echo $audio->name ?> </span><a id="<?php echo 'a_edit'.$audio->ID; ?>" class="glyph glyph-edit" onclick="editMediaName(<?php echo $audio->ID; ?>, <?php echo 'a_name'.$audio->ID; ?>, '<?php echo Audio; ?>')"><span id="<?php echo 'a_icon'.$audio->ID; ?>" class="glyphicon glyphicon-edit"></span></a></div>
                     <audio controls>
                         <source src="<?php echo $audio->src ?>" type="audio/mp3">
                     </audio>
@@ -72,7 +82,7 @@
                 <div class="video-container">
                     <?php foreach($videos as $video){ ?>
                     <div class="col-md-6" id="<?php echo 'video_'.$video->ID; ?>">
-                    <div><span id="<?php echo 'v_name'.$video->ID; ?>"><?php echo $video->name ?> </span><a id="<?php echo 'v_edit'.$video->ID; ?>" class="glyph glyph-edit" onclick="editMediaName(<?php echo $video->ID; ?>, <?php echo 'v_name'.$video->ID; ?>, '<?php echo Video ?>')"><span id="<?php echo 'v_icon'.$video->ID; ?>" class="glyphicon glyphicon-pencil"></span></a></div>
+                    <div><span id="<?php echo 'v_name'.$video->ID; ?>"><?php echo $video->name ?> </span><a id="<?php echo 'v_edit'.$video->ID; ?>" class="glyph glyph-edit" onclick="editMediaName(<?php echo $video->ID; ?>, <?php echo 'v_name'.$video->ID; ?>, '<?php echo Video ?>')"><span id="<?php echo 'v_icon'.$video->ID; ?>" class="glyphicon glyphicon-edit"></span></a></div>
                     <video style="width:300px" class="" controls=""><source src="<?php echo $video->src ?>" type="video/mp4"></video>
                     <a class="glyph" onclick="deleteMedia(<?php echo $video->ID; ?>, <?php echo 'video_'.$video->ID; ?>, 'video')"><span class="glyphicon glyphicon-remove"></span></a>
                     </div>
@@ -111,7 +121,7 @@
 
 <script type="text/javascript">
     $(function () {
-        $('#datetimepicker1').datetimepicker({
+        $('#created_at_div').datetimepicker({
                     format: 'MM/DD/YYYY'
         });
     });
@@ -137,6 +147,58 @@
             }
             });
         }
+    }
+    
+    function editHidden(item){
+        var view = document.getElementById(item + '_view');
+        var item_dis = document.getElementById(item + '_display');
+        var edit = document.getElementById(item + '_edit');
+        var icon = document.getElementById(item + '_icon');
+        var icon_div = document.getElementById(item + '_icon_div');
+        view.style.display = 'none';
+        edit.style.display = '';
+        icon.classList = 'glyphicon glyphicon-ok';
+        icon_div.onclick = function(){ changeHidden(item); } ;
+        item_dis.appendChild(icon_div);
+    }
+    
+    function changeHidden(item){
+        var view = document.getElementById(item + '_view');
+        var item_dis = document.getElementById(item + '_display');
+        var edit = document.getElementById(item + '_edit');
+        var icon = document.getElementById(item + '_icon');
+        var input = document.getElementById(item + '_input');
+        var icon_div = document.getElementById(item + '_icon_div');
+        var selected = document.getElementById(item + '_selected');
+        edit.style.display = 'none';
+        view.style.display = '';
+        icon.classList = 'glyphicon glyphicon-edit';
+        icon_div.onclick = function(){ editHidden(item); } ;
+        view.appendChild(icon_div);
+        var value = input.value;
+        if (item != 'created_at'){
+            var content_id = item + '_option_' + value;
+            console.log(content_id);
+            var content_div = document.getElementById(content_id);
+            var content = content_div.innerHTML;
+        } else {
+            var content = value;
+            value = content.replace(/\//g, "_");
+            console.log(value);
+        }
+        
+        var ajax_url = '<?php echo site_url('songbook/update_song_field'); ?>/' + item + '/' + <?php echo $song->ID; ?> + '/' + value;
+        jQuery.ajax({
+        url: ajax_url,
+        method: 'GET',
+        success: function(res){
+            if( res.result ){
+                selected.innerHTML = content;
+            }
+        }
+        });
+        
+        
     }
     
     function edit(item) {
@@ -167,7 +229,7 @@
         var input = document.getElementById(item + '_input');
         var name_div = document.getElementById(item);
         var new_name = input.value;
-        icon.classList = 'glyphicon glyphicon-pencil';
+        icon.classList = 'glyphicon glyphicon-edit';
         edit_div.onclick = function(){ edit(item); } ;
         var ajax_url = '<?php echo site_url('songbook/update_song_field'); ?>/' + item + '/' + <?php echo $song->ID; ?> + '/' + new_name;
         jQuery.ajax({
@@ -213,7 +275,7 @@
         var input = document.getElementById(prefix + '_input' + mediaId);
         var name_div = document.getElementById(prefix + '_name' + mediaId);
         var new_name = input.value;
-        icon.classList = 'glyphicon glyphicon-pencil';
+        icon.classList = 'glyphicon glyphicon-edit';
         edit.onclick = function(){ editMediaName(mediaId, prefix + '_name' + mediaId, type); } ;
         var ajax_url = '<?php echo site_url('media/update_name'); ?>/' + mediaId + '/' + new_name + '/' + type;
             jQuery.ajax({

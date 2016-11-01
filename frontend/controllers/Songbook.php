@@ -74,11 +74,24 @@ class Songbook extends CI_Controller{
         header('Content-Type: application/json');
         if( true ){
             $data = new stdClass;
-            $data->song_data = array(
-                $field => str_replace('%20', ' ', $new_name),
-            );
-            $this->Songbook_model->updateSong($song_id, $data);
-            echo json_encode(array('result' => true));
+            if ($field == 'album_id'){
+                $data->song_album_data = array(
+                    $field => str_replace('%20', ' ', $new_name),
+                    'song_id' => $song_id
+                );
+                $this->Songbook_model->updateSong($song_id, $data);
+                echo json_encode(array('result' => true));
+            } else{
+                if ($field == 'created_at'){
+                    $new_name = str_replace('_', '/', $new_name);
+                    $new_name = date('Y-m-d H:i:s', strtotime($new_name)); 
+                }
+                $data->song_data = array(
+                    $field => str_replace('%20', ' ', $new_name),
+                );
+                $this->Songbook_model->updateSong($song_id, $data);
+                echo json_encode(array('result' => true));
+            }
         } else {
             echo json_encode(array('result' => false));
         }

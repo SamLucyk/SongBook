@@ -212,7 +212,7 @@ class Media extends CI_Controller{
     function get_preview2($type, $src, $prev_type, $name, $id){
         if ($type == Audio){
             return "<div id='audio_".$id."'>
-                    <div><span id='a_name".$id."'>".$name."</span><a id='a_edit".$id."' class='glyph glyph-edit' onclick=\"editMediaName(".$id.", a_name".$id.", 'audio')\"><span id='a_icon".$id."' class='glyphicon glyphicon-pencil'></span></a></div>
+                    <div><span id='a_name".$id."'>".$name."</span><a id='a_edit".$id."' class='glyph glyph-edit' onclick=\"editMediaName(".$id.", a_name".$id.", 'audio')\"><span id='a_icon".$id."' class='glyphicon glyphicon-edit'></span></a></div>
                     <audio controls=''>
                         <source src='".$src."' type='".$prev_type."'>
                     </audio>
