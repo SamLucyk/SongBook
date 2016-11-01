@@ -70,12 +70,12 @@ class Songbook extends CI_Controller{
         $this->load->view('songbook/songs/song_'.$type, $this->data);
     }
     
-    public function update_song_name($song_id, $new_name){
+    public function update_song_field($field, $song_id, $new_name){
         header('Content-Type: application/json');
         if( true ){
             $data = new stdClass;
             $data->song_data = array(
-                'name' => str_replace('%20', ' ', $new_name),
+                $field => str_replace('%20', ' ', $new_name),
             );
             $this->Songbook_model->updateSong($song_id, $data);
             echo json_encode(array('result' => true));

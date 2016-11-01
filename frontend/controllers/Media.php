@@ -58,10 +58,11 @@ class Media extends CI_Controller{
                 ));
                 
                 if ($result){
-                    $preview = $this->get_preview($type, $src, $valid['type']);
+                    $preview = $this->get_preview2($type, $src, $valid['type'], $name, $id);
                     $config = array(
                         'filetype' => $valid['type'],
                         'caption' => $name,
+                        'url' => site_url('media/delete/'.$id.'/'.$type),
                         'frameAttr' => array('style' => 'height:80px')
                     );
 
@@ -197,13 +198,29 @@ class Media extends CI_Controller{
             return $this->validate_video($sourcePath);
         }
     }
-    
-    function get_preview($type, $src, $prev_type){
+
+    function get_preview($type, $src, $prev_type, $name){
         if ($type == Audio){
-            return "<audio class='kv-preview-data' controls=''><source src='".$src."' type='".$prev_type."'></audio>";
+            return "<div>
+                    <audio class='kv-preview-data' controls=''><source src='".$src."' type='".$prev_type."'></audio>".$name."</div";
         } else if ($type == Video) {
-            return "<video style='height:100px' class='kv-preview-data' controls=''><source src='".$src."' type='".$prev_type."'></video>";;
+            return "<video style='height:100px' class='kv-preview-data' controls=''><source src='".$src."' type='".$prev_type."'></video>";
         }
-    }    
+    }   
+    
+    
+    function get_preview2($type, $src, $prev_type, $name, $id){
+        if ($type == Audio){
+            return "<div id='audio_".$id."'>
+                    <div><span id='a_name".$id."'>".$name."</span><a id='a_edit".$id."' class='glyph glyph-edit' onclick=\"editMediaName(".$id.", a_name".$id.", 'audio')\"><span id='a_icon".$id."' class='glyphicon glyphicon-pencil'></span></a></div>
+                    <audio controls=''>
+                        <source src='".$src."' type='".$prev_type."'>
+                    </audio>
+                    <a class='glyph' onclick=\"deleteMedia(".$id.", audio_".$id.", 'audio')\"><span class='glyphicon glyphicon-remove'></span></a>
+                    </div>";
+        } else if ($type == Video) {
+            return "<video style='height:100px' class='kv-preview-data' controls=''><source src='".$src."' type='".$prev_type."'></video>";
+        }
+    }   
 }
     

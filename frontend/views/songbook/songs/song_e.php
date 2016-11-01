@@ -4,8 +4,10 @@
     <form id="songUpdateForm" action="<?php echo base_url('songbook/update_song/'.$song->ID); ?>" method="post">
         <div class="transbox-b-dark col-sm-8 col-sm-offset-2 col-xs-12">
             <h1>
-                <span id="name"><?php echo $song->name ?></span><a id="name_edit" class="glyph glyph-edit" onclick="editName()"><span id="name_icon" class="glyphicon glyphicon-pencil"></span></a>
+                <span id="name"><?php echo $song->name ?></span><a id="name_edit" class="glyph glyph-edit" onclick="edit('name')"><span id="name_icon" class="glyphicon glyphicon-pencil"></span></a>
             </h1>
+            <h4>By 
+                <span id="artist"><?php echo $song->artist ?></span><a id="artist_edit" class="glyph glyph-edit" onclick="edit('artist')"><span id="artist_icon" class="glyphicon glyphicon-pencil"></span></a></h4>
         </div>
         <div class="padd-20 col-xs-12">
             <div class="col-md-12">
@@ -80,12 +82,12 @@
                 
                 <div class="col-xs-6 padd-20-0 center">
                     <label class="control-label">Upload Audio</label>
-                    <input name="file-upload" id="audio-upload" type='file'>
+                    <input class="file-loading" name="file-upload" id="audio-upload" type='file' multiple>
                 </div>
                 
                 <div class="col-xs-6 padd-20-0 center">
                     <label class="control-label">Upload Video</label>
-                    <input name="file-upload" id="video-upload" type='file'>
+                    <input name="file-upload" id="video-upload" type='file' multiple>
                 </div>
                 
             </div>
@@ -137,37 +139,37 @@
         }
     }
     
-    function editName() {
-        var edit = document.getElementById('name_edit');
-        var name_div = document.getElementById('name');
+    function edit(item) {
+        var edit = document.getElementById(item + '_edit');
+        var name_div = document.getElementById(item);
         var name = name_div.innerHTML;
-        var icon = document.getElementById('name_icon');
+        var icon = document.getElementById(item + '_icon');
         icon.classList = 'glyphicon glyphicon-ok';
-        edit.onclick = function(){ changeName(); } ;
-        input = createNameInput(name);
+        edit.onclick = function(){ change(item); } ;
+        input = createInput(name, item);
         name_div.innerHTML = '';
         name_div.appendChild(input);
     }
     
-    function createNameInput(name){
+    function createInput(name, item){
         var x = document.createElement("INPUT");
         x.setAttribute("type", "text");
         x.setAttribute("style", "width:300px; font-size:16px; margin-right:3px; margin-bottom:5px");
         x.classList = 'black';
-        x.setAttribute("id", 'name_input');
+        x.setAttribute("id", item + '_input');
         x.value = name;
         return x;
     }
     
-    function changeName(){
-        var edit = document.getElementById('name_edit');
-        var icon = document.getElementById('name_icon');
-        var input = document.getElementById('name_input');
-        var name_div = document.getElementById('name');
+    function change(item){
+        var edit_div = document.getElementById(item + '_edit');
+        var icon = document.getElementById(item + '_icon');
+        var input = document.getElementById(item + '_input');
+        var name_div = document.getElementById(item);
         var new_name = input.value;
         icon.classList = 'glyphicon glyphicon-pencil';
-        edit.onclick = function(){ editName(); } ;
-        var ajax_url = '<?php echo site_url('songbook/update_song_name'); ?>/' + <?php echo $song->ID; ?> + '/' + new_name;
+        edit_div.onclick = function(){ edit(item); } ;
+        var ajax_url = '<?php echo site_url('songbook/update_song_field'); ?>/' + item + '/' + <?php echo $song->ID; ?> + '/' + new_name;
         jQuery.ajax({
         url: ajax_url,
         method: 'GET',
@@ -234,7 +236,35 @@
 
     });
     
-    $("#audio-upload").fileinput({'showUpload':false, 'type':'audio', 'uploadUrl':'<?php echo site_url('media/upload/'.Audio.'/'.$song->ID); ?>'});
-    $("#video-upload").fileinput({'showUpload':false, 'type':'video', 'maxFileSize': 0, 'maxPreviewFileSize': 0, 'uploadUrl':'<?php echo site_url('media/upload/'.Video.'/'.$song->ID); ?>'});
+    $("#audio-upload").fileinput({
+        browseOnZoneClick:true,         
+        showUpload:true,                    
+        type:'audio', 
+        uploadUrl:'<?php echo site_url('media/upload/'.Audio.'/'.$song->ID); ?>', 
+        initialPreviewFileType:'audio', 
+        initialPreviewShowDelete:true,
+        browseLabel: "Pick Audio",
+        browseIcon: '<i class="glyphicon glyphicon-music"></i>',
+        uploadClass: "btn btn-info",
+        uploadLabel: "Upload",
+        removeClass: "btn btn-danger",
+        removeLabel: "Delete",
+        uploadAsync: true,
+        initialPreviewFileType: 'audio',
+        minFileCount: 1,
+        maxFileCount: 5,
+        overwriteInitial: false 
+    });
+    
+    $("#video-upload").fileinput({
+        'browseOnZoneClick':true, 
+        'showUpload':true, 
+        'type':'video', 
+        'maxFileSize': 0, 
+        'maxPreviewFileSize': 0, 
+        'uploadUrl':'<?php echo site_url('media/upload/'.Video.'/'.$song->ID); ?>',
+        'browseLabel': "Pick Video",
+        'browseIcon': '<i class="glyphicon glyphicon-film"></i>',
+    });
 </script>
 <?php $this->load->view('footer'); ?>

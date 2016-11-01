@@ -1,5 +1,5 @@
 /*!
- * bootstrap-fileinput v4.3.5
+ * bootstrap-fileinput v4.3.6
  * http://plugins.krajee.com/file-input
  *
  * Author: Kartik Visweswaran
@@ -94,7 +94,7 @@
     position: relative;
     display: table;
     margin: 8px;
-    height: 80px;
+    height: 160px;
     border: 1px solid #ddd;
     box-shadow: 1px 1px 5px 0 #a2958a;
     padding: 6px;
@@ -109,6 +109,7 @@
 
 .file-preview-image {
     vertical-align: middle;
+    image-orientation: from-image;
 }
 
 .file-preview-text {
@@ -381,7 +382,7 @@
 }
 
 .file-zoom-content {
-    height: 200px;
+    height: 480px;
     text-align: center;
 }
 

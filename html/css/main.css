@@ -6,6 +6,10 @@
     --dark-alt: #6A8794;
 }
 
+body {
+    font-family: 'Rubik', sans-serif;
+}
+
 #bg {
     background-image:url(../img/banner.jpg);
     background-repeat:no-repeat;
@@ -88,7 +92,6 @@
 }
 
 body {
-    font-family: Nobile !important;
 	line-height: 30px;
 }
 

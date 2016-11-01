@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <link href="<?php echo base_url(); ?>css/navbar-fixed-side.css" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Nobile" />
+    <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css">
-    <link href="<?php echo base_url(); ?>css/main.css?v=1.1" rel="stylesheet" type="text/css"/>
     <link href="<?php echo base_url(); ?>js/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css"/>
     <link href="<?php echo base_url(); ?>css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
     <link href="<?php echo base_url(); ?>css/main.css?v=1.1" rel="stylesheet" type="text/css"/>
@@ -28,6 +27,5 @@
     <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
     <script src="<?php echo base_url(); ?>js/bower_components/moment/min/moment.min.js" type="text/javascript"></script>
     <script src="<?php echo base_url(); ?>js/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
-    
 </head>
 <body>

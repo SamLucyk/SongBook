@@ -3,16 +3,16 @@
     Song
     <div class="transbox-b-dark col-sm-8 col-sm-offset-2 col-xs-12">
         <h1><?php echo $song->name;?></h1>
-        <h4>By <?php echo $user->first.' '.$user->last ?></h4>
+        <h4>By <?php echo $song->artist; ?></h4>
     </div>
     <div class="padd-20 col-xs-12 col-sm-10 col-sm-offset-1">
-        <div>
+        <div class="col-xs-12 transbox-b">
             <h4 class="col-xs-4 control-label">Info <a onclick="toggle('info')" class="glyph glyph-edit"><span id="info-toggle" style="font-size:16px" class="glyphicon glyphicon-chevron-up"></span></a></h4>
             <h4 class="col-xs-4 control-label">Audio <a onclick="toggle('audio')" class="glyph glyph-edit"><span id="audio-toggle" style="font-size:16px" class="glyphicon glyphicon-chevron-up"></span></a></h4>
             <h4 class="col-xs-4 control-label">Videos <a onclick="toggle('video')" class="glyph glyph-edit"><span id="video-toggle" style="font-size:16px" class="glyphicon glyphicon-chevron-up"></span></a></h4>
         </div>
-        <div id="info-container" style="display:none" class="padd-20 transbox-b">
-            <div >
+        <div id="info-container" style="display:none" class="padd-20">
+            <div class="col-xs-12 transbox-b">
                 <div id='status' class="col-md-4">
                     <h4>Status: <?php echo $song->status->name; ?></h4>
                 </div>
