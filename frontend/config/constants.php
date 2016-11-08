@@ -97,4 +97,5 @@ define('Song', 'song');
 define('Album', 'album');
 define('Audio', 'audio');
 define('Video', 'video');
+define('Lyrics', 'lyrics');
 define('Picture', 'picture');

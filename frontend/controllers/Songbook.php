@@ -74,6 +74,7 @@ class Songbook extends CI_Controller{
         $this->Songbook_model->deleteSong($song_id);
         redirect(site_url('songbook'));
     }
+
     
     function song( $type, $song_id){
         $song = $this->Songbook_model->getSong( $song_id );

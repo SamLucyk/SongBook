@@ -51,6 +51,8 @@ class Songbook_model extends CI_Model{
     
     public function deleteSong($song_id){
         $this->db->where('song_id', $song_id);
+        $this->db->delete('lyrics');
+        $this->db->where('song_id', $song_id);
         $this->db->delete('song_album');
         $this->db->where('ID', $song_id);
         $this->db->delete('song');
