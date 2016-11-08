@@ -14,7 +14,6 @@ body {
     background-image:url(../img/banner.jpg);
     background-repeat:no-repeat;
     background-size:cover;
-    min-height: 100%
 
 }
 
@@ -43,11 +42,6 @@ body {
     color: black;
 }
 
-.transbox h1 {
-    color: var(--main);
-    text-decoration: underline;
-}
-
 .form-group {
     font-weight: bold;
 }
@@ -56,12 +50,24 @@ body {
 
 .transbox {
   background-color: rgba(255, 255, 255, 0.90);
+    color: #000000;
+    border-radius: 100px;
 }
 
 .transbox p {
     margin: 5%;
     font-weight: bold;
+    opacity: 1.0;
+}
+
+.transbox-w {
+  background-color: rgba(255, 255, 255, 0.90);
     color: #000000;
+}
+
+.transbox-w p {
+    margin: 5%;
+    font-weight: bold;
     opacity: 1.0;
 }
 
@@ -77,11 +83,15 @@ body {
 }
 
 .transbox-b {
+    color: white !important;
+    text-shadow: none !important;
     background-color: rgba(0, 0, 0, 0.5);
     border-radius: 100px;
 }
 
 .transbox-b-dark {
+    color: white !important;
+    text-shadow: none !important;
     background-color: rgba(0, 0, 0, 0.6);
     border-radius: 100px;
 }
@@ -182,7 +192,6 @@ p {
     padding: 5px;
     margin-bottom: 0;
     font-size: 24px;
-    font-family: "Hickory Jack" !important;
     font-weight: 400;
     line-height: 1.42857143;
     text-align: center;
@@ -366,17 +375,60 @@ body,html{
     background-color: var(--light);
 }
 
-.songbook-wrap h1 {
-    color: var(--light);       
+.dataTables_wrapper{
+    color: white !important;
+    text-shadow: none !important;
 }
 
-.songbook-wrap h2 {
+.album_pic{
+    width: 100%;
+    padding-bottom: 100%;
+    background-size: 100% 100%;
+}
+
+.album-slider .pic{
+    margin-top: 10px;
+    width:165px;
+    height:165px;
+}
+
+.add-song-album {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+
+
+.slick-slide{
+    width: 190px;
+}
+
+.slick-slide img{
+    display: initial;
+}
+
+a:link, a:visited {
+    text-decoration: none;
+}
+
+a:hover, a:active {
+    background-color: rgba(0, 0, 0, 0.50);
+}
+
+.track-select {
+    color: var(--dark) !important;
+}
+
+.caption {
     color: var(--light);
-        
+    text-decoration: none;
 }
 
-.song-table{
-    border-style: solid;
+.caption :hover{
+    color: var(--dark-alt)
 }
 
 .odd {
@@ -403,18 +455,13 @@ table.dataTable {
     background-color: var(--dark-alt);
 }
 
-.carousel-inner .caption{
-    color: var(--light);
-}
-
 .navbar-form {
     margin-bottom: 0px;
     margin-top: 0px;
 }
 
-.glyph {
+.glyphicon {
     cursor: pointer;
-    color: white;
     font-size: 16px;
 }
 
@@ -426,6 +473,14 @@ table.dataTable {
     color:#d9534f;
 }
 
+.input-group-btn .glyphicon-trash {
+    color:white;
+}
+
+.glyphicon-trash {
+    color:#d9534f;
+}
+
 .glyphicon-ok {
     color:limegreen;
 }
@@ -434,17 +489,37 @@ table.dataTable {
     margin-left: 3px;
 }
 
-.glyph:hover {
+.glyphicon:hover {
     color: var(--light-alt);
+}
+
+.file-preview-frame {
+    position: relative;
+    margin: 8px;
+    height: inherit; */
+    border: 1px solid #ddd;
+    box-shadow: none; */
+    padding: 6px;
+    float: none; */
+    text-align: center;
+    vertical-align: middle;
+}
+
+.file-preview-initial{
+    display: block !important;
 }
 
 .audio-container {
     border: 2px solid;
     padding: 20px;
-    height: 100px;
+    height: 190px;
     width: 100%;
     resize: vertical;
     overflow: scroll;
+}
+
+.audio-margin{
+    margin-bottom: 7px;
 }
 
 .video-container {
@@ -457,9 +532,21 @@ table.dataTable {
 }
 
 .lyric-container {
-    height: 400px;
+    height: 600px;
     resize: vertical;
     overflow: scroll;
+    color: white !important;
+    text-shadow: none !important;
+}
+
+.left {
+    text-align: left;
+    margin-left: 5px;
+}
+
+
+.section-label{
+    font-size: 24px;
 }
 
 ///* PADDING *///
@@ -555,8 +642,8 @@ table.dataTable {
     padding-top: 60px;
 }
 
-.padd-60-40 {
-    padding-top: 60px;
+.padd-65-40 {
+    padding-top: 65px;
     padding-bottom: 40px;
 }
 

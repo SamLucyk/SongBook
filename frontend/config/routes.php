@@ -58,12 +58,12 @@ $route['/']  = 'pages/index';
 $route['login']  = 'user/login';
 $route['logout']  = 'user/logout';
 $route['sign-up']  = 'user/sign_up';
+$route['profile']  = 'user/profile';
 $route['sign-up/user-exists']  = 'error/user_exists';
 $route['thankyou'] = 'pages/thankyou';
 
 //Song Book
 $route['songbook']  = 'songbook/index';
-
 $route['upload'] = 'Upload';
 
 

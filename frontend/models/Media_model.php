@@ -26,6 +26,17 @@ class Media_model extends CI_Model{
         return $this->db->get()->result()[0];
     }
     
+    function getById($table, $key, $val){
+        $this->db->select('*');
+        $this->db->from($table);
+        $this->db->where($key, $val);
+        $result = $this->db->get()->result();
+        if(!empty($result)){
+            $result = $result[0];
+        }
+        return $result;
+    }
+    
     function getAll( $song_id, $type ){
         $this->db->select('*');
         $this->db->from($type);

@@ -18,7 +18,7 @@
                     <div class="form-group">
                     <select class="form-control" id="status" name="status">
                         <?php foreach($statuses as $status){ ?>
-                            <option value="<?php echo $status->ID; ?>"><?php echo $status->name; ?></option>
+                            <option value="<?php echo $status->ID; ?>" <?php if($status->ID == 3){echo 'selected';} ?>><?php echo $status->name; ?></option>
                         <?php } ?>
                     </select>
                     </div>
@@ -29,7 +29,7 @@
                     <select class="form-control" id="album" name="album">
                             <option value="none">No Album</option>
                         <?php foreach($albums as $album){ ?>
-                            <option value="<?php echo $album->ID; ?>"><?php echo $album->name; ?></option>
+                            <option value="<?php echo $album->ID; ?>" <?php if($album->ID == $aid){echo 'selected';} ?> ><?php echo $album->name; ?></option>
                         <?php } ?>
                     </select>
                     </div>
@@ -75,7 +75,8 @@
 
     CKEDITOR.replace( 'lyrics', {
         uiColor: '#94A8B1',
-        height: '500px'
+        height: '500px',
+        enterMode: CKEDITOR.ENTER_BR
     });
 
     });

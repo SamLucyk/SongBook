@@ -30,7 +30,7 @@ class Media extends CI_Controller{
         redirect(site_url());
     }    
      
-    public function upload($type, $song_id){
+    public function upload($type, $table, $item_id){
         header('Content-Type: application/json');
         if( $this->is_ajax() ){
             $sourcePath = $_FILES['file-upload']['tmp_name'];
@@ -40,7 +40,7 @@ class Media extends CI_Controller{
             } else {
                 $name = $_FILES['file-upload']['name'];
                 $ext = pathinfo($name, PATHINFO_EXTENSION);
-                $id = $this->insert($song_id, $name, $ext, $type);
+                $id = $this->insert($table, $item_id, $name, $ext, $type);
                 $key = $this->get_key($type, $id, $ext);
                 $src = BucketUrl.$key;
 
@@ -58,7 +58,7 @@ class Media extends CI_Controller{
                 ));
                 
                 if ($result){
-                    $preview = $this->get_preview2($type, $src, $valid['type'], $name, $id);
+                    $preview = $this->get_preview($type, $src, $valid['type'], $name, $id);
                     $config = array(
                         'filetype' => $valid['type'],
                         'caption' => $name,
@@ -88,9 +88,15 @@ class Media extends CI_Controller{
         }
     }
     
-    function insert($song_id, $name, $ext, $type){
+    function insert($table, $item_id, $name, $ext, $type){
+        if ($type == Picture){
+            $current_pic = $this->Media_model->getById($type, 'album_id', $item_id);
+            if (!empty($current_pic)){
+                $this->delete($current_pic->ID, $type, false);
+            }
+        }
         $data = array(
-            'song_id' => $song_id,
+            $table.'_id' => $item_id,
             'name' => $name
         );
         $id = $this->Media_model->insert($data, $type);
@@ -104,7 +110,7 @@ class Media extends CI_Controller{
         return $id;
     }
     
-    function delete($id, $type){
+    function delete($id, $type, $echo = true){
         header('Content-Type: application/json');
         if( $this->is_ajax() ){
             $media = $this->Media_model->get($id, $type);
@@ -115,8 +121,8 @@ class Media extends CI_Controller{
             if($result){
                 $this->Media_model->delete($id, $type);
             }
-            echo json_encode(array('result' => true));
-        } else {
+            if($echo){ echo json_encode(array('result' => true)); }
+        } else if($echo){
             echo json_encode(array('result' => false));
         }
     }
@@ -172,6 +178,23 @@ class Media extends CI_Controller{
             break;
         }
     }
+    
+    function validate_picture($file){
+        $a = getimagesize($file);
+        $image_type = $a[2];
+
+        if(in_array($image_type , array(IMAGETYPE_GIF , IMAGETYPE_JPEG ,IMAGETYPE_PNG , IMAGETYPE_BMP)))
+        {
+            return array(
+                    'result'=> true,
+                    'type' => $image_type
+                );
+        }
+        return array(
+                    'result'=> false,
+                    'type' => $image_type
+                );
+    }
 
     ///Helpers///
     function verify(){
@@ -184,6 +207,8 @@ class Media extends CI_Controller{
             return BucketAudio.$this->user->ID.'/'.$id.'.'.$ext;
         } else if ($type == Video) {
             return BucketVideo.$this->user->ID.'/'.$id.'.'.$ext;
+        } else if ($type == Picture) {
+            return BucketPicture.$this->user->ID.'/'.$id.'.'.$ext;
         }
     }
     
@@ -196,27 +221,24 @@ class Media extends CI_Controller{
             return $this->validate_audio($sourcePath);
         } else if ($type == Video) {
             return $this->validate_video($sourcePath);
+        } else if ($type == Picture) {
+            return $this->validate_picture($sourcePath);
         }
     }
-
-    function get_preview($type, $src, $prev_type, $name){
-        if ($type == Audio){
-            return "<div>
-                    <audio class='kv-preview-data' controls=''><source src='".$src."' type='".$prev_type."'></audio>".$name."</div";
-        } else if ($type == Video) {
-            return "<video style='height:100px' class='kv-preview-data' controls=''><source src='".$src."' type='".$prev_type."'></video>";
-        }
-    }   
     
     
-    function get_preview2($type, $src, $prev_type, $name, $id){
+    function get_preview($type, $src, $prev_type, $name, $id){
         if ($type == Audio){
             return "<div id='audio_".$id."'>
-                    <div><span id='a_name".$id."'>".$name."</span><a id='a_edit".$id."' class='glyph glyph-edit' onclick=\"editMediaName(".$id.", a_name".$id.", 'audio')\"><span id='a_icon".$id."' class='glyphicon glyphicon-edit'></span></a></div>
+                    <div class='boxshadow'>
+                    <div>
+                    <span id='a_name".$id."'>".$name."</span><a id='a_edit".$id."' class='glyph-edit' onclick=\"editMediaName(".$id.", a_name".$id.", 'audio')\"><span id='a_icon".$id."' class='glyphicon glyphicon-edit'></span></a>
+                    </div>
                     <audio controls=''>
                         <source src='".$src."' type='".$prev_type."'>
                     </audio>
-                    <a class='glyph' onclick=\"deleteMedia(".$id.", audio_".$id.", 'audio')\"><span class='glyphicon glyphicon-remove'></span></a>
+                    <a onclick=\"deleteMedia(".$id.", audio_".$id.", 'audio')\"><span class='glyphicon glyphicon-trash'></span></a>
+                    </div>
                     </div>";
         } else if ($type == Video) {
             return "<video style='height:100px' class='kv-preview-data' controls=''><source src='".$src."' type='".$prev_type."'></video>";

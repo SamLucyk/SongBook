@@ -26,13 +26,15 @@ class Auth extends CI_Controller{
         
         if ($valid){
             $user = $this->User_model->getByEmail($email)[0];
+            $theme = $this->User_model->getTheme($user->ID);
             $data = array(
                 'user' => $email,
                 'name' => $user->first,
                 'is_logged_in' => true,
-                'id_user' => $user->ID,
+                'id_user' => $user->ID
                 );
             $this->session->set_userdata('user_data', $data);
+            $this->session->set_userdata('theme', $theme);
             redirect( base_url('songbook') );
         } else {
             redirect(base_url('user/login'));

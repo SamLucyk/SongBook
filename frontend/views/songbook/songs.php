@@ -1,5 +1,5 @@
 <div class='col-md-10 col-md-offset-1 col-xs-12 padd-20'>
-<table id="songs-table" class="table table-striped table-bordered" cellspacing="0" width="100%">
+<table id="songs-table" class="table table-striped table-bordered songs-table" cellspacing="0" width="100%">
         <thead>
             <tr>
             <?php if(count($songs) == 0){ ?>
@@ -34,7 +34,7 @@
 $(document).ready(function() {
     $('#songs-table').DataTable( {
         "info": false,
-        "scrollY": "300px",
+        "scrollY": "400px",
         "scrollCollapse": true,
         "paging": false
 } );

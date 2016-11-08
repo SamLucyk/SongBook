@@ -1,5 +1,5 @@
 <?php $this->load->view('songbook/top'); ?>
-<?php $userdata = $this->session->userdata('user_data'); ?>
+<?php $userdata = $this->session->userdata('user_data'); //print_r($userdata);?>
     <div class="transbox-b col-sm-8 col-sm-offset-2 col-xs-12">
         <h1><?php echo $userdata['name']; ?>'s Song Book</h1>
     </div>
