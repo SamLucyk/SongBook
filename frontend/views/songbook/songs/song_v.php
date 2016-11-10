@@ -1,17 +1,33 @@
 <?php $this->load->view('songbook/top'); ?>
 <?php $userdata = $this->session->userdata('user_data'); ?>
-    Song
-    <div class="transbox-b-dark col-sm-8 col-sm-offset-2 col-xs-12">
+    <span class="page-label">Song</span>
+     <div class="col-sm-4 col-sm-offset-0 col-xs-10 col-xs-offset-1 padd-0-20">
+        <div class='under_shadow'>
+        <div class="song_album_pic" style="background-image:url(<?php echo $song->album->pic->src; ?>)"></div>
+        </div>
+         <?php if(isset($audios) && !empty($audios)){ ?>
+        <div id="audio-container" class="" >
+            <div class="" >
+                <?php foreach($audios as $audio){ ?>
+                <div class="col-md-12 audio-margin" id="<?php echo 'audio_'.$audio->ID; ?>">
+                    <div class="boxshadow">
+                    <div><span ><?php echo $audio->name ?> </span></div>
+                    <audio controls>
+                        <source src="<?php echo $audio->src; ?>" type="audio/mp3">
+                    </audio>
+                    </div>
+                </div>
+                <?php } ?>
+            </div>
+        </div>
+        <?php } ?>
+    </div>
+    <div class="transbox-b-dark col-sm-8 col-xs-12">
         <h1><?php echo $song->name;?></h1>
         <h4>By <?php echo $song->artist; ?></h4>
     </div>
-    <div class="padd-20 col-xs-12 col-sm-10 col-sm-offset-1">
-        <div class="col-xs-12 transbox-b">
-            <h4 class="col-xs-4 control-label">Info <a onclick="toggle('info')" class="glyph glyph-edit"><span id="info-toggle" style="font-size:16px" class="glyphicon glyphicon-chevron-up"></span></a></h4>
-            <h4 class="col-xs-4 control-label">Audio <a onclick="toggle('audio')" class="glyph glyph-edit"><span id="audio-toggle" style="font-size:16px" class="glyphicon glyphicon-chevron-up"></span></a></h4>
-            <h4 class="col-xs-4 control-label">Videos <a onclick="toggle('video')" class="glyph glyph-edit"><span id="video-toggle" style="font-size:16px" class="glyphicon glyphicon-chevron-up"></span></a></h4>
-        </div>
-        <div class="col-xs-12 padd-20" id="info-container" style="display:none">
+    <div class="padd-20 col-xs-12 col-sm-8">
+        <div class="col-xs-12 padd-20" id="info-container">
             <div class="col-xs-12 transbox-b">
                 <div id='status' class="col-md-4">
                     <h4>Status: <?php echo $song->status->name; ?></h4>
@@ -24,27 +40,12 @@
                 </div>
             </div>
         </div>
-        <?php if(isset($audios) && !empty($audios)){ ?>
-        <div id="audio-container" class="padd-20" style="display:none">
-            <div  class="audio-container" >
-                <?php foreach($audios as $audio){ ?>
-                <div class="col-md-6 audio-margin" id="<?php echo 'audio_'.$audio->ID; ?>">
-                    <div class="boxshadow">
-                    <div><span ><?php echo $audio->name ?> </span></div>
-                    <audio controls>
-                        <source src="<?php echo $audio->src; ?>" type="audio/mp3">
-                    </audio>
-                    </div>
-                </div>
-                <?php } ?>
-            </div>
-        </div>
-        <?php } ?>
+        
         <?php if(isset($videos) && !empty($videos)){ ?>
-        <div id="video-container" class="padd-20" style="display:none">
+        <div id="video-container" class="padd-20">
             <div class="video-container" >
                 <?php foreach($videos as $video){ ?>
-                <div class="col-md-6" id="<?php echo 'video_'.$video->ID; ?>">
+                <div class="col-md-12" id="<?php echo 'video_'.$video->ID; ?>">
                     <div class="boxshadow">
                         <div><span><?php echo $video->name ?> </span></div>
                         <video style="width:300px" class="" controls=""><source src="<?php echo $video->src ?>" type="video/mp4"></video>
@@ -75,6 +76,7 @@
 </div>
 </div>
 <script>
+    setActive('song');
 $(function() {
     $('.confirm').click(function() {
         return window.confirm("Are you sure you want to delete \"<?php echo $song->name ?>\"? (This can not be undone)");
@@ -93,4 +95,4 @@ $(function() {
         }
     }
 </script>
-<?php $this->load->view('footer'); ?>
+<?php $this->load->view('songbook/footer'); ?>

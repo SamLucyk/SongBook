@@ -31,14 +31,28 @@
     </table>
 
 <script>
+    
 $(document).ready(function() {
     $('#songs-table').DataTable( {
         "info": false,
         "scrollY": "400px",
         "scrollCollapse": true,
         "paging": false
+    } );
+    addNewSongButton();
 } );
-} );
+    
+function addNewSongButton(){
+        var a = document.createElement("a");
+        a.setAttribute("href", "<?php echo site_url('songbook/newsong')?>");
+        a.setAttribute("style", "padding-right:5px");
+        a.classList = 'glyph glyph-edit';
+        var span = document.createElement('span');
+        span.classList = "glyphicon glyphicon-plus";
+        a.appendChild(span);
+        var search = document.getElementById('songs-table_filter');
+        search.prepend(a);
+    }    
     
 jQuery(document).ready(function($) {
     $(".clickable-row").click(function() {

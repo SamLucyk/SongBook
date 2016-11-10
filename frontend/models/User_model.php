@@ -24,7 +24,9 @@ class User_model extends CI_Model{
     function getField($field, $id ){
         if ($field == 'theme_id'){
             return $this->getTheme($id);
-        } else {
+        } else if ($field == 'scheme_id'){
+            return $this->getScheme($id);
+        }else {
             $this->db->select('user.'.$field);
             $this->db->from('user');
             $this->db->where('user.ID', $id);
@@ -40,9 +42,23 @@ class User_model extends CI_Model{
         return $this->db->get()->result()[0];
     }
     
+    function getScheme( $id ){
+        $this->db->select('scheme.*');
+        $this->db->from('user');
+        $this->db->join('scheme', 'user.scheme_id = scheme.ID', 'left'); 
+        $this->db->where('user.ID', $id);
+        return $this->db->get()->result()[0];
+    }
+    
     function getThemes( ){
         $this->db->select('theme.*');
         $this->db->from('theme');
+        return $this->db->get()->result();
+    }
+    
+    function getSchemes( ){
+        $this->db->select('scheme.*');
+        $this->db->from('scheme');
         return $this->db->get()->result();
     }
     

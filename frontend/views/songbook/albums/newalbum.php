@@ -50,6 +50,6 @@
     function enable(){
         can_submit = true;
     }
-    
+    setActive('create');
 </script>
-<?php $this->load->view('footer'); ?>
+<?php $this->load->view('songbook/footer'); ?>

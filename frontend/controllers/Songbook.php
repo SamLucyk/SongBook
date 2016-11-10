@@ -145,6 +145,7 @@ class Songbook extends CI_Controller{
         if(isset($song->album_id)){
             $album = $this->Songbook_model->getAlbum( $song->album_id );
         } 
+        $album = $this->formatSongAlbum($album);
         $timestamp = strtotime($song->created_at);
         $song->status = $this->Songbook_model->getStatus( $song->status_id );
         $song->lyrics = $this->Songbook_model->getLyrics( $song->ID );
@@ -241,6 +242,19 @@ class Songbook extends CI_Controller{
                 $uploadOk = 0;
             }
         }
+    }
+    
+    function formatSongAlbum( $album ){
+        $this->load->model("Media_model");
+        if($album->name != 'No Album'){
+            $pic = $this->Media_model->getById(Picture, 'album_id', $album->ID);
+        }
+        if (!isset($pic) or empty($pic) ){
+            $pic = new stdClass;
+            $pic->src = base_url('img/default-album-art.png');
+        }
+        $album->pic = $pic;
+        return $album;
     }
     
     function formatAlbum( $album ){

@@ -1,9 +1,8 @@
 :root {
-    --main: #94A8B1;
-    --light: #EEF1F2;
-    --light-alt: #C5D0D5;
-    --dark: #466B7B;
-    --dark-alt: #6A8794;
+    --light: white;
+    --light-alt: lightgrey;
+    --dark: black;
+    --dark-alt: grey;
 }
 
 body {
@@ -178,12 +177,12 @@ p {
 
 .button-info {
     color: var(--light);
-    background-color: var(--main);
+    background-color: var(--dark);
 }
 
 .button-selected {
-    color: var(--main);
-    background-color: white;
+    color: var(--dark);
+    background-color: var(--light);
     border-color: black
 }
 
@@ -210,7 +209,7 @@ p {
 }
 
 .button:hover {
-    color: var(--main);
+    color: var(--dark);
     background-color: var(--light);
 }
 
@@ -356,13 +355,17 @@ body,html{
     position:absolute;
     z-index: -1;
     padding-top:20px;
-    background-color: var(--main);
+    background-color: var(--dark);
     color: white;
         
 }
 
 .nav-pills{
     padding: 15px 15px;
+}
+
+a {
+   color: var(--light);
 }
 
 .nav-pills a{
@@ -384,6 +387,38 @@ body,html{
     width: 100%;
     padding-bottom: 100%;
     background-size: 100% 100%;
+    
+}
+
+.song_album_pic{
+    width: 100%;
+    padding-bottom: 100%;
+    background-size: 100% 100%;
+    
+}
+
+.under_shadow{
+    -webkit-box-shadow: 5px 4px 25px -2px rgba(0,0,0,0.83);
+    -moz-box-shadow: 5px 4px 25px -2px rgba(0,0,0,0.83);
+    box-shadow: 5px 4px 25px -2px rgba(0,0,0,0.83);
+}
+
+.nav-pill{
+    -webkit-box-shadow: 5px 4px 25px -2px rgba(0,0,0,0.83);
+    -moz-box-shadow: 5px 4px 25px -2px rgba(0,0,0,0.83);
+    box-shadow: 5px 4px 25px -2px rgba(0,0,0,0.83);
+}
+
+.inner_shadow{
+    -webkit-box-shadow: inset 5px 4px 25px 2px rgba(0,0,0,0.76);
+    -moz-box-shadow: inset 5px 4px 25px 2px rgba(0,0,0,0.76);
+    box-shadow: inset 5px 4px 25px 2px rgba(0,0,0,0.76);
+}
+
+tr {
+   -webkit-box-shadow: inset 5px 4px 25px 2px rgba(0,0,0,0.76);
+    -moz-box-shadow: inset 5px 4px 25px 2px rgba(0,0,0,0.76);
+    box-shadow: inset 5px 4px 25px 2px rgba(0,0,0,0.76); 
 }
 
 .album-slider .pic{
@@ -401,9 +436,28 @@ body,html{
   z-index: 10;
 }
 
+.dataTables_wrapper.no-footer .dataTables_scrollBody {
+    border-bottom: none;
+}
+
+
+label {
+    color: white !important;
+}
+
+input[type="search"]  {
+    color: black!important;
+    -webkit-box-shadow: inset -1px 1px 4px 1px  rgba(0,0,0,0.76);
+    -moz-box-shadow: inset -1px 1px 4px 1px  rgba(0,0,0,0.76);
+    box-shadow: inset -1px 1px 4px 1px  rgba(0,0,0,0.76);
+}
 
 .slick-slide{
     width: 190px;
+}
+
+.slick-slide:hover {
+    background-color: rgba(0, 0, 0, 0.50);
 }
 
 .slick-slide img{
@@ -412,10 +466,6 @@ body,html{
 
 a:link, a:visited {
     text-decoration: none;
-}
-
-a:hover, a:active {
-    background-color: rgba(0, 0, 0, 0.50);
 }
 
 .track-select {
@@ -431,13 +481,18 @@ a:hover, a:active {
     color: var(--dark-alt)
 }
 
+.page-label {
+    float:right; 
+    padding-right:20px;
+}
+
 .odd {
     background-color: var(--dark) !important;
     color: var(--light);
 }
 
 .even {
-    background-color: var(--dark-alt);
+    background-color: var(--dark-alt) !important;
     color: var(--light);
 }
 
@@ -446,8 +501,8 @@ a:hover, a:active {
 }
 
 #songs-table tr:hover{
-    background-color: var(--main) !important;
-    color: var(--light);
+    background-color: var(--light-alt) !important;
+    color: var(--dark-alt);
     
 }
 
@@ -467,6 +522,18 @@ table.dataTable {
 
 .glyphicon-edit {
     color:#5bc0de;
+}
+
+.glyphicon-plus {
+    color:#5bc0de;
+}
+
+.glyphicon-music {
+    color:darkorange;
+}
+
+.glyphicon-home {
+    color:crimson;
 }
 
 .glyphicon-remove {

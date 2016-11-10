@@ -73,12 +73,12 @@
 <script type="text/javascript">
     jQuery(document).ready(function(){
 
-    CKEDITOR.replace( 'lyrics', {
-        uiColor: '#94A8B1',
-        height: '500px',
-        enterMode: CKEDITOR.ENTER_BR
-    });
-
+        CKEDITOR.replace( 'lyrics', {
+            uiColor: '#94A8B1',
+            height: '500px',
+            enterMode: CKEDITOR.ENTER_BR
+        });
+        setActive('create');
     });
 </script>
-<?php $this->load->view('footer'); ?>
+<?php $this->load->view('songbook/footer'); ?>

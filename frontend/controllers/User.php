@@ -14,6 +14,7 @@ class User extends CI_Controller{
             $this->data = array(
                 "user" => $this->user,
                 "themes" => $this->User_model->getThemes(),
+                "schemes" => $this->User_model->getSchemes(),
                 "songbooks" => $this->Songbook_model->getSongbooks($this->user->ID),
                 "songs" => $this->formatSongs($this->Songbook_model->getSongs($this->user->ID)),
                 "albums" => $this->Songbook_model->getAlbums($this->user->ID),

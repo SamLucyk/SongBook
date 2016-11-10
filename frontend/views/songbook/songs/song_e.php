@@ -3,7 +3,7 @@
     
     
 <form id="songUpdateForm" action="<?php echo base_url('songbook/update_song/'.$song->ID); ?>" method="post">
-        Song
+        <span class="page-label">Song</span>
         <div class="transbox-b-dark col-sm-8 col-sm-offset-2 col-xs-12">
             <h1>
                 <span id="name"><?php echo $song->name ?></span><a id="name_edit" class="glyph glyph-edit" onclick="edit('name')"><span id="name_icon" class="glyphicon glyphicon-edit"></span></a>
@@ -147,6 +147,16 @@
         });
     });
     
+    jQuery(document).ready(function(){
+
+    CKEDITOR.replace( 'lyrics', {
+        uiColor: '#94A8B1',
+        height: '500px',
+        enterMode: CKEDITOR.ENTER_BR
+        });
+        setActive('song');
+    });
+    
     function updateSong() {
         document.getElementById("songUpdateForm").submit();
     }
@@ -221,7 +231,6 @@
         });
     }
 
-    
     function edit(item) {
         var edit = document.getElementById(item + '_edit');
         var name_div = document.getElementById(item);
@@ -309,16 +318,6 @@
             }
             });
     }
-
-    jQuery(document).ready(function(){
-
-    CKEDITOR.replace( 'lyrics', {
-        uiColor: '#94A8B1',
-        height: '500px',
-        enterMode: CKEDITOR.ENTER_BR
-    });
-
-    });
     
     $("#audio-upload").fileinput({
         browseOnZoneClick:true,         
@@ -360,4 +359,4 @@
         overwriteInitial: false 
     });
 </script>
-<?php $this->load->view('footer'); ?>
+<?php $this->load->view('songbook/footer'); ?>

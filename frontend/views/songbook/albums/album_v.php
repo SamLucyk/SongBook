@@ -1,19 +1,17 @@
 <?php $this->load->view('songbook/top'); ?>
 <?php $userdata = $this->session->userdata('user_data'); ?>
-    Album
+<span class="page-label">Album</span>
     <div class="col-sm-3 col-sm-offset-0 col-xs-10 col-xs-offset-1 padd-0-20">
+        <div class='under_shadow'>
         <div class="album_pic" style="background-image:url(<?php echo $album->pic->src; ?>)"></div>
+        </div>
+        <div class="col-sm-12">
+            <span style="float:left"><?php echo $album->status->name; ?></span>  
+            <span style="float:right"><?php echo $album->created_at; ?></span>
+        </div>
     </div>
     <div class="transbox-b-dark col-sm-6 col-xs-12">
         <h1><?php echo $album->name;?></h1>
-    </div>
-    <div class="col-sm-9 col-xs-12 padd-20-0">
-        <div class="col-sm-6">
-            <h3>Status: <?php echo $album->status->name; ?></h3>
-        </div>
-        <div class="col-sm-6">
-            <h3>Created: <?php echo $album->created_at; ?></h3>
-        </div>
     </div>
     <div class="col-sm-9">
         <table id="songs-table" class="table table-striped table-bordered songs-table" cellspacing="0" width="100%">
@@ -36,12 +34,12 @@
                 </tr>
                 <?php } else {
                     foreach($album->songs as $song){ ?>
-                <tr class='clickable-row' data-href='<?php echo site_url('songbook/song/v/'.$song->ID)?>'>
-                    <td width="10%"><?php echo $song->track_num ?></td>
-                    <td><?php echo $song->name ?></td>
-                    <td><?php echo $song->created_at ?></td>
-                    <td><?php echo $song->status->name ?></td>
-                </tr>
+                        <tr class='clickable-row' data-href='<?php echo site_url('songbook/song/v/'.$song->ID)?>'>
+                            <td width="10%"><?php echo $song->track_num ?></td>
+                            <td><?php echo $song->name ?></td>
+                            <td><?php echo $song->created_at ?></td>
+                            <td><?php echo $song->status->name ?></td>
+                        </tr>
                 <?php }
                     } ?>
             </tbody>
@@ -67,10 +65,12 @@ $(function() {
 $(document).ready(function() {
     $('#songs-table').DataTable( {
         "info": false,
-        "scrollY": "300px",
+        "scrollY": "400px",
         "scrollCollapse": true,
         "paging": false
 } );
+    addNewSongButton();
+    setActive('album');
 } );
     
 jQuery(document).ready(function($) {
@@ -78,5 +78,17 @@ jQuery(document).ready(function($) {
         window.document.location = $(this).data("href");
     });
 });
+    
+    function addNewSongButton(){
+        var a = document.createElement("a");
+        a.setAttribute("href", "<?php echo site_url('songbook/newsong/?aid='.$album->ID)?>");
+        a.setAttribute("style", "padding-right:5px");
+        a.classList = 'glyph glyph-edit';
+        var span = document.createElement('span');
+        span.classList = "glyphicon glyphicon-plus";
+        a.appendChild(span);
+        var search = document.getElementById('songs-table_filter');
+        search.prepend(a);
+    }
 </script>
-<?php $this->load->view('footer'); ?>
+<?php $this->load->view('songbook/footer'); ?>

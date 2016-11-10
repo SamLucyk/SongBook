@@ -85,17 +85,31 @@ defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automat
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
 
-
-
-/* DS DEFINED */
+/* Bucket */
 define('Bucket','mysongbook');
 define('BucketUrl', 'https://s3.amazonaws.com/mysongbook/');
 define('BucketAudio', 'Audio/');
 define('BucketVideo', 'Video/');
 define('BucketPicture', 'Picture/');
+/* Tables */
 define('Song', 'song');
 define('Album', 'album');
 define('Audio', 'audio');
 define('Video', 'video');
 define('Lyrics', 'lyrics');
 define('Picture', 'picture');
+/* Colorschemes */
+define('Greylight', 'white');
+define('Greylightalt', 'lightgrey');
+define('Greydark', '#595a5b');
+define('Greydarkalt', '#999999');
+
+define('Psychiclight', 'white');
+define('Psychiclightalt', '#FFC864');
+define('Psychicdark', 'darkorange');
+define('Psychicdarkalt', '#1D0A6B');
+
+define('Rusticlight', '#D1D8F2');
+define('Rusticlightalt', '#CCFFFF');
+define('Rusticdark', '#303E73');
+define('Rusticdarkalt', '#442F74');

@@ -13,11 +13,13 @@
 
 <script>
     $(document).ready(function(){
-          $('.album-slider').slick({
+        $('.album-slider').slick({
               infinite: true,
               slidesToShow: 3,
               slidesToScroll: 1,
               variableWidth: true
         });
+        $(".pic").addClass('under_shadow');
+        $(".slick-list").addClass('inner_shadow');
         });
 </script>

@@ -10,12 +10,12 @@
     </div>
     <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
         <ul class="nav navbar-nav">
-            <li class="active">
+            <li id='home_navbar' class="active">
                 <a href="<?php echo site_url('songbook') ?>">
                     Home<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span>
                 </a>
             </li>
-            <li class="dropdown">
+            <li id='create_navbar' class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     Create 
                     <span class="caret"></span>
@@ -26,7 +26,7 @@
                     <li><a href="<?php echo site_url('songbook/newalbum') ?>">New Album</a></li>
                 </ul>
             </li>    
-            <li class="dropdown">
+            <li id='song_navbar' class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     My Songs 
                     <span class="caret"></span>
@@ -38,7 +38,7 @@
                     <?php } ?>
                 </ul>
             </li>    
-            <li class="dropdown">
+            <li id='album_navbar' class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     My Albums 
                     <span class="caret"></span>
@@ -53,4 +53,19 @@
         </ul>
     </div>
   </div>
+    <script>
+        function setActive(active){
+            clearActive();
+            id = '#' + active + '_navbar';
+            $(id).addClass('active');
+        }
+
+        function clearActive(){
+            $('#home_navbar').removeClass('active');
+            $('#song_navbar').removeClass('active');
+            $('#album_navbar').removeClass('active');
+            $('#create_navbar').removeClass('active');
+            console.log('unset active');
+        }
+    </script>
 </nav>

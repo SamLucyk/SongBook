@@ -27,6 +27,7 @@ class Auth extends CI_Controller{
         if ($valid){
             $user = $this->User_model->getByEmail($email)[0];
             $theme = $this->User_model->getTheme($user->ID);
+            $scheme = $this->User_model->getScheme($user->ID);
             $data = array(
                 'user' => $email,
                 'name' => $user->first,
@@ -35,6 +36,7 @@ class Auth extends CI_Controller{
                 );
             $this->session->set_userdata('user_data', $data);
             $this->session->set_userdata('theme', $theme);
+            $this->session->set_userdata('scheme', $scheme);
             redirect( base_url('songbook') );
         } else {
             redirect(base_url('user/login'));

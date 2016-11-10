@@ -1,6 +1,6 @@
 <?php $this->load->view('songbook/top'); ?>
 <?php $userdata = $this->session->userdata('user_data'); ?>
-    Album
+    <span class="page-label">Album</span>
         <div class="col-sm-3 col-sm-offset-0 col-xs-10 col-xs-offset-1 padd-0-20">
             <div class="album_pic" style="background-image:url(<?php echo $album->pic->src; ?>)"></div>
             <div class="col-xs-12 padd-20-0 center">
@@ -87,7 +87,6 @@
                     } ?>
             </tbody>
         </table>
-            <a class="glyph glyph-edit" href="<?php echo site_url('songbook/newsong/?aid='.$album->ID)?>"><span id="created_at_icon" class="glyphicon glyphicon-plus"></span></a>
     </div>
             <div class="col-xs-12 padd-40-20">
                 <div class="col-sm-6 center padd-0-20">
@@ -105,6 +104,28 @@
                     format: 'MM/DD/YYYY'
         });
     });
+    
+    $(document).ready(function() {
+    $('#songs-table').DataTable( {
+        "info": false,
+        "scrollY": "400px",
+        "scrollCollapse": true,
+        "paging": false
+    } );
+        addNewSongButton();
+        setActive('album');
+    } );
+    
+    $("#picture-upload").fileinput({'showPreview':false, 'showRemove':false,
+            'allowedFileExtensions' : ['jpg', 'png','gif'],
+        uploadUrl:'<?php echo site_url('media/upload/'.Picture.'/'.Album.'/'.$album->ID); ?>'
+    });
+    
+    jQuery(document).ready(function($) {
+    $(".clickable-row").click(function() {
+        window.document.location = $(this).data("href");
+    });
+});
     
     function edit(item) {
         var edit = document.getElementById(item + '_edit');
@@ -197,26 +218,6 @@
         });
     }
     
-    $(document).ready(function() {
-    $('#songs-table').DataTable( {
-        "info": false,
-        "scrollY": "300px",
-        "scrollCollapse": true,
-        "paging": false
-} );
-} );
-    
-    $("#picture-upload").fileinput({'showPreview':false, 'showRemove':false,
-            'allowedFileExtensions' : ['jpg', 'png','gif'],
-        uploadUrl:'<?php echo site_url('media/upload/'.Picture.'/'.Album.'/'.$album->ID); ?>'
-    });
-    
-    jQuery(document).ready(function($) {
-    $(".clickable-row").click(function() {
-        window.document.location = $(this).data("href");
-    });
-});
-    
     function updateSongField(field, song_id){
         var id = field + '_' + song_id;
         var input = document.getElementById(id);
@@ -232,6 +233,18 @@
         }
         });
     }
+
+    function addNewSongButton(){
+        var a = document.createElement("a");
+        a.setAttribute("href", "<?php echo site_url('songbook/newsong/?aid='.$album->ID)?>");
+        a.setAttribute("style", "padding-right:5px");
+        a.classList = 'glyph glyph-edit';
+        var span = document.createElement('span');
+        span.classList = "glyphicon glyphicon-plus";
+        a.appendChild(span);
+        var search = document.getElementById('songs-table_filter');
+        search.prepend(a);
+    }
     
 </script>
-<?php $this->load->view('footer'); ?>
+<?php $this->load->view('songbook/footer'); ?>
