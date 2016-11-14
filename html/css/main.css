@@ -376,6 +376,11 @@ a {
     background-color: var(--light);
 }
 
+a:hover{
+    text-decoration: none;
+}
+
+
 .dataTables_wrapper{
     color: white !important;
     text-shadow: none !important;
@@ -596,15 +601,15 @@ table.dataTable {
 }
 
 
-#playlist audio{width:100%;padding:0px;}
+.media-playlist audio{width:100%;padding:0px;}
 
-#playlist .audio_options{
+.media-playlist .media_options{
     -webkit-box-shadow: 5px 4px 25px 2px rgba(0,0,0,0.76);
     -moz-box-shadow: 5px 4px 25px 2px rgba(0,0,0,0.76);
     box-shadow: 5px 4px 25px 2px rgba(0,0,0,0.76);
 }
 
-#playlist {
+.media-playlist {
     text-shadow:none; 
     width:100%;
     padding-bottom:20px;
@@ -616,14 +621,14 @@ table.dataTable {
     box-shadow: inset 5px 4px 25px 2px rgba(0,0,0,0.76);
 }
 
-#playlist a{
+.media-playlist a{
     color:var(--light); 
     background-color:var(--dark); 
     text-decoration:none; 
     border-bottom: thin solid black;
 }
 
-#playlist .active a{
+.media-playlist .active a{
     color:var(--dark); 
     background-color:var(--light);  
     text-decoration:none; 
@@ -631,9 +636,9 @@ table.dataTable {
     -moz-box-shadow: inset 2px 1px 10px 1px  rgba(0,0,0,0.76);
     box-shadow: inset 2px 1px 10px 1px  rgba(0,0,0,0.76);
 }
-#playlist li a{padding:5px;display:block;}
-#playlist li a:hover{text-decoration:none;}
-#playlist {list-style: none;}
+.media-playlist li a{padding:5px;display:block;}
+.media-playlist li a:hover{text-decoration:none;}
+.media-playlist {list-style: none;}
 
 .video-container {
     border: 2px solid;

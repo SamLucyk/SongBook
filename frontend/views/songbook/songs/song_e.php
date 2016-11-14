@@ -343,7 +343,7 @@
         'browseOnZoneClick':true, 
         'showUpload':true, 
         'type':'video', 
-        'uploadUrl':'<?php echo site_url('media/upload/'.Video.'/'.$song->ID); ?>',
+        'uploadUrl':'<?php echo site_url('media/upload/'.Video.'/'.Song.'/'.$song->ID); ?>',
         initialPreviewFileType:'video', 
         initialPreviewShowDelete:true,
         browseLabel: "Pick Video",
