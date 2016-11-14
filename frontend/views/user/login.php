@@ -1,7 +1,7 @@
 <?php $this->load->view('top'); ?>
         <div class="row col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12 padd-40-0">
             <form id="login-form" action="<?php echo base_url('auth/login'); ?>" method="post">
-                <div class="transbox-w col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+                <div class="login-box col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
                     <div class="form-group">
                         Email
                         <input type="text" class="form-control" name="email" style="color:#bfbfbf; font-variant: none;" 

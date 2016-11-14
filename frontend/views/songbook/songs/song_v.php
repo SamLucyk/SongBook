@@ -3,24 +3,44 @@
     <span class="page-label">Song</span>
      <div class="col-sm-4 col-sm-offset-0 col-xs-10 col-xs-offset-1 padd-0-20">
         <div class='under_shadow'>
-        <div class="song_album_pic" style="background-image:url(<?php echo $song->album->pic->src; ?>)"></div>
+        <div class="song_album_pic col-xs-12" style="background-image:url(<?php echo $song->album->pic->src; ?>)"></div>
         </div>
-         <?php if(isset($audios) && !empty($audios)){ ?>
-        <div id="audio-container" class="" >
-            <div class="" >
-                <?php foreach($audios as $audio){ ?>
-                <div class="col-md-12 audio-margin" id="<?php echo 'audio_'.$audio->ID; ?>">
-                    <div class="boxshadow">
-                    <div><span ><?php echo $audio->name ?> </span></div>
-                    <audio controls>
-                        <source src="<?php echo $audio->src; ?>" type="audio/mp3">
-                    </audio>
-                    </div>
+            <div class="playlist">
+            <audio class="under_shadow" style="width:100%" id="audio" controls>
+                <source src="" type="audio/mp3">
+            </audio>
+            <a onclick="mediaActive('audio')" class="col-xs-6 no-padd"><div id="audio-button" class="center media-label media-label-active padd-5">Audio</div></a>
+            <a onclick="mediaActive('video')" class="col-xs-6 no-padd"><div id="video-button" class="media-label padd-5 center ">Video</div></a>
+            <ul id="playlist" class="col-xs-12 inner_layer">
+                <div class="audio_options">
+                    
+                <?php if(isset($audios) && !empty($audios)){ 
+                    $x = 1;                                 
+                    foreach($audios as $audio){ ?>
+                        <li class="" id="<?php echo 'audio_'.$x ?>">
+                            <a href="<?php echo $audio->src; ?>">
+                                <?php echo $audio->name; ?>
+                            </a>
+                        </li>
+                <?php $x++;
+                    } 
+                }?>
                 </div>
-                <?php } ?>
-            </div>
-        </div>
-        <?php } ?>
+                <div class="video_options" style='display:none'>
+                <?php if(isset($videos) && !empty($video)){ 
+                    $x = 1;                                 
+                    foreach($videos as $video){ ?>
+                        <li class="" id="<?php echo 'video_'.$x ?>">
+                            <a href="<?php echo $video->src; ?>">
+                                <?php echo $video->name; ?>
+                            </a>
+                        </li>
+                <?php $x++;
+                    }
+                }?>
+                </div>
+            </ul>
+         </div>
     </div>
     <div class="transbox-b-dark col-sm-8 col-xs-12">
         <h1><?php echo $song->name;?></h1>
@@ -41,23 +61,10 @@
             </div>
         </div>
         
-        <?php if(isset($videos) && !empty($videos)){ ?>
-        <div id="video-container" class="padd-20">
-            <div class="video-container" >
-                <?php foreach($videos as $video){ ?>
-                <div class="col-md-12" id="<?php echo 'video_'.$video->ID; ?>">
-                    <div class="boxshadow">
-                        <div><span><?php echo $video->name ?> </span></div>
-                        <video style="width:300px" class="" controls=""><source src="<?php echo $video->src ?>" type="video/mp4"></video>
-                    </div>
-                </div>
-                <?php } ?>
-            </div>
-            <?php } ?>
-        </div>
-        <div class="col-xs-12 padd-20">
-            <div class="transbox-b-dark lyric-container col-md-10 col-md-offset-1">
-                <h3>Lyrics:</h3>
+        
+        <div class="col-xs-12 padd-20 inner_shadow inner_layer">
+            <div class="section-label">Lyrics</div>
+            <div class="transbox-b-dark lyric-container padd-20-0 col-sm-12">
                 <?php if($song->lyrics->content != ''){ echo $song->lyrics->content;}
                 else { ?> 
                 <a href="<?php echo site_url('songbook/song/e/'.$song->ID) ?>"><p>Click here to add lyrics!</p></a>
@@ -71,17 +78,17 @@
             <div class="col-md-6 center">
                 <a class="confirm" href="<?php echo base_url('songbook/delete_song/'.$song->ID) ?>"> <input id="form-btn" class="button button-info" value="Delete"></a>
             </div>
-        </div> 
-    </div>
+        </div>    
+</div>
 </div>
 </div>
 <script>
     setActive('song');
-$(function() {
-    $('.confirm').click(function() {
-        return window.confirm("Are you sure you want to delete \"<?php echo $song->name ?>\"? (This can not be undone)");
+    $(function() {
+        $('.confirm').click(function() {
+            return window.confirm("Are you sure you want to delete \"<?php echo $song->name ?>\"? (This can not be undone)");
+        });
     });
-});
     
     function toggle(ele){
         var item = document.getElementById(ele + '-container');
@@ -94,5 +101,57 @@ $(function() {
             toggle.classList = 'glyphicon glyphicon-chevron-up';
         }
     }
+    
+    init();
+    function init(){
+        var current = 0;
+        var audio = $('#audio');
+        var playlist = $('#playlist');
+        var tracks = playlist.find('li a');
+        var len = tracks.length - 1;
+        audio[0].volume = .10;
+        audio[0].play();
+        playlist.find('a').click(function(e){
+            e.preventDefault();
+            link = $(this);
+            current = link.parent().index();
+            run(link, audio[0]);
+        });
+        audio[0].addEventListener('ended',function(e){
+            current++;
+            if(current == len){
+                current = 0;
+                link = playlist.find('a')[0];
+            }else{
+                link = playlist.find('a')[current];    
+            }
+            run($(link),audio[0]);
+        });
+    }
+    function run(link, player){
+            player.src = link.attr('href');
+            par = link.parent();
+            par.addClass('active').siblings().removeClass('active');
+            player.load();
+            player.play();
+    }
+    
+    function mediaActive(active){
+        if(active == 'video'){
+            jQuery('#video-button').addClass('media-label-active');
+            jQuery('#audio-button').removeClass('media-label-active');
+            jQuery('#video-options').css('display','');
+            jQuery('#audio-options').css('display','none');
+        } 
+        if(active == 'audio'){
+            jQuery('#video-button').removeClass('media-label-active');
+            jQuery('#audio-button').addClass('media-label-active');
+            jQuery('#video-options').css('display','none');
+            jQuery('#audio-options').css('display','');
+        }
+    }
+    
+
 </script>
+
 <?php $this->load->view('songbook/footer'); ?>

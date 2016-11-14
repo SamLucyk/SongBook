@@ -12,7 +12,7 @@
             <?php $this->load->view('songbook/albums'); ?>
         </div>
     </div>
-    <div class="padd-0-20 col-xs-12">
+    <div class="padd-20-20 col-xs-12">
         <div class="col-md-12">
             <?php $this->load->view('songbook/songs'); ?>
         </div>

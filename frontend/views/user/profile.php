@@ -44,11 +44,11 @@
                 </h3>
             </div>
             
-            <div class="col-md-10 col-md-offset-1 padd-40-20">
-                <div class="col-md-6 center">
+            <div class="col-xs-12 padd-40-20">
+                <div class="col-xs-12 col-sm-6 padd-0-20">
                     <a onclick='updateUser()'><input id="about-btn" class="button button-info" value="Apply"></a>
                 </div>
-                <div class="col-md-6 center">
+                <div class="col-xs-12 col-sm-6 center">
                     <a href="<?php echo base_url('songbook') ?>"> <input id="form-btn" class="button button-info" value="Back"></a>
                 </div>
             </div>  

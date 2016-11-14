@@ -12,8 +12,8 @@
     <link href="<?php echo base_url(); ?>css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
     <link href="<?php echo base_url(); ?>css/themes.css?v=1.1" rel="stylesheet" type="text/css"/>
     <link href="<?php echo base_url(); ?>css/main.css?v=1.1" rel="stylesheet" type="text/css"/>
-    <script src="<?php echo base_url(); ?>js/ckeditor/ckeditor.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="<?php echo base_url(); ?>js/ckeditor/ckeditor.js"></script>
     <script src="<?php echo base_url(); ?>js/plugins/canvas-to-blob.min.js" type="text/javascript"></script>
     <script src="<?php echo base_url(); ?>js/plugins/sortable.min.js" type="text/javascript"></script>
     <script src="<?php echo base_url(); ?>js/plugins/purify.min.js" type="text/javascript"></script>
@@ -24,5 +24,9 @@
     <script type="text/javascript" src="<?php echo base_url(); ?>js/slick.js"></script>
     <script src="<?php echo base_url(); ?>js/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
     <script src="<?php echo base_url(); ?>js/jquery.cropit.js" type="text/javascript"></script>
+    
+    <script type="text/javascript" src="<?php echo base_url(); ?>js/jquery.jplayer.min.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>js/jplayer.playlist.min.js"></script>
+    <link type="text/css" href="<?php echo base_url(); ?>skin/pink.flag/css/jplayer.pink.flag.css" rel="stylesheet" />
 </head>
 <body>

@@ -21,5 +21,6 @@
         });
         $(".pic").addClass('under_shadow');
         $(".slick-list").addClass('inner_shadow');
+        $(".slick-list").addClass('inner_layer');
         });
 </script>
