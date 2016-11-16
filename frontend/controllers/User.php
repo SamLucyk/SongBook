@@ -71,11 +71,12 @@ class User extends CI_Controller{
         return (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
     }
     
-    public function update_user_field($field, $new_name, $u_id){
+    public function update_user_field($field, $u_id){
         header('Content-Type: application/json');
-        if( true ){
+        if( $this->is_ajax() ){
+            $new_value = $this->input->post('update');
             $data = array(
-                $field => str_replace('%20', ' ', $new_name)
+                $field => $new_value
             );
             $result = $this->User_model->update($u_id, $data);
             if($result){

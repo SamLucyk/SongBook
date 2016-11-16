@@ -14,6 +14,9 @@
 <script>
     $(document).ready(function(){
         $('.album-slider').slick({
+            autoplay: true,
+        autoplaySpeed: 3000,
+            centerMode: true,
               infinite: true,
               slidesToShow: 3,
               slidesToScroll: 1,

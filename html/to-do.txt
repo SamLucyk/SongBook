@@ -1,0 +1,11 @@
+- Use POST Ajax for album/songbook edits
+- Clean Up Code
+- Make Status Badges
+- Click Button to have lyrics cover screen and scroll
+- Add default option for recordings
+- Play button on song list to play the default recording
+- Option to make song/albums have a public page.
+- Add comments
+- Add Messaging
+- Add friends
+- Media Page

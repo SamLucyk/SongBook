@@ -89,12 +89,13 @@
         var content_id = item + '_option_' + value;
         var content_div = document.getElementById(content_id);
         var content = content_div.innerHTML;
-        var ajax_url = '<?php echo site_url('user/update_user_field'); ?>/' + item + '/' + value + '/' + <?php echo $user->ID; ?>;
+        var ajax_url = '<?php echo site_url('user/update_user_field'); ?>/' + item + '/' + <?php echo $user->ID; ?>;
         console.log(ajax_url);
         view.appendChild(icon_div);
         jQuery.ajax({
         url: ajax_url,
-        method: 'GET',
+        method: 'POST',
+        data: {update:value},
         success: function(res){
         if( res.result ){
             selected.innerHTML = content;
@@ -133,10 +134,11 @@
         var value = input.value;
         icon.classList = 'glyphicon glyphicon-edit';
         edit_div.onclick = function(){ edit(item); } ;
-        var ajax_url = '<?php echo site_url('user/update_user_field'); ?>/' + item + '/' + value + '/' + <?php echo $user->ID; ?>;
+        var ajax_url = '<?php echo site_url('user/update_user_field'); ?>/' + item + '/' + <?php echo $user->ID; ?>;
         jQuery.ajax({
         url: ajax_url,
-        method: 'GET',
+        method: 'POST',
+        data: {update:value},
         success: function(res){
             if( res.result ){
                 console.log('success');

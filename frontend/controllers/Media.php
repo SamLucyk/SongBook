@@ -75,11 +75,12 @@ class Media extends CI_Controller{
         }
     }
     
-    function update_name($id, $name, $type){
+    function update_name($id, $type){
         header('Content-Type: application/json');
         if( $this->is_ajax()){
+            $value = $this->input->post('update');
             $data = array(
-                'name' => str_replace('%20', ' ', $name),
+                'name' => $value,
             );
             $this->Media_model->update($id, $data, $type);
             echo json_encode(array('result' => true));

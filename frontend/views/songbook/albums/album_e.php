@@ -154,17 +154,18 @@
         var icon = document.getElementById(item + '_icon');
         var input = document.getElementById(item + '_input');
         var name_div = document.getElementById(item);
-        var new_name = input.value;
+        var value = input.value;
         icon.classList = 'glyphicon glyphicon-edit';
         edit_div.onclick = function(){ edit(item); } ;
-        var ajax_url = '<?php echo site_url('songbook/update_album_field'); ?>/' + item + '/' + <?php echo $album->ID; ?> + '/' + new_name;
+        var ajax_url = '<?php echo site_url('songbook/update_album_field'); ?>/' + item + '/' + <?php echo $album->ID; ?>;
         jQuery.ajax({
         url: ajax_url,
-        method: 'GET',
+        method: 'POST',
+        data: {update:value},
         success: function(res){
             if( res.result ){
                 console.log('success');
-                name_div.innerHTML = new_name;
+                name_div.innerHTML = value;
             }
         }
         });
@@ -203,13 +204,13 @@
         var content = content_div.innerHTML;
         } else {
         var content = value;
-        value = content.replace(/\//g, "_");
         }
 
-        var ajax_url = '<?php echo site_url('songbook/update_album_field'); ?>/' + item + '/' + <?php echo $album->ID; ?> + '/' + value;
+        var ajax_url = '<?php echo site_url('songbook/update_album_field'); ?>/' + item + '/' + <?php echo $album->ID; ?>;
         jQuery.ajax({
         url: ajax_url,
-        method: 'GET',
+        method: 'POST',
+        data: {update:value},
         success: function(res){
         if( res.result ){
             selected.innerHTML = content;
@@ -221,11 +222,12 @@
     function updateSongField(field, song_id){
         var id = field + '_' + song_id;
         var input = document.getElementById(id);
-        var val = input.value;
-        var ajax_url = '<?php echo site_url('songbook/update_song_field'); ?>/' + field + '/' + song_id + '/' + val;
+        var value = input.value;
+        var ajax_url = '<?php echo site_url('songbook/update_song_field'); ?>/' + field + '/' + song_id;
         jQuery.ajax({
         url: ajax_url,
-        method: 'GET',
+        method: 'POST',
+        data: {update:value},
         success: function(res){
             if( res.result ){
                 console.log(ajax_url);

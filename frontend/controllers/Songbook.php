@@ -84,24 +84,29 @@ class Songbook extends CI_Controller{
         $this->load->view('songbook/songs/song_'.$type, $this->data);
     }
     
-    public function update_song_field($field, $song_id, $new_name){
+    public function update_song_field($field, $song_id){
         header('Content-Type: application/json');
+        $new_value = $this->input->post('update');
         if( $this->is_ajax() ){
             $data = new stdClass;
             if ($field == 'album_id'){
                 $data->song_album_data = array(
-                    $field => str_replace('%20', ' ', $new_name),
+                    $field => $new_value,
                     'song_id' => $song_id
                 );
                 $this->Songbook_model->updateSong($song_id, $data);
                 echo json_encode(array('result' => true));
-            } else{
-                if ($field == 'created_at'){
-                    $new_name = str_replace('_', '/', $new_name);
-                    $new_name = date('Y-m-d H:i:s', strtotime($new_name)); 
-                }
+            } else if ($field == 'lyrics'){
+                $data->lyrics_data = array(
+                    'song_id' => $song_id,
+                    'content' => $new_value
+                );
+                $this->Songbook_model->updateSong($song_id, $data);
+                echo json_encode(array('result' => true));
+            } else {
+                if ($field == 'created_at'){ $new_value = date('Y-m-d H:i:s', strtotime($new_value)); }
                 $data->song_data = array(
-                    $field => str_replace('%20', ' ', $new_name),
+                    $field => $new_value,
                 );
                 $this->Songbook_model->updateSong($song_id, $data);
                 echo json_encode(array('result' => true));
@@ -121,16 +126,16 @@ class Songbook extends CI_Controller{
         redirect(site_url('songbook/song/e/'.$song_id));
     }
     
-    public function update_album_field($field, $album_id, $new_name){
+    public function update_album_field($field, $album_id){
         header('Content-Type: application/json');
         if( $this->is_ajax() ){
+            $new_value = $this->input->post('update');
             $data = new stdClass;
             if ($field == 'created_at'){
-                $new_name = str_replace('_', '/', $new_name);
-                $new_name = date('Y-m-d H:i:s', strtotime($new_name)); 
+                $new_value = date('Y-m-d H:i:s', strtotime($new_value)); 
             }
             $data->album_data = array(
-                $field => str_replace('%20', ' ', $new_name)
+                $field => $new_value
             );
             $this->Songbook_model->updateAlbum($album_id, $data);
             echo json_encode(array('result' => true));

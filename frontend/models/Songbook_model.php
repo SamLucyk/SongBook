@@ -75,9 +75,8 @@ class Songbook_model extends CI_Model{
         }
         
         if (isset($data->lyrics_data)){
-           $this->db->where('song_id', $song_id);
-            $this->db->delete('lyrics');
-            $this->db->insert('lyrics', $data->lyrics_data);
+            $this->db->where('song_id', $song_id);
+            $this->db->update('lyrics', $data->lyrics_data);
         }   
     }
     

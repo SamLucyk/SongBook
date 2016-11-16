@@ -25,6 +25,7 @@
                     foreach($audios as $audio){ ?>
                         <li id="<?php echo 'audio_'.$x ?>">
                             <a class="media" href="<?php echo $audio->src; ?>">
+                                <span class="glyphicon glyphicon-play-circle float-right"></span>
                                 <?php echo $audio->name; ?>
                             </a>
                         </li>
@@ -46,6 +47,7 @@
                     foreach($videos as $video){ ?>
                         <li class="" id="<?php echo 'video_'.$x ?>">
                             <a class="media" href="<?php echo $video->src; ?>">
+                                <span class="glyphicon glyphicon-play-circle float-right"></span>
                                 <?php echo $video->name; ?>
                             </a>
                         </li>
