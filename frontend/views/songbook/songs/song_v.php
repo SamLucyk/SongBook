@@ -13,8 +13,8 @@
             <audio class="under_shadow" style="width:100%" id="audio" controls>
                 <source src="" type="audio/mp3">
             </audio>
-         </div>
-        <div class="">
+        </div>
+        <div>
             <a onclick="mediaActive('audio')" class="col-xs-6 no-padd"><div id="audio-button" class="center media-label media-label-active padd-5">Audio</div></a>
             <a onclick="mediaActive('video')" class="col-xs-6 no-padd"><div id="video-button" class="media-label padd-5 center ">Video</div></a>
             <ul class="media-playlist inner_layer col-xs-12" id="audio_playlist" class="col-xs-12 inner_layer">
@@ -63,44 +63,31 @@
                 </div>
             </ul>
          </div>
+         <div class="padd-0-10">
+            <div id='status' class="col-xs-6">
+                <div data-toggle="tooltip" data-placement="bottom" title="Status" class="status_badge under_shadow"><?php echo $song->status->name; ?></div>
+            </div>
+            <div id='created' class="col-xs-6">
+                <div data-toggle="tooltip" data-placement="bottom" title="Created" class="status_badge under_shadow"><?php echo $song->created_at; ?></div>
+            </div>
+         </div>
+         <div class="col-xs-12 padd-20">
+            <a href="<?php echo site_url('songbook/song/e/'.$song->ID) ?>"><input id="about-btn" class="button button-info" value="Edit"></a>
+         </div>
     </div>
     <div class="transbox-b-dark col-sm-8 col-xs-12">
         <h1><?php echo $song->name;?></h1>
-        <h4>By <?php echo $song->artist; ?></h4>
+        <h4><?php echo $song->artist; ?> - <a data-toggle="tooltip" data-placement="right" title="Album" href="<?php echo base_url($song->album->path); ?>"><?php echo $song->album->name; ?></a></h4>
     </div>
-    <div class="padd-20 col-xs-12 col-sm-8">
-        <div class="col-xs-12 padd-20" id="info-container">
-            <div class="col-xs-12 transbox-b">
-                <div id='status' class="col-md-4">
-                    <h4>Status: <?php echo $song->status->name; ?></h4>
-                </div>
-                <div id='album' class="col-md-4">
-                    <h4>Album: <a href="<?php echo base_url("songbook/album/v").'/'.$song->album->ID?>"><?php echo $song->album->name; ?></a></h4>
-                </div>
-                <div id='created' class="col-md-4">
-                    <h4>Created: <?php echo $song->created_at; ?></h4>
-                </div>
-            </div>
+    <div class="col-xs-12 col-sm-8 padd-20 marg-20-40 inner_shadow inner_layer">
+        <div class="section-label">Lyrics</div>
+        <div class="transbox-b-dark lyric-container padd-20-0 col-sm-12">
+            <?php if($song->lyrics->content != ''){ echo $song->lyrics->content;}
+            else { ?> 
+            <a href="<?php echo site_url('songbook/song/e/'.$song->ID) ?>"><p>Click here to add lyrics!</p></a>
+            <?php }?>
         </div>
-        
-        
-        <div class="col-xs-12 padd-20 inner_shadow inner_layer">
-            <div class="section-label">Lyrics</div>
-            <div class="transbox-b-dark lyric-container padd-20-0 col-sm-12">
-                <?php if($song->lyrics->content != ''){ echo $song->lyrics->content;}
-                else { ?> 
-                <a href="<?php echo site_url('songbook/song/e/'.$song->ID) ?>"><p>Click here to add lyrics!</p></a>
-                <?php }?>
-            </div>
-        </div>
-        <div class="col-xs-12 padd-20-20">
-            <div class="col-md-6 center">
-                <a href="<?php echo site_url('songbook/song/e/'.$song->ID) ?>"><input id="about-btn" class="button button-info" value="Edit"></a>
-            </div>
-            <div class="col-md-6 center">
-                <a class="confirm" href="<?php echo base_url('songbook/delete_song/'.$song->ID) ?>"> <input id="form-btn" class="button button-info" value="Delete"></a>
-            </div>
-        </div>    
+    </div>
 </div>
 </div>
 </div>
@@ -209,7 +196,9 @@
         }
     }
     
-
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip(); 
+    });
 </script>
 
 <?php $this->load->view('songbook/footer'); ?>

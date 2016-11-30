@@ -39,11 +39,15 @@ class User extends CI_Controller{
         
         $email = $this->input->post('email');
         if (!$this->user_exists($email)){
+            $first = $this->input->post('first');
             $user_data = array(
-            'first' => $this->input->post('first'),
+            'first' => $first,
             'last' => $this->input->post('last'),
             'email' => $email,
-            'password' => $this->hashpassword($this->input->post('pass'))
+            'password' => $this->hashpassword($this->input->post('pass')),
+            'scheme_id' => 3,
+            'theme_id' => 11,
+            'songbook_name' => $first."'s Songbook"
             );
             $insert = $this->User_model->insert($user_data);
             $this->load->view( 'pages/welcome' );
@@ -61,7 +65,7 @@ class User extends CI_Controller{
         $this->load->view('user/profile', $this->data);
     }
     
-      ///Helpers///
+    ///Helpers///
     function verify(){
         $result = ( isset($this->userdata['is_logged_in']) && $this->userdata['is_logged_in'] == true );
         return $result;
@@ -75,6 +79,16 @@ class User extends CI_Controller{
         header('Content-Type: application/json');
         if( $this->is_ajax() ){
             $new_value = $this->input->post('update');
+            $result = $this->update_field($field, $u_id, $new_value);
+            echo json_encode(array('result' => $result));
+        } else {
+            echo json_encode(array('result' => false));
+        }
+    }
+    
+    public function update_field($field, $u_id, $new_value){
+        header('Content-Type: application/json');
+        if( $this->is_ajax() ){
             $data = array(
                 $field => $new_value
             );
@@ -84,6 +98,19 @@ class User extends CI_Controller{
                 $key = str_replace('_id', '', $field);
                 $this->session->set_userdata($key, $new);
             }
+            return $result;
+        }
+    }
+    
+    public function update_user_name($u_id){
+        header('Content-Type: application/json');
+        if( $this->is_ajax() ){
+            $new_value = $this->input->post('update');
+            $first = $new_value['first_name'];
+            $last = $new_value['last_name'];
+            $result1 = $this->update_field('first', $u_id, $first);
+            $result2 = $this->update_field('last', $u_id, $last);
+            $result = ($result1 && $result2);
             echo json_encode(array('result' => $result));
         } else {
             echo json_encode(array('result' => false));

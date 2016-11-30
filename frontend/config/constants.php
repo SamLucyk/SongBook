@@ -109,6 +109,11 @@ define('Psychiclightalt', '#FFC864');
 define('Psychicdark', 'darkorange');
 define('Psychicdarkalt', '#1D0A6B');
 
+define('Schoollight', 'white');
+define('Schoollightalt', '#87CEFA');
+define('Schooldark', '#4682B4');
+define('Schooldarkalt', '#A52A2A');
+
 define('Rusticlight', '#D1D8F2');
 define('Rusticlightalt', '#CCFFFF');
 define('Rusticdark', '#303E73');

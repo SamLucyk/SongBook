@@ -11,7 +11,7 @@ class Songbook extends CI_Controller{
         $this->load->model("Songbook_model");
         $this->userdata = $this->session->userdata('user_data');
         if( !$this->verify()){
-            redirect(site_url());
+            redirect(site_url('songbook'));
         }
         else {
             $this->client = S3Client::factory(array(
@@ -49,10 +49,9 @@ class Songbook extends CI_Controller{
     
     function create_song(){
         $data = new stdClass;
-        $artist = $this->user->first.' '.$this->user->last;
         $data->song_data = array(
             'name' => $this->input->post('name'),
-            'artist' => $artist,
+            'artist' => $this->input->post('artist'),
             'user_id' => $this->user->ID,
             'created_at' => date("Y-m-d H:i:s"),
             'status_id' => $this->input->post('status')
@@ -71,42 +70,40 @@ class Songbook extends CI_Controller{
     }
     
     function delete_song($song_id){
-        $this->Songbook_model->deleteSong($song_id);
+        if($this->belongsToUser(Song, $song_id)){
+            $this->Songbook_model->deleteSong($song_id);
+        }
         redirect(site_url('songbook'));
     }
 
     
     function song( $type, $song_id){
-        $song = $this->Songbook_model->getSong( $song_id );
-        $this->data['song'] = $this->formatSong($song);
-        $this->data['audios'] = $this->getAll($song_id, Audio);
-        $this->data['videos'] = $this->getAll($song_id, Video);
-        $this->load->view('songbook/songs/song_'.$type, $this->data);
+        if($this->belongsToUser(Song, $song_id)){
+            $song = $this->Songbook_model->getSong( $song_id );
+            $this->data['song'] = $this->formatSong($song);
+            $this->data['audios'] = $this->getAll($song_id, Audio);
+            $this->data['videos'] = $this->getAll($song_id, Video);
+            $this->load->view('songbook/songs/song_'.$type, $this->data);
+        } else {
+            redirect(site_url(''));
+        }
     }
     
     public function update_song_field($field, $song_id){
         header('Content-Type: application/json');
-        $new_value = $this->input->post('update');
-        if( $this->is_ajax() ){
+        if( $this->is_ajax() && $this->belongsToUser(Song, $song_id)){
+            $value = $this->input->post('update');
             $data = new stdClass;
             if ($field == 'album_id'){
-                $data->song_album_data = array(
-                    $field => $new_value,
-                    'song_id' => $song_id
-                );
-                $this->Songbook_model->updateSong($song_id, $data);
-                echo json_encode(array('result' => true));
+                $this->update_song_album($value, $song_id);
             } else if ($field == 'lyrics'){
-                $data->lyrics_data = array(
-                    'song_id' => $song_id,
-                    'content' => $new_value
-                );
-                $this->Songbook_model->updateSong($song_id, $data);
-                echo json_encode(array('result' => true));
+                $this->update_song_lyrics($value, $song_id);
             } else {
-                if ($field == 'created_at'){ $new_value = date('Y-m-d H:i:s', strtotime($new_value)); }
+                if ($field == 'created_at'){ 
+                    $value = $this->input_to_date($value);
+                }
                 $data->song_data = array(
-                    $field => $new_value,
+                    $field => $value,
                 );
                 $this->Songbook_model->updateSong($song_id, $data);
                 echo json_encode(array('result' => true));
@@ -116,28 +113,28 @@ class Songbook extends CI_Controller{
         }
     }
     
-    public function update_song($song_id){
-        $data = new stdClass;    
-        $data->lyrics_data = array(
-            'song_id' => $song_id,
-            'content' => $this->input->post('lyrics')
-        );
-        $this->Songbook_model->updateSong($song_id, $data);
-        redirect(site_url('songbook/song/e/'.$song_id));
+    function update_song_album($value, $song_id){
+        if ($this->belongsToUser(Song, $song_id)){
+            $data = new stdClass;
+            $data->song_album_data = array(
+                'album_id' => $value,
+                'song_id' => $song_id
+            );
+            $this->Songbook_model->updateSong($song_id, $data);
+            echo json_encode(array('result' => true));
+        } else {
+            echo json_encode(array('result' => false));
+        }
     }
     
-    public function update_album_field($field, $album_id){
-        header('Content-Type: application/json');
-        if( $this->is_ajax() ){
-            $new_value = $this->input->post('update');
+    function update_song_lyrics($value, $song_id){
+        if ($this->belongsToUser(Song, $song_id)){
             $data = new stdClass;
-            if ($field == 'created_at'){
-                $new_value = date('Y-m-d H:i:s', strtotime($new_value)); 
-            }
-            $data->album_data = array(
-                $field => $new_value
+            $data->lyrics_data = array(
+                        'song_id' => $song_id,
+                        'content' => $value
             );
-            $this->Songbook_model->updateAlbum($album_id, $data);
+            $this->Songbook_model->updateSong($song_id, $data);
             echo json_encode(array('result' => true));
         } else {
             echo json_encode(array('result' => false));
@@ -145,17 +142,11 @@ class Songbook extends CI_Controller{
     }
     
     function formatSong( $song ){
-        $album = new stdClass;
-        $album->name = 'No Album';
-        if(isset($song->album_id)){
-            $album = $this->Songbook_model->getAlbum( $song->album_id );
-        } 
-        $album = $this->formatSongAlbum($album);
         $timestamp = strtotime($song->created_at);
         $song->status = $this->Songbook_model->getStatus( $song->status_id );
         $song->lyrics = $this->Songbook_model->getLyrics( $song->ID );
         $song->created_at = date('m/d/Y', $timestamp);
-        $song->album = $album;
+        $song->album = $this->getAlbum($song->album_id);
         return $song;
     }
     
@@ -164,6 +155,19 @@ class Songbook extends CI_Controller{
             $song = $this->formatSong($song);
         }
         return $songs;
+    }
+    
+    function formatLyrics( $lyrics ){
+        $result = "";
+        $lines = explode("<br />", $lyrics->content);
+        foreach($lines as $line){
+            if ($this->isChords($line)){
+                $this->formatChords($line);
+            }
+            $result = $result.$line."<br>";
+        }
+        $lyrics->content = $result;
+        return $lyrics;
     }
     
     /////////////
@@ -175,10 +179,26 @@ class Songbook extends CI_Controller{
     }
     
     function album( $type, $album_id){
-        $album = $this->Songbook_model->getAlbum( $album_id );
-        $album = $this->formatAlbum($album);
-        $this->data['album'] = $album;
-        $this->load->view('songbook/albums/album_'.$type, $this->data);
+        if ($this->belongsToUser(Album, $album_id)){
+            $album = $this->getAlbum($album_id);
+            $album = $this->formatAlbum($album);
+            $this->data['album'] = $album;
+            $this->load->view('songbook/albums/album_'.$type, $this->data);
+        } else {
+            redirect(site_url('songbook'));
+        }
+    }
+    
+    function getAlbum( $album_id ){
+        if(isset($album_id)){
+            $album = $this->Songbook_model->getAlbum( $album_id );
+            $album->path = 'songbook/album/v/'.$album_id;
+        } else {
+            $album = new stdClass;
+            $album->name = 'No Album';
+            $album->path = $album->path = 'songbook';
+        }
+        return $this->formatSongAlbum($album);
     }
     
     function create_album(){
@@ -193,59 +213,54 @@ class Songbook extends CI_Controller{
         redirect(site_url('songbook'));
     }
     
-    public function update_album($album_id){
-        $dateTime = strtotime($this->input->post('created_at')); 
-        $timestamp = date('Y-m-d H:i:s', $dateTime); 
-        $data = array(
-            'name' => $this->input->post('name'),
-            'status_id' => $this->input->post('status'),
-            'created_at' => $timestamp
-        );
-        
-          $this->Songbook_model->updateAlbum($album_id, $data);
-          redirect(site_url('songbook/album/v/'.$album_id));
+    public function update_album_field($field, $album_id){
+        header('Content-Type: application/json');
+        if( $this->is_ajax() && $this->belongsToUser(Album, $album_id)){
+            $new_value = $this->input->post('update');
+            $data = new stdClass;
+            if ($field == 'created_at'){
+                $new_value = $this->input_to_date($new_value); 
+            }
+            $data->album_data = array(
+                $field => $new_value
+            );
+            $this->Songbook_model->updateAlbum($album_id, $data);
+            echo json_encode(array('result' => true));
+        } else {
+            echo json_encode(array('result' => false));
+        }
     }
     
     function delete_album($album_id){
-        $this->delete_album_picture($album_id);
-        $this->Songbook_model->deleteAlbum($album_id);
+        if( $this->belongsToUser(Album, $album_id)){
+            $this->delete_album_picture($album_id);
+            $this->Songbook_model->deleteAlbum($album_id);
+        }
         redirect(site_url('songbook'));
     }
     
     function delete_album_picture($album_id){
-        $this->load->model("Media_model");
-        $picture = $this->Media_model->getById(Picture, 'album_id', $album_id);
-        if(isset($picture) && !empty($picture)){
-            $result = $this->client->deleteObject(array(
-                'Bucket'       => Bucket,
-                'Key'          => $picture->s3key
-            ));
-            if($result){
-                $this->Media_model->delete($picture->ID, Picture);
+        if( $this->belongsToUser(Album, $album_id)){
+            $this->load->model("Media_model");
+            $picture = $this->Media_model->getById(Picture, 'album_id', $album_id);
+            if(isset($picture) && !empty($picture)){
+                if($this->delete_s3_by_key($picture->s3key, $album_id)){
+                    $this->Media_model->delete($picture->ID, Picture);
+                }
             }
+        } else {
+            redirect(site_url('songbook'));
         }
     }
     
-    public function upload_album_pic($album_id){
-        $this->upload();
-        redirect(site_url('songbook/album/v/'.$album_id));
-    }
-    
-    public function upload(){
-        $target_dir = base_url("public_files/");
-        $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-        $uploadOk = 1;
-        $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
-        // Check if image file is a actual image or fake image
-        if(isset($_POST["submit"])) {
-            $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-            if($check !== false) {
-                echo "File is an image - " . $check["mime"] . ".";
-                $uploadOk = 1;
-            } else {
-                echo "File is not an image.";
-                $uploadOk = 0;
-            }
+    function delete_s3_by_key($key, $album_id){
+        if( $this->belongsToUser(Album, $album_id)){
+            return $this->client->deleteObject(array(
+                    'Bucket'       => Bucket,
+                    'Key'          => $key
+            ));
+        } else {
+            return false;
         }
     }
     
@@ -264,19 +279,20 @@ class Songbook extends CI_Controller{
     
     function formatAlbum( $album ){
         $this->load->model("Media_model");
-        $status = $this->Songbook_model->getStatus( $album->status_id );
-        $songs = $this->formatSongs($this->Songbook_model->getSongsByAlbum($album->ID));
-        $pic = $this->Media_model->getById(Picture, 'album_id', $album->ID);
-        $timestamp = strtotime($album->created_at);
-        $album->created_at = date('m/d/Y', $timestamp);
-        $album->status = $status;
-        $album->songs = $songs;
+        $album->status = $this->Songbook_model->getStatus( $album->status_id );
+        $album->songs = $this->formatSongs($this->Songbook_model->getSongsByAlbum($album->ID));
+        $album->pic = $this->getAlbumPic($album->ID);
+        $album->created_at = date('m/d/Y', strtotime($album->created_at));
+        return $album;
+    }
+    
+    function getAlbumPic($album_id){
+        $pic = $this->Media_model->getById(Picture, 'album_id', $album_id);
         if (!isset($pic) or empty($pic)){
             $pic = new stdClass;
             $pic->src = base_url('img/default-album-art.png');
         }
-        $album->pic = $pic;
-        return $album;
+        return $pic;
     }
     
     function formatAlbums( $albums ){
@@ -285,6 +301,7 @@ class Songbook extends CI_Controller{
         }
         return $albums;
     }
+    
     //Audio//
     function getAll($song_id, $type){
         $this->load->model("Media_model");
@@ -297,6 +314,11 @@ class Songbook extends CI_Controller{
     }
 
     ///Helpers///
+    function belongsToUser($table, $item_id){
+        $item = $this->Songbook_model->get($table, $item_id);
+        return ($item->user_id == $this->user->ID);
+    }
+    
     function verify(){
         $result = ( isset($this->userdata['is_logged_in']) && $this->userdata['is_logged_in'] == true );
         return $result;
@@ -304,6 +326,10 @@ class Songbook extends CI_Controller{
     
     function is_ajax(){
         return (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
+    }
+    
+    function input_to_date($value){
+        return date('Y-m-d H:i:s', strtotime($value));
     }
             
 }

@@ -25,10 +25,6 @@ class Media extends CI_Controller{
             );
         }
     }
-
-    function index(){
-        redirect(site_url());
-    }    
      
     public function upload($type, $table, $item_id){
         header('Content-Type: application/json');
@@ -166,6 +162,7 @@ class Media extends CI_Controller{
             case 'video/avi':
             case 'video/mpeg':
             case 'video/mpg':
+            case 'video/mov':
                 return array(
                     'result'=> true,
                     'type' => $type

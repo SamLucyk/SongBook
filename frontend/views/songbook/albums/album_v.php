@@ -5,9 +5,13 @@
         <div class='under_shadow'>
         <div class="album_pic" style="background-image:url(<?php echo $album->pic->src; ?>)"></div>
         </div>
-        <div class="col-sm-12">
-            <span style="float:left"><?php echo $album->status->name; ?></span>  
-            <span style="float:right"><?php echo $album->created_at; ?></span>
+        <div class="marg-10-0">
+        <div id='status' class="col-xs-6">
+            <div data-toggle="tooltip" data-placement="bottom" title="Status" class="status_badge under_shadow"><?php echo $album->status->name; ?></div>
+        </div> 
+        <div id='created' class="col-xs-6">
+            <div data-toggle="tooltip" data-placement="bottom" title="Created" class="status_badge under_shadow"><?php echo $album->created_at; ?></div>
+        </div> 
         </div>
     </div>
     <div class="transbox-b-dark col-sm-6 col-xs-12">
@@ -90,5 +94,9 @@ jQuery(document).ready(function($) {
         var search = document.getElementById('songs-table_filter');
         search.prepend(a);
     }
+    
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip(); 
+    });
 </script>
 <?php $this->load->view('songbook/footer'); ?>

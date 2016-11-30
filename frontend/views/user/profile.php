@@ -6,36 +6,50 @@
         Profile
         <div class="transbox-b-dark col-sm-8 col-sm-offset-2 col-xs-12">
             <h1>
-                <span id="name"><?php echo $user->first.' '.$user->last ?></span><a id="name_edit" class="glyph glyph-edit" onclick="edit('name')"><span id="name_icon" class="glyphicon glyphicon-edit"></span></a>
+                <div id='name_view'>
+                    <span id="name_selected"><?php echo $user->first.' '.$user->last ?></span>
+                    <a class="glyph glyph-edit" onclick="editName()">
+                        <span id="name_icon" class="glyphicon glyphicon-edit"></span>
+                    </a>
+                </div>
+                <div id='name_edit' class="col-xs-12 col-xs-offset-1 padd-20" style="display:none">
+                    <input type="text" style="width:40%; float:left; font-size:16px; margin-right:3px; margin-bottom:5px" class="black" id="first_name_input" value="<?php echo $user->first; ?>">
+                    <input type="text" style="width:40%; float:left; font-size:16px; margin-right:3px; margin-bottom:5px" class="black" id="last_name_input" value="<?php echo $user->last; ?>">
+                    <a class="input-ok-glyph" style="float:left; width:10%" onclick="changeName()">
+                        <span style="float:left" class="glyphicon glyphicon-ok"></span>
+                    </a>
+                </div>
             </h1>
         </div>
         <div class="padd-20 col-xs-12">
             <div class="col-md-12">
             <div class="col-md-4">
-                <h3 style="font-size:18px"><span id="theme_id_display">Theme:</span> 
+                <h3 style="font-size:18px"><span>Theme:</span> 
                     <span id="theme_id_view">
-                        <span style="font-size:18px" id="theme_id_selected"><?php echo $theme->name; ?></span><a id="theme_id_icon_div" class="glyph glyph-edit" onclick="editHidden('theme_id')"><span id="theme_id_icon" class="glyphicon glyphicon-edit"></span></a>
+                        <span style="font-size:18px" id="theme_id_selected"><?php echo $theme->name; ?></span><a class="glyph glyph-edit" onclick="editHidden('theme_id')"><span class="glyphicon glyphicon-edit"></span></a>
                     </span>
                     <div id='theme_id_edit' style="display:none">
-                        <select class="form-control" id="theme_id_input" name="status">
+                        <select class="form-control" id="theme_id_input" style="float:left; width:90%" name="status">
                             <?php foreach($themes as $t){ ?>
                                 <option id='theme_id_option_<?php echo $t->ID; ?>' value="<?php echo $t->ID; ?>" <?php if($t->ID == $theme->ID){echo 'selected';} ?>><?php echo $t->name; ?></option>
                             <?php } ?>
                         </select>
+                        <a class="input-ok-glyph" style="float:right; width:10%" onclick="changeHidden('theme_id')"><span class="glyphicon glyphicon-ok"></span></a>
                     </div>
                 </h3>
             </div>
             <div class="col-md-4">
-                <h3 style="font-size:18px"><span id="scheme_id_display">Color Scheme:</span> 
+                <h3 style="font-size:18px"><span>Color Scheme:</span> 
                     <span id="scheme_id_view">
-                        <span style="font-size:18px" id="scheme_id_selected"><?php echo $scheme->name; ?></span><a id="scheme_id_icon_div" class="glyph glyph-edit" onclick="editHidden('scheme_id')"><span id="scheme_id_icon" class="glyphicon glyphicon-edit"></span></a>
+                        <span style="font-size:18px" id="scheme_id_selected"><?php echo $scheme->name; ?></span><a class="glyph glyph-edit" onclick="editHidden('scheme_id')"><span class="glyphicon glyphicon-edit"></span></a>
                     </span>
                     <div id='scheme_id_edit' style="display:none">
-                        <select class="form-control" id="scheme_id_input" name="status">
+                        <select class="form-control" id="scheme_id_input" style="float:left; width:90%" name="status">
                             <?php foreach($schemes as $s){ ?>
                                 <option id='scheme_id_option_<?php echo $s->ID; ?>' value="<?php echo $s->ID; ?>" <?php if($s->ID == $scheme->ID){echo 'selected';} ?>><?php echo $s->name; ?></option>
                             <?php } ?>
                         </select>
+                        <a class="input-ok-glyph" style="float:right; width:10%" onclick="changeHidden('scheme_id')"><span class="glyphicon glyphicon-ok"></span></a>
                     </div>
                 </h3>
             </div>
@@ -63,35 +77,24 @@
     
     function editHidden(item){
         var view = document.getElementById(item + '_view');
-        var item_dis = document.getElementById(item + '_display');
         var edit = document.getElementById(item + '_edit');
-        var icon = document.getElementById(item + '_icon');
-        var icon_div = document.getElementById(item + '_icon_div');
         view.style.display = 'none';
         edit.style.display = '';
-        icon.classList = 'glyphicon glyphicon-ok';
-        icon_div.onclick = function(){ changeHidden(item); } ;
-        item_dis.appendChild(icon_div);
     }
     
     function changeHidden(item){
         var view = document.getElementById(item + '_view');
         var edit = document.getElementById(item + '_edit');
-        var icon = document.getElementById(item + '_icon');
         var selected = document.getElementById(item + '_selected');
         var input = document.getElementById(item + '_input');
-        var icon_div = document.getElementById(item + '_icon_div');
         edit.style.display = 'none';
         view.style.display = '';
-        icon.classList = 'glyphicon glyphicon-edit';
-        icon_div.onclick = function(){ editHidden(item); } ;
         var value = input.value;
         var content_id = item + '_option_' + value;
         var content_div = document.getElementById(content_id);
         var content = content_div.innerHTML;
         var ajax_url = '<?php echo site_url('user/update_user_field'); ?>/' + item + '/' + <?php echo $user->ID; ?>;
         console.log(ajax_url);
-        view.appendChild(icon_div);
         jQuery.ajax({
         url: ajax_url,
         method: 'POST',
@@ -101,6 +104,38 @@
             selected.innerHTML = content;
         }
         }
+        });
+    }
+    
+    function editName(){
+        var view = document.getElementById('name_view');
+        var edit = document.getElementById('name_edit');
+        view.style.display = 'none';
+        edit.style.display = '';
+    }
+    
+    function changeName(){
+        var view = document.getElementById('name_view');
+        var edit = document.getElementById('name_edit');
+        var selected = document.getElementById('name_selected');
+        var first_input = document.getElementById('first_name_input');
+        var last_input = document.getElementById('last_name_input');
+        edit.style.display = 'none';
+        view.style.display = '';
+        var first = first_input.value;
+        var last = last_input.value;
+        var ajax_url = '<?php echo site_url('user/update_user_name'); ?>/' + <?php echo $user->ID; ?>;
+        console.log(ajax_url);
+        jQuery.ajax({
+        url: ajax_url,
+        method: 'POST',
+        data: {update:{first_name:first, last_name:last}},
+        success: function(res){
+        if( res.result ){
+            selected.innerHTML = first + ' ' + last;
+        }
+        },
+        error: function(ts) { console.log(ts.responseText) }
         });
     }
     
@@ -144,7 +179,8 @@
                 console.log('success');
                 name_div.innerHTML = value;
             }
-        }
+        },
+        error: function(ts) { console.log(ts.responseText) }
         });
     }
     

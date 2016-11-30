@@ -1,7 +1,7 @@
 <?php $this->load->view('top'); ?>
         <div class="row col-md-6 col-md-offset-3 padd-20">
             <form id="signupform" action="<?php echo base_url('user/create_user'); ?>" method="post">
-                <div class="col-md-12 transbox">
+                <div class="col-md-12 transbox-b">
                 <div class="col-md-6">
                     First name
                     <div class="form-group">

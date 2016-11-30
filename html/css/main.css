@@ -230,117 +230,7 @@ p {
   width:270px;
 }
 
-  nav.sidebar, .main{
-    -webkit-transition: margin 200ms ease-out;
-      -moz-transition: margin 200ms ease-out;
-      -o-transition: margin 200ms ease-out;
-      transition: margin 200ms ease-out;
-  }
 
-  .main{
-    padding: 10px 10px 0 10px;
-  }
-
- @media (min-width: 765px) {
-
-    .main{
-      position: absolute;
-      width: calc(100% - 40px); 
-      margin-left: 40px;
-      float: right;
-    }
-
-    nav.sidebar:hover + .main{
-      margin-left: 200px;
-    }
-
-    nav.sidebar.navbar.sidebar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
-      margin-left: 0px;
-    }
-
-    nav.sidebar .navbar-brand, nav.sidebar .navbar-header{
-      text-align: center;
-      width: 100%;
-      margin-left: 0px;
-    }
-    
-    nav.sidebar a{
-      padding-right: 13px;
-    }
-
-    nav.sidebar .navbar-nav > li:first-child{
-      border-top: 1px var(--light) solid;
-    }
-
-    nav.sidebar .navbar-nav > li{
-      border-bottom: 1px var(--light) solid;
-    }
-
-    nav.sidebar .navbar-nav .open .dropdown-menu {
-      position: static;
-      float: none;
-      width: auto;
-      margin-top: 0;
-      background-color: transparent;
-      border: 0;
-      -webkit-box-shadow: none;
-      box-shadow: none;
-    }
-
-    nav.sidebar .navbar-collapse, nav.sidebar .container-fluid{
-      padding: 0 0px 0 0px;
-    }
-
-    .navbar-inverse .navbar-nav .open .dropdown-menu>li>a {
-      color: var(--dark);
-    }
-
-    nav.sidebar{
-      width: 200px;
-      height: 100%;
-      margin-left: -160px;
-      float: left;
-      margin-bottom: 0px;
-    }
-
-    nav.sidebar li {
-      width: 100%;
-    }
-
-    nav.sidebar:hover{
-      margin-left: 0px;
-    }
-
-    .forAnimate{
-      opacity: 0;
-    }
-  }
-   
-  @media (min-width: 1330px) {
-
-    .main{
-      width: calc(100% - 200px);
-      margin-left: 200px;
-    }
-
-    nav.sidebar{
-      margin-left: 0px;
-      float: left;
-    }
-
-    nav.sidebar .forAnimate{
-      opacity: 1;
-    }
-  }
-
-  nav.sidebar .navbar-nav .open .dropdown-menu>li>a:hover, nav.sidebar .navbar-nav .open .dropdown-menu>li>a:focus {
-    color: #CCC;
-    background-color: transparent;
-  }
-
-  nav:hover .forAnimate{
-    opacity: 1;
-  }
   section{
     padding-left: 15px;
   }
@@ -410,6 +300,7 @@ a:hover{
     box-shadow: 5px 4px 25px -2px rgba(0,0,0,0.83);
 }
 
+
 .under_shadow{
     -webkit-box-shadow: 5px 4px 25px -2px rgba(0,0,0,0.83);
     -moz-box-shadow: 5px 4px 25px -2px rgba(0,0,0,0.83);
@@ -436,6 +327,19 @@ a:hover{
 
 .inner_layer{
     background: #666;
+}
+
+.status_badge{
+    background: white;
+    color: var(--dark);
+    border-radius: 100px;
+    text-align: center;
+    text-shadow: none !important;
+    cursor: default;
+}
+
+.status_badge:hover{
+    background:var(--light);
 }
 
 
@@ -539,6 +443,11 @@ table.dataTable {
     margin-top: 0px;
 }
 
+.input-ok-glyph{
+    float: right;
+    position: relative;
+    padding-top: 5px;
+}
 .glyphicon {
     cursor: pointer;
     font-size: 16px;
@@ -547,6 +456,7 @@ table.dataTable {
 .glyphicon-edit {
     color:#5bc0de;
 }
+
 
 .glyphicon-plus {
     color:#5bc0de;
@@ -599,7 +509,6 @@ table.dataTable {
 .file-preview-initial{
     display: block !important;
 }
-
 
 .media-playlist audio{width:100%;padding:0px;}
 
@@ -657,6 +566,12 @@ table.dataTable {
     text-shadow: none !important;
 }
 
+.inner-lyric{
+    margin-left: 10%;
+    width: 75%;
+    text-align: left;
+}
+
 .section-label{
     font-size: 24px;
     text-align: left;
@@ -670,6 +585,10 @@ table.dataTable {
     border-left: thin solid black;  
     text-decoration: none;
     cursor: pointer;
+}
+
+.media-label:hover{
+    color: var(--light-alt);
 }
 
 .media-label-active{
@@ -694,8 +613,17 @@ table.dataTable {
     padding: 5px;
 }
 
+.padd-10 {
+    padding: 10px;
+}
+
+.padd-10-10 {
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
 .padd-15 {
-    padding: 5px;
+    padding: 15px;
 } 
 
 .padd-20 {
@@ -802,6 +730,19 @@ table.dataTable {
 .padd-100-40 {
     padding-top: 100px;
     padding-bottom: 40px;
+}
+
+.marg-20-0 {
+    margin-top: 20px;
+}
+
+.marg-20-40 {
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+.marg-10-0 {
+    margin-top: 10px;
 }
 
 .float-right{

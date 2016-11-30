@@ -3,50 +3,57 @@
     <span class="page-label">Album</span>
         <div class="col-sm-3 col-sm-offset-0 col-xs-10 col-xs-offset-1 padd-0-20">
             <div class="album_pic" style="background-image:url(<?php echo $album->pic->src; ?>)"></div>
-            <div class="col-xs-12 padd-20-0 center">
+            <div class="col-xs-12 center">
                 <div class="left">
                     <label class="section-label"><span style="font-size:60%"> (Square images work best)</span></label>
                 </div>
                 <input class="file-loading" name="file-upload" id="picture-upload" type='file'>
             </div>
+            <div class="col-sm-12 padd-10-0"> 
+                <span id="status_id_view">
+                    <div data-toggle="tooltip" data-placement="left" title="Status" class="status_badge under_shadow"><span id="status_id_selected"><?php echo $album->status->name; ?></span><a class="glyph glyph-edit" onclick="editHidden('status_id')"><span class="glyphicon glyphicon-edit"></span></a></div>
+                </span>
+                <div id='status_id_edit' style="display:none">
+                    <select class="form-control" id="status_id_input"  style="width:90%; float:left" name="status">
+                        <?php foreach($statuses as $status){ ?>
+                            <option id='status_id_option_<?php echo $status->ID; ?>' value="<?php echo $status->ID; ?>" <?php if($status->ID == $album->status_id){echo 'selected';} ?>><?php echo $status->name; ?></option>
+                        <?php } ?>
+                    </select>
+                    <div style="float:right; width:10%">
+                    <a class="glyph glyph-edit" onclick="changeHidden('status_id')">
+                        <span class="glyphicon glyphicon-ok"></span>
+                    </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 padd-10-0">
+                <span id="created_at_view">
+                    <div data-toggle="tooltip" data-placement="left" title="Created" class="status_badge under_shadow"><span id="created_at_selected"><?php echo $album->created_at; ?></span><a class="glyph glyph-edit" onclick="editHidden('created_at')"><span class="glyphicon glyphicon-edit"></span></a></div>
+                </span>
+                <div id='created_at_edit' style="display:none">
+                    <div class='input-group date' id='created_at_div' style="width:90%; float:left; color:black">
+                        <input type='text' id='created_at_input' class="form-control" value="<?php echo $album->created_at?>"/>
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                    <div style="float:right; width:10%">
+                        <a class="input-ok-glyph" onclick="changeHidden('created_at')">
+                            <span class="glyphicon glyphicon-ok"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="transbox-b-dark col-sm-6 col-xs-12">
             <h1>
                 <h1>
-                <span id="name"><?php echo $album->name ?></span><a id="name_edit" class="glyph glyph-edit" onclick="edit('name')"><span id="name_icon" class="glyphicon glyphicon-edit"></span></a>
+                <span id="name"><?php echo $album->name ?></span><a id="name_edit" class="glyph glyph-edit" onclick="edit('name')"><span data-toggle="tooltip" data-placement="right" title="Title" id="name_icon" class="glyphicon glyphicon-edit"></span></a>
             </h1>
             </h1>
         </div>
-        <div class="col-sm-9 col-xs-12 padd-20-0">
-            <div class="col-sm-6">
-                <h3><span id="status_id_display">Status:</span> 
-                    <span id="status_id_view">
-                        <span id="status_id_selected"><?php echo $album->status->name; ?></span><a id="status_id_icon_div" class="glyph glyph-edit" onclick="editHidden('status_id')"><span id="status_id_icon" class="glyphicon glyphicon-edit"></span></a>
-                    </span>
-                    <div id='status_id_edit' style="display:none">
-                        <select class="form-control" id="status_id_input" name="status">
-                            <?php foreach($statuses as $status){ ?>
-                                <option id='status_id_option_<?php echo $status->ID; ?>' value="<?php echo $status->ID; ?>" <?php if($status->ID == $album->status_id){echo 'selected';} ?>><?php echo $status->name; ?></option>
-                            <?php } ?>
-                        </select>
-                    </div>
-                </h3>
-            </div>
-            <div class="col-sm-6">
-                <h3><span id="created_at_display">Created at:</span> 
-                    <span id="created_at_view">
-                        <span style="font-size:18px" id="created_at_selected"><?php echo $album->created_at; ?></span><a id="created_at_icon_div" class="glyph glyph-edit" onclick="editHidden('created_at')"><span id="created_at_icon" class="glyphicon glyphicon-edit"></span></a>
-                    </span>
-                    <div id='created_at_edit' style="display:none">
-                        <div class='input-group date' id='created_at_div' style="color:black">
-                            <input type='text' id='created_at_input' class="form-control" value="<?php echo $album->created_at?>"/>
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
-                        </div>
-                    </div>
-                </h3>
-            </div>
+        <div class="col-sm-9">
+            
         </div>
         <div class="col-sm-9">
         <table id="songs-table" class="table table-striped table-bordered songs-table" cellspacing="0" width="100%">
@@ -88,19 +95,19 @@
             </tbody>
         </table>
     </div>
-            <div class="col-xs-12 padd-40-20">
-                <div class="col-sm-6 center padd-0-20">
-                    <a href="<?php echo base_url('songbook/album/v/'.$album->ID) ?>"><input id="about-btn" class="button button-info" value="Save"></a>
-                </div>
-                <div class="col-sm-6 center padd-0-20">
-                    <a href="<?php echo base_url('songbook/album/v/'.$album->ID) ?>"> <input id="form-btn" class="button button-info" value="Cancel"></a>
-                </div>
-            </div>  
+    <div class="col-xs-12 padd-40-20">
+        <div class="col-sm-6 center padd-0-20">
+            <a href="<?php echo base_url('songbook/album/v/'.$album->ID) ?>"><input id="about-btn" class="button button-info" value="Save"></a>
+        </div>
+        <div class="col-sm-6 center padd-0-20">
+            <a href="<?php echo base_url('songbook/album/v/'.$album->ID) ?>"> <input id="form-btn" class="button button-info" value="Cancel"></a>
+        </div>
+    </div>  
 </div>
 </div>
 <script type="text/javascript">
     $(function () {
-        $('#datetimepicker1').datetimepicker({
+        $('#created_at_div').datetimepicker({
                     format: 'MM/DD/YYYY'
         });
     });
@@ -173,16 +180,9 @@
     
     function editHidden(item){
         var view = document.getElementById(item + '_view');
-        var item_dis = document.getElementById(item + '_display');
         var edit = document.getElementById(item + '_edit');
-        var icon = document.getElementById(item + '_icon');
-        var icon_div = document.getElementById(item + '_icon_div');
         view.style.display = 'none';
-        edit.style.display = '';
-        icon.classList = 'glyphicon glyphicon-ok';
-        icon_div.onclick = function(){ changeHidden(item); } ;
-        item_dis.appendChild(icon_div);
-        
+        edit.style.display = '';  
     }
     
     function changeHidden(item){
@@ -192,11 +192,8 @@
         var edit = document.getElementById(item + '_edit');
         var selected = document.getElementById(item + '_selected');
         var input = document.getElementById(item + '_input');
-        var icon_div = document.getElementById(item + '_icon_div');
         edit.style.display = 'none';
         view.style.display = '';
-        icon.classList = 'glyphicon glyphicon-edit';
-        icon_div.onclick = function(){ editHidden(item); } ;
         var value = input.value;
         if (item != 'created_at'){
         var content_id = item + '_option_' + value;
@@ -205,7 +202,6 @@
         } else {
         var content = value;
         }
-
         var ajax_url = '<?php echo site_url('songbook/update_album_field'); ?>/' + item + '/' + <?php echo $album->ID; ?>;
         jQuery.ajax({
         url: ajax_url,
@@ -215,7 +211,8 @@
         if( res.result ){
             selected.innerHTML = content;
         }
-        }
+        },
+        error: function(ts) { console.log(ts.responseText) }
         });
     }
     
@@ -247,6 +244,11 @@
         var search = document.getElementById('songs-table_filter');
         search.prepend(a);
     }
+
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip(); 
+    });
+
     
 </script>
 <?php $this->load->view('songbook/footer'); ?>

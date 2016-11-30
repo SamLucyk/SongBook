@@ -35,7 +35,12 @@ class Songbook_model extends CI_Model{
         $this->db->from('song');
         $this->db->join('song_album', 'song.ID = song_album.song_id', 'left'); 
         $this->db->where('song.ID', $song_id);
-        return $this->db->get()->result()[0];
+        $result = $this->db->get()->result();
+        if(!empty($result)) {
+            return $result[0];
+        } else {
+            return $result;
+        }
     }
     
     function insertSong( $data){
@@ -102,7 +107,12 @@ class Songbook_model extends CI_Model{
         $this->db->select('album.*');
         $this->db->from('album');
         $this->db->where('album.ID', $album_id);
-        return $this->db->get()->result()[0];
+        $result = $this->db->get()->result();
+        if(!empty($result)) {
+            return $result[0];
+        } else {
+            return $result;
+        }   
     }
     
     function insertAlbum( $data ){
@@ -143,6 +153,21 @@ class Songbook_model extends CI_Model{
         $this->db->from('lyrics');
         $this->db->where('song_id', $song_id);
         return $this->db->get()->result()[0];
+    }
+    
+    
+    //////////////
+    // Helpers //
+    ////////////
+    
+    function get( $table, $item_id){
+        if ($table == Song){
+            return $this->getSong($item_id);
+        } if ($table == Album){
+            return $this->getAlbum($item_id);
+        } else {
+            return false;
+        }
     }
    
 }   

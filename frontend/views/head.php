@@ -11,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/slick-theme.css"/>
     <link href="<?php echo base_url(); ?>css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
     <link href="<?php echo base_url(); ?>css/themes.css?v=1.1" rel="stylesheet" type="text/css"/>
+    <link href="<?php echo base_url(); ?>css/sidebar.css" rel="stylesheet" type="text/css"/>
     <link href="<?php echo base_url(); ?>css/main.css?v=1.1" rel="stylesheet" type="text/css"/>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="<?php echo base_url(); ?>js/ckeditor/ckeditor.js"></script>

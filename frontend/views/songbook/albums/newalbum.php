@@ -50,6 +50,15 @@
     function enable(){
         can_submit = true;
     }
+    
+    function inputFocus(i){
+        if(i.value==i.defaultValue){ i.value=""; i.style.color="#000"; }
+    }
+
+    function inputBlur(i){
+        if(i.value==""){ i.value=i.defaultValue; i.style.color="#bfbfbf"; }
+    }   
+    
     setActive('create');
 </script>
 <?php $this->load->view('songbook/footer'); ?>

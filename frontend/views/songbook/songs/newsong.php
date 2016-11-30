@@ -6,43 +6,48 @@
     <div class="padd-20 col-xs-12">
         <form id="newsongform" action="<?php echo base_url('songbook/create_song'); ?>" method="post">
                 <div class="col-md-12">
-                    Songs
-                <div class="col-md-6 col-md-offset-3">
-                    Song Name
-                    <div class="form-group">
-                        <input type="text" class="form-control" id='name' name="name" style="color:#bfbfbf; font-variant: none;" value="Name" onchange='enable()' onfocus="inputFocus(this)" onblur="inputBlur(this)">
+                    <div class="col-md-6 col-md-offset-3">
+                        Song Name
+                        <div class="form-group">
+                            <input type="text" class="form-control" id='name' name="name" style="color:#bfbfbf; font-variant: none;" value="Song Name" onchange='enable()' onfocus="inputFocus(this)" onblur="inputBlur(this)">
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <label for="status">Status</label>
-                    <div class="form-group">
-                    <select class="form-control" id="status" name="status">
-                        <?php foreach($statuses as $status){ ?>
-                            <option value="<?php echo $status->ID; ?>" <?php if($status->ID == 3){echo 'selected';} ?>><?php echo $status->name; ?></option>
-                        <?php } ?>
-                    </select>
+                    <div class="col-md-4">
+                        Artist
+                        <div class="form-group">
+                            <input type="text" class="form-control" id='artist' name="artist" style="color:#bfbfbf; font-variant: none;" value="Artist Name" onchange='enable()' onfocus="inputFocus(this)" onblur="inputBlur(this)">
+                        </div>
+                    </div>  
+                    <div class="col-md-4">
+                        <label for="status">Status</label>
+                        <div class="form-group">
+                        <select class="form-control" id="status" name="status">
+                            <?php foreach($statuses as $status){ ?>
+                                <option value="<?php echo $status->ID; ?>" <?php if($status->ID == 3){echo 'selected';} ?>><?php echo $status->name; ?></option>
+                            <?php } ?>
+                        </select>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <label for="album">Album</label>
-                    <div class="form-group">
-                    <select class="form-control" id="album" name="album">
-                            <option value="none">No Album</option>
-                        <?php foreach($albums as $album){ ?>
-                            <option value="<?php echo $album->ID; ?>" <?php if($album->ID == $aid){echo 'selected';} ?> ><?php echo $album->name; ?></option>
-                        <?php } ?>
-                    </select>
+                    <div class="col-md-4">
+                        <label for="album">Album</label>
+                        <div class="form-group">
+                        <select class="form-control" id="album" name="album">
+                                <option value="none">No Album</option>
+                            <?php foreach($albums as $album){ ?>
+                                <option value="<?php echo $album->ID; ?>" <?php if($album->ID == $aid){echo 'selected';} ?> ><?php echo $album->name; ?></option>
+                            <?php } ?>
+                        </select>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-10 col-md-offset-1 padd-20-20">
-                <div class="form-group col-sm-12">
-                    <label for="lyrics"><h3>Lyrics</h3></label><br/>
-                    <textarea id="lyrics" name="lyrics"></textarea>
-                </div>
-                </div>
-                <div id="alert" class="col-md-8 col-md-offset-2 center transbox hide alert">
-                    Please enter your name and a valid email address!
-                </div>
+                    <div class="col-md-10 col-md-offset-1 padd-20-20">
+                        <div class="form-group col-sm-12">
+                            <label for="lyrics"><h3>Lyrics</h3></label><br/>
+                            <textarea id="lyrics" name="lyrics"></textarea>
+                        </div>
+                    </div>
+                    <div id="alert" class="col-md-8 col-md-offset-2 center transbox hide alert">
+                        Please enter your name and a valid email address!
+                    </div>
                 </div>                          
                 <div class="col-md-4 col-md-offset-4 center padd-10-0">
                     <input onclick="validate()" id="form-btn" class="button button-info" value="Create Song">
@@ -67,6 +72,14 @@
     function enable(){
         can_submit = true;
     }
+    
+    function inputFocus(i){
+        if(i.value==i.defaultValue){ i.value=""; i.style.color="#000"; }
+    }
+
+    function inputBlur(i){
+        if(i.value==""){ i.value=i.defaultValue; i.style.color="#bfbfbf"; }
+    }     
     
 </script>
 
