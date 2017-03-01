@@ -91,7 +91,14 @@ body {
     color: white !important;
     text-shadow: none !important;
     background-color: rgba(0, 0, 0, 0.6);
-    border-radius: 100px;
+    border-radius: 20px;
+}
+
+.title-transbox {
+    color: white !important;
+    text-shadow: none !important;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 50px;
 }
 
 .transbox-b p {
@@ -342,13 +349,6 @@ a:hover{
     background:var(--light);
 }
 
-
-tr {
-   -webkit-box-shadow: inset 5px 4px 25px 2px rgba(0,0,0,0.76);
-    -moz-box-shadow: inset 5px 4px 25px 2px rgba(0,0,0,0.76);
-    box-shadow: inset 5px 4px 25px 2px rgba(0,0,0,0.76); 
-}
-
 .album-slider .pic{
     margin-top: 10px;
     width: 165px;
@@ -448,6 +448,12 @@ table.dataTable {
     position: relative;
     padding-top: 5px;
 }
+
+.toggle-off.btn {
+    color: black !important;
+    text-shadow: none !important;
+}
+
 .glyphicon {
     cursor: pointer;
     font-size: 16px;
@@ -577,13 +583,71 @@ table.dataTable {
     text-align: left;
 }
 
+.lyrics-label {
+    color:lightblue;
+    top: 35px;
+    left: 40px;
+    font-size: 20px;
+    position: absolute;
+    z-index: 20;
+}
+
+.lyrics-play {
+    color:lightblue;
+    top: 40px;
+    right: 40px;
+    font-size: 20px;
+    position: absolute;
+    z-index: 20;
+}
+
+.lyrics-pause {
+    color:lightblue;
+    top: 40px;
+    right: 60px;
+    font-size: 20px;
+    position: absolute;
+    z-index: 20;
+}
+
+.lyrics-slide {
+    color:lightblue;
+    top: 93px;
+    right: 46px;
+    font-size: 20px;
+    position: absolute;
+    z-index: 20;
+}
+
+.lyrics-slide-val {
+    color:lightblue;
+    top: 62px;
+    right: 25px;
+    font-size: 20px;
+    width: 50px;
+    position: absolute;
+    z-index: 20;
+}
+
+input[type=range][orient=vertical]
+{
+    writing-mode: bt-lr; /* IE */
+    -webkit-appearance: slider-vertical; /* WebKit */
+    width: 8px;
+    height: 175px;
+    padding: 0 5px;
+}
+
+#video {
+    height: 356.59px;
+    background-color:black;
+}
+
 .media-label{
     background-color: var(--dark);
     font-size: 24px;
-    border-bottom: thin solid black;
-    border-right: thin solid black;
-    border-left: thin solid black;  
     text-decoration: none;
+    text-shadow: none;
     cursor: pointer;
 }
 
@@ -592,9 +656,9 @@ table.dataTable {
 }
 
 .media-label-active{
-    -webkit-box-shadow: inset 5px 4px 25px 2px rgba(0,0,0,0.76);
-    -moz-box-shadow: inset 5px 4px 25px 2px rgba(0,0,0,0.76);
-    box-shadow: inset 5px 4px 25px 2px rgba(0,0,0,0.76); 
+    -webkit-box-shadow: inset 2px 2px 11px 0px rgba(0,0,0,0.76);
+    -moz-box-shadow: inset 2px 2px 11px 0px rgba(0,0,0,0.76);
+    box-shadow: inset 2px 2px 11px 0px rgba(0,0,0,0.76); 
     color:var(--dark); 
     background-color:var(--light);  
 }

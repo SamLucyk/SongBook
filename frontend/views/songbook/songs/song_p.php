@@ -1,6 +1,5 @@
 <?php $this->load->view('songbook/top'); ?>
-<?php $userdata = $this->session->userdata('user_data'); ?>
-    <span class="page-label">Song</span>
+    <span class="page-label">Public Song</span>
      <div class="col-sm-4 col-sm-offset-0 col-xs-10 col-xs-offset-1 padd-0-20">
         <div id="video_frame"  style="display:none">
             <video width="100%" class='under_shadow' id="video" controls>
@@ -33,8 +32,8 @@
                     } 
                 } else { ?>
                     <li>
-                        <a href="<?php echo site_url('songbook/song/e/'.$song->ID) ?>">
-                            Add a recording!
+                        <a>
+                            No Current Recordings.
                         </a>
                     </li>
                     <?php } ?>
@@ -55,8 +54,8 @@
                     }
                 } else { ?>
                     <li>
-                        <a href="<?php echo site_url('songbook/song/e/'.$song->ID) ?>">
-                            Add a Video!
+                        <a>
+                            No Current Videos.
                         </a>
                     </li>
                     <?php } ?>
@@ -70,9 +69,6 @@
             <div id='created' class="col-xs-6">
                 <div data-toggle="tooltip" data-placement="bottom" title="Created" class="status_badge under_shadow"><?php echo $song->created_at; ?></div>
             </div>
-         </div>
-         <div class="col-xs-12 padd-20">
-            <a href="<?php echo site_url('songbook/song/e/'.$song->ID) ?>"><input id="about-btn" class="button button-info" value="Edit"></a>
          </div>
     </div>
     <div class="title-transbox col-sm-8 col-xs-12">
@@ -167,7 +163,7 @@
             }else{
                 link = playlist.find('a')[current];    
             }
-            run($(link),video[0]);
+            run($(link),audio[0]);
         });
     }
     

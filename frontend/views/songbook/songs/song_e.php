@@ -112,53 +112,59 @@
                     </div>
                 </div>
             </div>
+            <div class="col-sm-6 padd-10-0">
+                Visibility:
+                <input <?php if($song->public_enabled){ echo 'checked'; } ?> id="public_enabled" type="checkbox" data-toggle="toggle" data-on="Public" data-off="Private">
+            </div>
+            <div class="col-sm-7 padd-10-0">
+                Comments:
+                <input id='comments_enabled' <?php if($song->comments_enabled){ echo 'checked'; } ?> <?php if(!$song->public_enabled){ echo 'disabled'; } ?> type="checkbox" data-toggle="toggle" data-on="Enabled" data-off="Disabled">
+            </div>
     </div>
-    <div class="transbox-b-dark col-sm-8 col-xs-12">
+    <div class="title-transbox col-sm-8 col-xs-12">
         <h1>
             <span id="name"><?php echo $song->name ?></span><a id="name_edit" class="glyph glyph-edit" onclick="edit('name')"><span data-toggle="tooltip" data-placement="bottom" title="Title" id="name_icon" class="glyphicon glyphicon-edit"></span></a>
         </h1>
         <h4 class="padd-0-20">    
-                <span class="col-xs-6">
-                <span id="artist"><?php echo $song->artist ?></span><a id="artist_edit" class="glyph glyph-edit" onclick="edit('artist')"><span data-toggle="tooltip" data-placement="bottom" title="Artist" id="artist_icon" class="glyphicon glyphicon-edit"></span></a>
-                </span>
-            
-                <span class="col-xs-6">
-                <span id="album_id_view">
-                    <span id="album_id_selected"><?php echo $song->album->name; ?></span><a data-toggle="tooltip" data-placement="bottom" title="Album" class="glyph glyph-edit" onclick="editHidden('album_id')"><span class="glyphicon glyphicon-edit"></span></a>
-                </span>
-                <div id='album_id_edit' style="display:none;">
-                    <select class="form-control" id="album_id_input" name="album" style="width:90%; float:left">
-                            <option id='album_id_option_none' value="none" selected>No Album</option>
-                        <?php foreach($albums as $album){ ?>
-                            <option id='album_id_option_<?php echo $album->ID; ?>' value="<?php echo $album->ID; ?>" 
-                                    <?php if(isset($song->album_id)){
-                                            if($album->ID == $song->album_id){
-                                                echo 'selected';}
-                                    }?>><?php echo $album->name; ?></option>
-                        <?php } ?>
-                    </select>
-                    <a class="input-ok-glyph" onclick="changeHidden('album_id')" style="width:10%; float:right"><span class="glyphicon glyphicon-ok"></span></a>
-                </div>
-                </span>
+            <span class="col-xs-6">
+            <span id="artist"><?php echo $song->artist ?></span><a id="artist_edit" class="glyph glyph-edit" onclick="edit('artist')"><span data-toggle="tooltip" data-placement="bottom" title="Artist" id="artist_icon" class="glyphicon glyphicon-edit"></span></a>
+            </span>
+
+            <span class="col-xs-6">
+            <span id="album_id_view">
+                <span id="album_id_selected"><?php echo $song->album->name; ?></span><a data-toggle="tooltip" data-placement="bottom" title="Album" class="glyph glyph-edit" onclick="editHidden('album_id')"><span class="glyphicon glyphicon-edit"></span></a>
+            </span>
+            <div id='album_id_edit' style="display:none;">
+                <select class="form-control" id="album_id_input" name="album" style="width:90%; float:left">
+                        <option id='album_id_option_none' value="none" selected>No Album</option>
+                    <?php foreach($albums as $album){ ?>
+                        <option id='album_id_option_<?php echo $album->ID; ?>' value="<?php echo $album->ID; ?>" 
+                                <?php if(isset($song->album_id)){
+                                        if($album->ID == $song->album_id){
+                                            echo 'selected';}
+                                }?>><?php echo $album->name; ?></option>
+                    <?php } ?>
+                </select>
+                <a class="input-ok-glyph" onclick="changeHidden('album_id')" style="width:10%; float:right"><span class="glyphicon glyphicon-ok"></span></a>
+            </div>
+            </span>
         </h4>
     </div>
-        <div class="col-xs-12 col-sm-8 padd-20 marg-20-0 inner_shadow inner_layer">
-            <div class="col-xs-12 lyric-box">
-                <span id="lyrics_view">
-                    <span class="section-label" style="float:left; width:10%">Lyrics</span>
-                    <a style="float:left;" onclick="editHidden('lyrics')"><span class="glyphicon glyphicon-edit"></span></a>
-                    <div id="lyrics_selected" class="transbox-b-dark lyric-container col-xs-12 padd-20">
-                        <?php echo $song->lyrics->content; ?>
-                    </div>
-                </span>
-                <span id="lyrics_edit" style="display:none">
-                    <span class="section-label" style="float:left; width:10%">Lyrics</span>
-                    <a style="float:left;" onclick="changeHidden('lyrics')"><span class="glyphicon glyphicon-ok"></span></a>
+        <div id="lyric-container" class="col-xs-12 col-sm-8 padd-20 marg-20-40">
+            <span id="lyrics_view">
+                <span class="lyrics-label">Lyrics</span>
+                <a style="float:left;" onclick="editHidden('lyrics')"><span class="glyphicon glyphicon-edit"></span></a>
+                <div id="lyrics_selected" class="transbox-b-dark lyric-container padd-20-0 col-sm-12">
+                    <?php echo $song->lyrics->content; ?>
+                </div>
+            </span>
+            <span id="lyrics_edit" style="display:none">
+                <span class="section-label" style="float:left; width:10%">Lyrics</span>
+                <a style="float:left;" onclick="changeHidden('lyrics')"><span class="glyphicon glyphicon-ok"></span></a>
                 <div class="col-xs-12">
                     <textarea style="display:none" id="lyrics_input" name="lyrics_input"><?php echo $song->lyrics->content; ?></textarea>
                 </div>
-                </span>
-            </div>
+            </span>
         </div>
         <div class="col-xs-12 padd-20-20">
             <div class="col-xs-6 center">
@@ -178,18 +184,6 @@
             return window.confirm("Are you sure you want to delete \"<?php echo $song->name ?>\"? (This can not be undone)");
         });
     });
-    
-    function toggle(ele){
-        var item = document.getElementById(ele + '-container');
-        var toggle = document.getElementById(ele + '-toggle');
-        if(item.style.display == 'none'){
-            item.style.display = '';
-            toggle.classList = 'glyphicon glyphicon-chevron-down';
-        } else{
-            item.style.display = 'none';
-            toggle.classList = 'glyphicon glyphicon-chevron-up';
-        }
-    }
     
     init();
     init2();
@@ -295,6 +289,37 @@
         });
         setActive('song');
     });
+    
+    $('#public_enabled').change(function(){
+        toggle('public_enabled', $(this).prop('checked'));
+        if ($(this).prop('checked')){
+            $('#comments_enabled').bootstrapToggle('enable');
+        } else {
+            $('#comments_enabled').bootstrapToggle('disable');
+        }
+    });
+    
+    $('#comments_enabled').change(function(){
+        toggle('comments_enabled', $(this).prop('checked'));
+    });
+    
+    function toggle(field, value){
+        var ajax_url = '<?php echo site_url('songbook/update_song_field'); ?>/' + field + '/' + <?php echo $song->ID; ?>;
+        var value = value ? 1 : 0;
+        console.log(value);
+        jQuery.ajax({
+            url: ajax_url,
+            method: 'POST',
+            data: {update:value},
+            success: function(res){
+                if( res.result ){
+                    console.log('success');
+                } else {
+                    console.log('failed');
+                }
+            }
+        });
+    }
     
     //Audio//
     

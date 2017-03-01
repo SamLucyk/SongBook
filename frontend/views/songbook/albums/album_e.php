@@ -5,13 +5,20 @@
             <div class="album_pic" style="background-image:url(<?php echo $album->pic->src; ?>)"></div>
             <div class="col-xs-12 center">
                 <div class="left">
-                    <label class="section-label"><span style="font-size:60%"> (Square images work best)</span></label>
+                    <label class="section-label">
+                        <span style="font-size:60%"> (Square images work best)</span>
+                    </label>
                 </div>
                 <input class="file-loading" name="file-upload" id="picture-upload" type='file'>
             </div>
             <div class="col-sm-12 padd-10-0"> 
                 <span id="status_id_view">
-                    <div data-toggle="tooltip" data-placement="left" title="Status" class="status_badge under_shadow"><span id="status_id_selected"><?php echo $album->status->name; ?></span><a class="glyph glyph-edit" onclick="editHidden('status_id')"><span class="glyphicon glyphicon-edit"></span></a></div>
+                    <div data-toggle="tooltip" data-placement="left" title="Status" class="status_badge under_shadow">
+                        <span id="status_id_selected"><?php echo $album->status->name; ?></span>
+                        <a class="glyph glyph-edit" onclick="editHidden('status_id')">
+                            <span class="glyphicon glyphicon-edit"></span>
+                        </a>
+                    </div>
                 </span>
                 <div id='status_id_edit' style="display:none">
                     <select class="form-control" id="status_id_input"  style="width:90%; float:left" name="status">

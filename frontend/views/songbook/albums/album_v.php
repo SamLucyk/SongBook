@@ -6,10 +6,10 @@
         <div class="album_pic" style="background-image:url(<?php echo $album->pic->src; ?>)"></div>
         </div>
         <div class="marg-10-0">
-        <div id='status' class="col-xs-6">
+        <div id='status' class="col-md-6 marg-10-0">
             <div data-toggle="tooltip" data-placement="bottom" title="Status" class="status_badge under_shadow"><?php echo $album->status->name; ?></div>
         </div> 
-        <div id='created' class="col-xs-6">
+        <div id='created' class="col-md-6 marg-10-0">
             <div data-toggle="tooltip" data-placement="bottom" title="Created" class="status_badge under_shadow"><?php echo $album->created_at; ?></div>
         </div> 
         </div>

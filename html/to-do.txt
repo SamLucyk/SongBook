@@ -1,6 +1,8 @@
 - Click Button to have lyrics cover screen and scroll
-- Fixed media file type uploads
+- Crop pics before storage.
+- Fix media file type uploads
 - Design Default Album Pic.
+- Design Logo
 - Add default option for recordings
 - Play button on song list to play the default recording
 - Option to make song/albums have a public page.
@@ -12,3 +14,4 @@
 - Add friends
 - Media Page
 - Lyrics -> Chords
+- Inspiration storage/ Stream of lyrics/videos/etc

@@ -51,10 +51,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['default_controller'] = 'pages/';
 $route['404_override'] = 'error';
+$route['not-public'] = 'error/not_public';
 $route['not-found'] = 'error';
 $route['translate_uri_dashes'] = FALSE;
 
 $route['/']  = 'pages/index';
+$route['song/(:any)'] = 'pages/song/$1';
+$route['thankyou'] = 'pages/thankyou';
 $route['login']  = 'user/login';
 $route['logout']  = 'user/logout';
 $route['sign-up']  = 'user/sign_up';

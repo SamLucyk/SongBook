@@ -20,5 +20,9 @@ class Error extends CI_Controller
         $this->load->view('errors/user-exists');
     }
     
+    public function not_public(){
+        $this->load->view('errors/not-public');
+    }
+    
 }
 ?>

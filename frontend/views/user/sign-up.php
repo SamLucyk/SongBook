@@ -1,44 +1,44 @@
 <?php $this->load->view('top'); ?>
         <div class="row col-md-6 col-md-offset-3 padd-20">
             <form id="signupform" action="<?php echo base_url('user/create_user'); ?>" method="post">
-                <div class="col-md-12 transbox-b">
-                <div class="col-md-6">
+                <div class="col-xs-12 transbox-b padd-20">
+                <div class="col-sm-6 col-xs-12">
                     First name
                     <div class="form-group">
                         <input type="text" class="form-control" id='first' name="first" style="color:#bfbfbf; font-variant: none;" value="First" onfocus="inputFocus(this)" onblur="inputBlur(this)">
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-sm-6 col-xs-12">
                     Last name
                     <div class="form-group">
                         <input type="text" class="form-control" id='last' name="last" style="color:#bfbfbf; font-variant: none;" 
                     value="Last" onfocus="inputFocus(this)" onblur="inputBlur(this)">
                     </div>
                 </div>
-                <div class="col-md-8 col-md-offset-2">
+                <div class="col-sm-8 col-sm-offset-2 col-xs-12">
                     Email
                     <div class="form-group">
                         <input type="text" class="form-control" id='email' name="email" style="color:#bfbfbf; font-variant: none;" 
                     value="Email" onfocus="inputFocus(this)" onblur="inputBlur(this)">
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-sm-6 col-xs-12">
                     <div class="form-group">
                         Password
                         <input type="password" class="form-control" id='pass' name="pass" style="color:#bfbfbf; font-variant: none;" onfocus="inputFocus(this)" onblur="inputBlur(this)">
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-sm-6 col-xs-12">
                     <div class="form-group">
                         Confirm Password
                         <input type="password" class="form-control" id='repass' name="repass" style="color:#bfbfbf; font-variant: none;" onfocus="inputFocus(this)" onblur="inputBlur(this)">
                     </div>
                 </div>
-                <div id="alert" class="col-md-8 col-md-offset-2 center transbox hide alert">
+                <div id="alert" class="col-xs-12 col-sm-8 col-sm-offset-2 center transbox hide alert">
                     Please enter your name and a valid email address!
                 </div>
                 </div>                          
-                <div class="col-md-4 col-md-offset-3 center padd-10-0">
+                <div class="col-xs-12 col-sm-4 col-sm-offset-3 center padd-10-0">
                     <input onclick="validate()" id="form-btn" class="button button-info" value="Sign-up">
                 </div>
             </form>
