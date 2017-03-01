@@ -1,7 +1,7 @@
     <!-- Wrapper for slides -->
     <div class="album-slider col-md-8 col-md-offset-2" >
         
-             <? foreach($albums as $album){?>
+             <?php foreach($albums as $album) { ?>
                     <a href='<?php echo site_url('songbook/album/v/'.$album->ID) ?>'>
                         <div>
                         <img class="pic" src="<?php echo $album->pic->src; ?>" alt="<?php echo $album->name; ?>">
@@ -25,5 +25,5 @@
         $(".pic").addClass('under_shadow');
         $(".slick-list").addClass('inner_shadow');
         $(".slick-list").addClass('inner_layer');
-        });
+    });
 </script>
