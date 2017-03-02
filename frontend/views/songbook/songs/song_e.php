@@ -153,8 +153,8 @@
         <div id="lyric-container" class="col-xs-12 col-sm-8 padd-20 marg-20-40">
             <span id="lyrics_view">
                 <span class="lyrics-label">Lyrics</span>
-                <a style="float:left;" onclick="editHidden('lyrics')"><span class="glyphicon glyphicon-edit"></span></a>
-                <div id="lyrics_selected" class="transbox-b-dark lyric-container padd-20-0 col-sm-12">
+                <div id="scrollable-lyric-container" class="transbox-b-dark lyric-container padd-20-0 col-sm-12">
+                    <a style="float:right;" onclick="editHidden('lyrics')"><span class="glyphicon glyphicon-edit"></span></a>
                     <?php echo $song->lyrics->content; ?>
                 </div>
             </span>
@@ -166,6 +166,7 @@
                 </div>
             </span>
         </div>
+
         <div class="col-xs-12 padd-20-20">
             <div class="col-xs-6 center">
                 <a href="<?php echo site_url('songbook/song/v/'.$song->ID) ?>"><input id="about-btn" class="button button-info" value="View"></a>
