@@ -12,7 +12,7 @@
                         <input type="password" class="form-control" id='pass' name="pass" style="color:#bfbfbf; font-variant: none;" onfocus="inputFocus(this)" onblur="inputBlur(this)">
                     </div>
                 </div>
-                <div class="col-xs-4 col-xs-offset-4 center padd-20">
+                <div class="col-xs-4 col-xs-offset-4 center padd-40-0">
                     <input type="submit" id="form-btn" class="button button-info" value="Log-in">
                 </div>
             </form>
