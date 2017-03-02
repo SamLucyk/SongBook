@@ -91,7 +91,7 @@
                         foreach($album->songs as $songa){ ?>
                             <option value="<?php echo $count; ?>" <?php if($song->track_num == $count){echo 'selected';} ?>><?php echo $count; ?> </option>
                         <?php echo $count++; ?>
-                        <? } ?>
+                        <?php } ?>
                     </select></div></td>
                     <td><?php echo $song->name ?></td>
                     <td><?php echo $song->created_at ?></td>
@@ -104,10 +104,10 @@
     </div>
     <div class="col-xs-12 padd-40-20">
         <div class="col-sm-6 center padd-0-20">
-            <a href="<?php echo base_url('songbook/album/v/'.$album->ID) ?>"><input id="about-btn" class="button button-info" value="Save"></a>
+            <a href="<?php echo base_url('songbook/album/v/'.$album->ID); ?>"><input id="about-btn" class="button button-info" value="Save"></a>
         </div>
         <div class="col-sm-6 center padd-0-20">
-            <a href="<?php echo base_url('songbook/album/v/'.$album->ID) ?>"> <input id="form-btn" class="button button-info" value="Cancel"></a>
+            <a href="<?php echo base_url('songbook/album/v/'.$album->ID); ?>"> <input id="form-btn" class="button button-info" value="Cancel"></a>
         </div>
     </div>  
 </div>
@@ -242,7 +242,7 @@
 
     function addNewSongButton(){
         var a = document.createElement("a");
-        a.setAttribute("href", "<?php echo site_url('songbook/newsong/?aid='.$album->ID)?>");
+        a.setAttribute("href", "<?php echo site_url('songbook/newsong/?aid='.$album->ID); ?>");
         a.setAttribute("style", "padding-right:5px");
         a.classList = 'glyph glyph-edit';
         var span = document.createElement('span');
@@ -256,6 +256,5 @@
         $('[data-toggle="tooltip"]').tooltip(); 
     });
 
-    
 </script>
 <?php $this->load->view('songbook/footer'); ?>
